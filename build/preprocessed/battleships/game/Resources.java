@@ -35,6 +35,7 @@ public class Resources {
     public Image fondo;
     public Image girar;
     public Image buttonBarcos;
+    public Image vacio;
     
     public Image s_portaaviones_0;
     public Image s_portaaviones_1;
@@ -116,6 +117,7 @@ public class Resources {
         fondo = null;
         girar = null;
         buttonBarcos = null;
+        vacio = null;
         
         s_portaaviones_0 = null;
         s_portaaviones_1 = null;
@@ -183,6 +185,7 @@ public class Resources {
             fondo = ih.loadImage("/fondo.png",scaling);
             girar = ih.loadImage("/girar.png",scaling);
             buttonBarcos = ih.loadImage("/barcos.png",scaling);
+            vacio = ih.loadImage("/vacio.png",scaling);
             
             
             s_portaaviones_0 = ih.loadImage("/barco_part/port0.png",scaling);
