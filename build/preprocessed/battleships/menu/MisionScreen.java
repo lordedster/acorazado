@@ -24,7 +24,7 @@ public class MisionScreen
     private int y;
     
     public MisionScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling){
-        super(ITEM_COUNT,l);
+        super(ITEM_COUNT,l, Graphics.LEFT | Graphics.TOP);
         
         setItem(RESUME, new MenuItem(loadSprite("/continuar.png", 2, scaling)));
         setItem(NEWGAME, new MenuItem(loadSprite("/nuevo_juego.png",2,scaling)));

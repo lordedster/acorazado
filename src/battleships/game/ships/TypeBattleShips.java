@@ -51,7 +51,7 @@ public class TypeBattleShips {
     
     
     // Estados del juego
-    public static final int STATE_MENU = 15;
+    public static final int STATE_MENU = 0;
     public static final int STATE_INFO = 1;
     public static final int STATE_TRANSITION = 2;
     public static final int STATE_LEVEL = 3;
@@ -66,8 +66,8 @@ public class TypeBattleShips {
     public static final int STATE_CAMPAIGN = 12;
     public static final int STATE_MULTI = 13;
     public static final int STATE_PERFIL = 14;
-    public static final int STATE_USER = 0;
-    public static final int GIRAR = 15;
+    public static final int STATE_USER = 15;
+    public static final int GIRAR = 16;
     
     //Dificultades
     public static final int FACIL = 0;

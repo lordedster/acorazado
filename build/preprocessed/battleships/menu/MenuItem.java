@@ -4,19 +4,34 @@
  */
 package battleships.menu;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.StringItem;
 import javax.microedition.lcdui.game.Sprite;
 
 public class MenuItem {
-    protected final Sprite sprite;
+    protected final Sprite sprite;    
+    protected final StringItem texto;
+    protected final boolean tipo;
     private volatile boolean selected = false;
 
     public MenuItem(Sprite sprite) {
         this.sprite = sprite;
+        this.texto = new StringItem(null, null);
+        this.tipo = true;
     }
+    
+    public MenuItem(StringItem texto) {
+        this.sprite = null;
+        this.texto = texto;
+        this.tipo = false;
+    }
+    
 
     public void setSelected(boolean s) {
         selected = s;
-        sprite.setFrame(getFrame());
+        if (tipo)
+        {
+            sprite.setFrame(getFrame());
+        }
     }
 
     protected int getFrame() {
@@ -81,7 +96,11 @@ public class MenuItem {
     /**
      * Render menu item
      */
-    public void paint(Graphics g) {
-        sprite.paint(g);
+    public void paint(Graphics g, int anchor) {
+        if (tipo){
+            sprite.paint(g);            
+        } else {
+            g.drawString(texto.getText(), texto.getPreferredHeight(), texto.getPreferredWidth(), anchor);
+        }
     }
 }

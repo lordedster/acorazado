@@ -1,49 +1,75 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package battleships.menu;
 
-import battleships.effects.Slideable;
-import javax.microedition.lcdui.Graphics;
-
 /**
  *
  * @author edster
  */
+import battleships.effects.Slideable;
+import javax.microedition.lcdui.Graphics;
+
 public class UserScreen
-    extends Menu
-    implements Slideable{
-    public static final int ITEM_COUNT = 3;    
-    public static final int SLOT1 = 0;
-    public static final int SLOT2 = 1;
-    public static final int SLOT3 = 2;    
+        extends Menu
+        implements Slideable {
+
+    public static final int ITEM_COUNT = 6;
+    public static final int ACTION = 0;
+    public static final int CAMPAIGN = 1;
+    public static final int MULTIJUGADOR = 2;
+    public static final int OPTIONS = 3;
+    public static final int EXIT = 4;
+    public static final int INFO = 5;
     public final int OUT_CX;
     public final int IN_CX;
     private int x;
     private int y;
-    
-     public UserScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling){
-        super(ITEM_COUNT,l);
-        
-        setItem(SLOT1, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
-        setItem(SLOT2, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
-        setItem(SLOT3, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
-        
+    private int width;
+    private int cornerY;
+
+    public UserScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling) {
+        super(ITEM_COUNT, l, Graphics.LEFT | Graphics.TOP);
+        this.width = width;       
+        this.cornerY = cornerY;
+        setItem(ACTION, new MenuItem(loadSprite("/action.png", 2, scaling)));
+        setItem(CAMPAIGN, new MenuItem(loadSprite("/campaign.png", 2, scaling)));
+        setItem(MULTIJUGADOR, new MenuItem(loadSprite("/multijugador.png", 2, scaling)));
+        setItem(OPTIONS, new MenuItem(loadSprite("/opciones.png", 2, scaling)));
+        setItem(EXIT, new MenuItem(loadSprite("/exit.png", 2, scaling)));
+        setItem(INFO, new MenuItem(loadSprite("/info.png", 2, scaling)));
         IN_CX = cornerX + width / 2;
         OUT_CX = IN_CX - width;
-
+        int exis = 1245;
+        exis = OUT_CX;
         x = OUT_CX;
         y = cornerY + height / 2;
-        
         positionItemsHorizontally();
         positionItemsVertically();
     }
-    
-    public void paint(Graphics g){
+
+    /**
+     * Render the menu
+     */
+    public void paint(Graphics g) {
         super.paint(g);
     }
+    /**
+     * Move view inwards
+     */
+    public boolean slideIn() {
+        int distance = x - IN_CX;
+        distance *= 0.8;
+        x = IN_CX + distance;
+        positionItemsHorizontally();
+        return distance != 0;
+    }
 
+    /**
+     * Move view outwards
+     */
     public boolean slideOut() {
         int distance = x - OUT_CX;
         distance *= 0.8;
@@ -52,21 +78,17 @@ public class UserScreen
         return distance != 0;
     }
 
-    public boolean slideIn() {
-        int distance = x - IN_CX;
-        distance *= 0.8;
-        x = IN_CX + distance;
-        positionItemsHorizontally();
-        return distance != 0;
-    }
-    
-    
+    /**
+     * Lay out menu items horizontally
+     */
     public final void positionItemsHorizontally() {
         MenuItem item;
-        for (int i = 0; i < ITEM_COUNT; i++) {
+        for (int i = 0; i < ITEM_COUNT - 1; i++) {
             item = getItem(i);
             item.setHorizontalCenter(x);
         }
+        item = getItem(ITEM_COUNT - 1);
+        item.setPosition(x - width / 2, cornerY);
     }
 
     /**
@@ -74,14 +96,34 @@ public class UserScreen
      */
     public final void positionItemsVertically() {
         int newY = y;
-        for (int i = 0; i < ITEM_COUNT; i++) {
+//        MenuItem resume = getItem(RESUME);
+//        if(!resume.isVisible()) {
+//            newY -= resume.getHeight() / 2;
+//        }
+        for (int i = 0; i < ITEM_COUNT - 1; i++) {
             MenuItem item = getItem(i);
             item.setCenter(item.getX(), newY);
             newY += item.getHeight();
         }
     }
-    
-    
+
+    /**
+     * Hide resume option
+     */
+//    public void hideResume() {
+//        getItem(RESUME).setVisibile(false);
+//        positionItemsVertically();
+//    }
+
+    /**
+     * Show resume option
+     */
+//    public void showResume() {
+//        getItem(RESUME).setVisibile(true);
+//        selectItem(RESUME);
+//        positionItemsVertically();
+//    }
 }
+
 
 

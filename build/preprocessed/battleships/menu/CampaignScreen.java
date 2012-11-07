@@ -24,8 +24,8 @@ public class CampaignScreen
     private int x;
     private int y;
     
-    public CampaignScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling) {
-        super(ITEM_COUNT, l);
+    public CampaignScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling, int anchor) {
+        super(ITEM_COUNT, l, anchor);
        
         IN_CX = cornerX + width / 2;
         OUT_CX = IN_CX - width;

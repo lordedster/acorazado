@@ -113,6 +113,7 @@ public class BattleshipCanvas
 
         audioManager = AudioManager.getInstance();
         vibratorManager = VibratorManager.getInstance();
+        gameState = TypeBattleShips.STATE_USER;
     }
 
     /**
@@ -514,7 +515,7 @@ public class BattleshipCanvas
     }
 
     protected void showNotify() {
-        r.loadResources();
+        r.loadResources(); 
         if (menu == null) {
             createMenu();
            // menu.hideResume();
@@ -785,27 +786,19 @@ public class BattleshipCanvas
         menu = new MainMenu(cornerX, cornerY, gameWidth, gameHeight, new Menu.Listener() {
 
             public void itemClicked(int item) {
-                switch (item) {
-                    case MainMenu.CAMPAIGN:
-                        newGame();        
-                        break;
-                    case MainMenu.ACTION:
-                        showMisionScreen();                        
-                        break;
-                    case MainMenu.MULTIJUGADOR:
-                        showSelector();                      
-                        break;
-                    case MainMenu.OPTIONS:
-                        showOptions();
-                        break;
-                    case MainMenu.EXIT:
-                        main.exit();
-                        break;
-                    case MainMenu.INFO:
-                        showInfo();
-                        break;
-                }
+                switch(item){
+                     case MainMenu.SLOT1:
+                         showUserScreen();
+                         break;
+                     case MainMenu.SLOT2:
+                         showUserScreen();
+                         break;
+                     case MainMenu.SLOT3:
+                         showUserScreen();
+                         break;
+                 }
             }
+         
         }, scaling);
     }
     
@@ -824,7 +817,7 @@ public class BattleshipCanvas
                         audioManager.playSample(r.SAMPLE_BONUS);
                         break;
                     case OptionScreen.BACK:
-                        showMenu();
+                        showUserScreen();
                         break;
                 }
             }
@@ -834,18 +827,27 @@ public class BattleshipCanvas
     private void createUserScreen(){
         userScreen = new UserScreen(cornerX, cornerY, gameWidth, gameHeight, new Menu.Listener() {
 
-            public void itemClicked(int item) {
-                switch(item){
-                     case UserScreen.SLOT1:
-                         showMenu();
-                         break;
-                     case UserScreen.SLOT2:
-                         showMenu();
-                         break;
-                     case UserScreen.SLOT3:
-                         showMenu();
-                         break;
-                 }
+               public void itemClicked(int item) {
+                switch (item) {
+                    case UserScreen.CAMPAIGN:
+                        newGame();        
+                        break;
+                    case UserScreen.ACTION:
+                        showMisionScreen();                        
+                        break;
+                    case UserScreen.MULTIJUGADOR:
+                        showSelector();                      
+                        break;
+                    case UserScreen.OPTIONS:
+                        showOptions();
+                        break;
+                    case UserScreen.EXIT:
+                        main.exit();
+                        break;
+                    case UserScreen.INFO:
+                        showInfo();
+                        break;
+                }
             }
         },scaling);
     }
@@ -892,11 +894,11 @@ public class BattleshipCanvas
 //                    case TypeBattleShips.GIRAR:
 ////                        deployShips.ObtenerBarcos();
 ////                        deployShips.ObtenerMapa();
-////                        showMenu();
+////                        showUserScreen();
 //                        deployShips.girarBarco();
 //                        break;
                     case TypeBattleShips.STATE_MENU:
-                        showMenu();
+                        showUserScreen();
                         break;
                 }
             }
@@ -908,7 +910,7 @@ public class BattleshipCanvas
              public void itemClicked(int item){
                  switch(item){
                      case MisionScreen.BACK:
-                         showMenu();
+                         showUserScreen();
                          break;
                      case MisionScreen.NEWGAME:
                          showSelector();
@@ -939,7 +941,7 @@ public class BattleshipCanvas
                         }
                         break;
                     case InfoScreen.BACK:
-                        showMenu();
+                        showUserScreen();
                         break;
                 }
             }

@@ -26,7 +26,7 @@ public class OptionScreen
     private int y;
     
     public OptionScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling) {
-        super(ITEM_COUNT, l);
+        super(ITEM_COUNT, l, Graphics.LEFT | Graphics.TOP);
 //        this.width = width;       
 //        this.cornerY = cornerY;
         vibrator = new ToggleMenuItem(loadSprite("/sensors.png", 4, scaling));
