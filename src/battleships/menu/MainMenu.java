@@ -30,7 +30,7 @@ public class MainMenu
     private int cornerY;
 
     public MainMenu(int cornerX, int cornerY, int width, int height, Listener l, double scaling) {
-        super(ITEM_COUNT, l);
+        super(ITEM_COUNT, l, Graphics.LEFT | Graphics.TOP);
         this.width = width;       
         this.cornerY = cornerY;
         setItem(ACTION, new MenuItem(loadSprite("/action.png", 2, scaling)));

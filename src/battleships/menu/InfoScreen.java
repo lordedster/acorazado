@@ -24,7 +24,7 @@ public class InfoScreen
     private Image info;
 
     public InfoScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling) {
-        super(ITEM_COUNT, l);
+        super(ITEM_COUNT, l, Graphics.LEFT | Graphics.TOP);
         this.height = height;
         this.cornerY = cornerY;
         IN_CX = cornerX + width / 2;

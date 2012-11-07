@@ -24,7 +24,7 @@ public class UserScreen
     private int y;
     
      public UserScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling){
-        super(ITEM_COUNT,l);
+        super(ITEM_COUNT,l, Graphics.LEFT | Graphics.TOP);
         
         setItem(SLOT1, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
         setItem(SLOT2, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
