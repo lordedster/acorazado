@@ -50,7 +50,7 @@ public class Menu {
      */
     protected void paint(Graphics g) {
         for (int i = 0; i < items.length; i++) {
-            items[i].paint(g, Graphics.LEFT | Graphics.TOP);
+            items[i].paint(g);
         }
     }
 
