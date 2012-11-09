@@ -20,7 +20,7 @@ public class MainMenu
     private int y;
     
      public MainMenu(int cornerX, int cornerY, int width, int height, Listener l, double scaling){
-        super(ITEM_COUNT,l, Graphics.LEFT | Graphics.TOP);
+        super(ITEM_COUNT,l);
         
         setItem(SLOT1, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
         setItem(SLOT2, new MenuItem(loadSprite("/vacio.png", 2, scaling)));

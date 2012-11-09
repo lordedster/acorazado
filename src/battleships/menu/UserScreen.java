@@ -31,7 +31,7 @@ public class UserScreen
     private int cornerY;
 
     public UserScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling) {
-        super(ITEM_COUNT, l, Graphics.LEFT | Graphics.TOP);
+        super(ITEM_COUNT, l);
         this.width = width;       
         this.cornerY = cornerY;
         setItem(ACTION, new MenuItem(loadSprite("/action.png", 2, scaling)));
