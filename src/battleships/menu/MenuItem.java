@@ -3,8 +3,8 @@
  * and open the template in the editor.
  */
 package battleships.menu;
+import battleships.game.Resources;
 import javax.microedition.lcdui.Graphics;
-import javax.microedition.lcdui.StringItem;
 import javax.microedition.lcdui.game.Sprite;
 
 public class MenuItem {
@@ -15,7 +15,7 @@ public class MenuItem {
 
     public MenuItem(Sprite sprite) {
         this.sprite = sprite;
-        this.texto = new StringMenuItem("");
+        this.texto = null;
         this.tipo = true;
     }
     

@@ -1,6 +1,7 @@
 package battleships.menu;
 
 import battleships.effects.Slideable;
+import battleships.game.Resources;
 import javax.microedition.lcdui.Graphics;
 
 /**
@@ -19,12 +20,24 @@ public class MainMenu
     private int x;
     private int y;
     
-     public MainMenu(int cornerX, int cornerY, int width, int height, Listener l, double scaling){
-        super(ITEM_COUNT,l, Graphics.LEFT | Graphics.TOP);
+     public MainMenu(int cornerX, int cornerY, int width, int height, Listener l, double scaling,String user1,String user2, String user3, Resources r){
+        super(ITEM_COUNT,l);
         
-        setItem(SLOT1, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
-        setItem(SLOT2, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
-        setItem(SLOT3, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
+        if (user1.equals("")){
+            setItem(SLOT1, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
+        }else{
+            setItem(SLOT1, new MenuItem(new StringMenuItem(user1,r)));
+        }
+        if (user2.equals("")){
+            setItem(SLOT2, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
+        }else{
+            setItem(SLOT2, new MenuItem(new StringMenuItem(user2,r)));
+        }
+        if (user3.equals("")){
+            setItem(SLOT3, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
+        }else{
+            setItem(SLOT3, new MenuItem(new StringMenuItem(user3,r)));
+        }
         
         IN_CX = cornerX + width / 2;
         OUT_CX = IN_CX - width;
@@ -36,10 +49,9 @@ public class MainMenu
         positionItemsVertically();
     }
     
-    public void paint(Graphics g){
+    public void paint(Graphics g) {
         super.paint(g);
     }
-
     public boolean slideOut() {
         int distance = x - OUT_CX;
         distance *= 0.8;

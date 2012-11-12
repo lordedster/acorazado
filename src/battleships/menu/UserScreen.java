@@ -10,6 +10,7 @@ package battleships.menu;
  * @author edster
  */
 import battleships.effects.Slideable;
+import battleships.game.Resources;
 import javax.microedition.lcdui.Graphics;
 
 public class UserScreen

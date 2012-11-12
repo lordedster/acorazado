@@ -10,6 +10,7 @@ package battleships.menu;
  * @author edster
  */
 import battleships.effects.Slideable;
+import battleships.game.Resources;
 import javax.microedition.lcdui.Graphics;
 
 public class UserScreen
@@ -31,7 +32,7 @@ public class UserScreen
     private int cornerY;
 
     public UserScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling) {
-        super(ITEM_COUNT, l, Graphics.LEFT | Graphics.TOP);
+        super(ITEM_COUNT, l);
         this.width = width;       
         this.cornerY = cornerY;
         setItem(ACTION, new MenuItem(loadSprite("/action.png", 2, scaling)));

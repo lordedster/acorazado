@@ -405,7 +405,7 @@ public class Game
      * Handle right action key
      */
     public void rightButtonPressed() {
-        listener.changeState(TypeBattleShips.STATE_MENU);
+        listener.changeState(TypeBattleShips.STATE_USER);
 //        listener.handleEvent(EVENT_BUTTON_PRESSED);
     }
 

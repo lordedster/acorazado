@@ -36,6 +36,9 @@ public class Resources {
     public Image girar;
     public Image buttonBarcos;
     public Image vacio;
+    public Image fondo_letra_izq;
+    public Image fondo_letra_der;
+    public Image fondo_letra_cent;
     
     public Image s_portaaviones_0;
     public Image s_portaaviones_1;
@@ -118,6 +121,9 @@ public class Resources {
         girar = null;
         buttonBarcos = null;
         vacio = null;
+        fondo_letra_izq = null;
+        fondo_letra_der = null;
+        fondo_letra_cent = null;
         
         s_portaaviones_0 = null;
         s_portaaviones_1 = null;
@@ -186,6 +192,9 @@ public class Resources {
             girar = ih.loadImage("/girar.png",scaling);
             buttonBarcos = ih.loadImage("/barcos.png",scaling);
             vacio = ih.loadImage("/vacio.png",scaling);
+            fondo_letra_izq = ih.loadImage("/fondo_letra_izq.png",scaling);
+            fondo_letra_der = ih.loadImage("/fondo_letra_der.png",scaling);
+            fondo_letra_cent = ih.loadImage("/fondo_letra_cent.png",scaling);
             
             
             s_portaaviones_0 = ih.loadImage("/barco_part/port0.png",scaling);

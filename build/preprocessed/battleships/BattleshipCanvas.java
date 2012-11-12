@@ -10,7 +10,6 @@
 package battleships;
 
 import battleships.effects.Slideable;
-import battleships.game.Game;
 import battleships.game.DeployShips;
 import battleships.game.Resources;
 import battleships.effects.ElectricArc;
@@ -29,6 +28,7 @@ import battleships.menu.Menu;
 import battleships.game.ships.TypeBattleShips;
 import battleships.menu.MisionScreen;
 import battleships.menu.UserScreen;
+import battleships.records.UserData;
 import java.util.Random;
 import javax.microedition.amms.control.tuner.TunerControl;
 import javax.microedition.io.ConnectionNotFoundException;
@@ -70,7 +70,6 @@ public class BattleshipCanvas
     private MisionScreen misionScreen;
     private UserScreen userScreen;
     private EnemyBoard tableroEnemigo;
-    private Game game;
     private Slideable currentView;
     private Slideable targetView;
     private Player electricity;
@@ -79,6 +78,12 @@ public class BattleshipCanvas
     private AudioManager audioManager;
     private VibratorManager vibratorManager;
     private boolean audioEnabled;
+    
+    // estructura para el guardado de memoria
+    private int playerSelected;
+    private UserData DATA;
+    private int modeSelected;
+    
     
     /**
      * Inserta un título en la clase descripción.
@@ -120,97 +125,31 @@ public class BattleshipCanvas
      * Creates a new game and loads the previous status of the game, if it exists
      */
     private void loadOrCreateGame() {
-        game = new Game(cornerX, cornerY, gameWidth, gameHeight, r, new Game.Listener() {
-
-            public void changeState(int state) {
-                switch (state) {
-                    case TypeBattleShips.STATE_MENU:
-                        showMenu();
-                        break;
-                    case TypeBattleShips.STATE_LEVEL:
-                        nextLevel();
-                        break;
-                }
-            }
-
-            public void handleEvent(int event) {
-                switch (event) {
-//                    case Game.EVENT_BALL_OUT:
-//                        //audioManager.playSample(r.SAMPLE_DEATH);
-//                        break;
-//                    case Game.EVENT_BONUS:
-////                        audioManager.playSample(r.SAMPLE_BONUS);
-//                        break;
-//                    case Game.EVENT_BRICK_EXPLOSION:
-////                        audioManager.playSample(r.SAMPLE_EXPLOSION);
-//                        break;
-//                    case Game.EVENT_BRICK_COLLISION:
-////                        audioManager.playSample(rndCollisionSample());
-//                        break;
-//                    case Game.EVENT_BUTTON_PRESSED:
-//                        audioManager.playSample(r.SAMPLE_BUTTON);
-//                        break;
-//                    case Game.EVENT_GAME_OVER:
-//                        // No sound at the moment
-//                        break;
-//                    case Game.EVENT_LEVEL_CHANGE:
-////                        audioManager.playSample(r.SAMPLE_TELEPORT);
-//                        break;
-//                    case Game.EVENT_LEVEL_STARTED:
-//                        //menu.showResume();
-//                        break;
-//                    case Game.EVENT_PLATE_COLLISION:
-////                        audioManager.playSample(rndCollisionSample());
-//                        break;
-//                    case Game.EVENT_WALL_COLLISION:
-////                        audioManager.playSample(r.SAMPLE_WALL);
-//                        break;
-                }
-            }
-        });
+        DATA = new UserData();
         try {
             //RecordStore.deleteRecordStore("GameSnapshot"); // Clear state data for testing purposes
             RecordStore snapshot = RecordStore.openRecordStore("GameSnapshot", true);
-            if (snapshot.getNumRecords() == 0 || !game.load(snapshot.getRecord(getRecordId(snapshot)))) {
-                game.newGame();
+            if (snapshot.getNumRecords() == 0 || !DATA.load(snapshot.getRecord(getRecordId(snapshot)))) {
+                DATA.reset();
             } else {
                // menu.showResume();
             }
             snapshot.closeRecordStore();
         }
         catch (RecordStoreException e) {
-            game.newGame();
+            DATA.reset();
         }
         catch (NumberFormatException nfe) { 
             nfe.printStackTrace();
         }
-        audioEnabled = true;      
-        showMenu();
-    }
-
-    /**
-     * Returns the name of a randomly selected collision sample
-     * @return The sample name in a String
-     */
-    public String rndCollisionSample() {
-//        switch (rnd.nextInt(2)) {
-//            case 0:
-//                return r.SAMPLE_COLLISION;
-//            case 1:
-//                return r.SAMPLE_COLLISION2;
-//            case 2:
-//                return r.SAMPLE_COLLISION3;
-//            default:
-//                return r.SAMPLE_COLLISION;
-//        }
-        return "";
+        audioEnabled = true;  
     }
 
     /**
      * Save the state of the game to RecordStore
      */
     public void saveGame() {
-        if (game == null) {
+        if (DATA == null) {
             return;
         }
         try {
@@ -218,7 +157,7 @@ public class BattleshipCanvas
             if (snapshot.getNumRecords() == 0) {
                 snapshot.addRecord(null, 0, 0);
             }
-            byte[] data = game.getSnapshot();
+            byte[] data = DATA.getSnapshot();
             snapshot.setRecord(getRecordId(snapshot), data, 0, data.length);
             snapshot.closeRecordStore();
             System.out.println("state saved succesfully");
@@ -286,19 +225,19 @@ public class BattleshipCanvas
                         info.clickSelected();
                 }
                 break;
-            case TypeBattleShips.STATE_LEVEL:
-                switch (key) {
-                    case LEFT_SOFTKEY:
-                        game.leftButtonPressed();
-                        break;
-                    case RIGHT_SOFTKEY:
-                        game.rightButtonPressed();
-                        break;
-                }
-                if (getGameAction(key) == FIRE) {
-                    game.fire();
-                }
-                break;
+//            case TypeBattleShips.STATE_LEVEL:
+//                switch (key) {
+//                    case LEFT_SOFTKEY:
+//                        game.leftButtonPressed();
+//                        break;
+//                    case RIGHT_SOFTKEY:
+//                        game.rightButtonPressed();
+//                        break;
+//                }
+//                if (getGameAction(key) == FIRE) {
+//                    game.fire();
+//                }
+//                break;
             case TypeBattleShips.STATE_OPTIONS:
                 switch (getGameAction(key)) {
                     case UP:
@@ -459,9 +398,9 @@ public class BattleshipCanvas
                     }
                 }
                 break;
-            case TypeBattleShips.STATE_LEVEL:
-                game.update();
-                break;
+//            case TypeBattleShips.STATE_LEVEL:
+//                game.update();
+//                break;
         }
     }
 
@@ -516,15 +455,15 @@ public class BattleshipCanvas
 
     protected void showNotify() {
         r.loadResources(); 
+        if (DATA == null) {
+            loadOrCreateGame();
+        }
         if (menu == null) {
             createMenu();
            // menu.hideResume();
         }
         if (info == null) {
             createInfoScreen();
-        }
-        if (game == null) {
-            loadOrCreateGame();
         }
         if (options == null) {
             createOptionScreen();
@@ -659,9 +598,9 @@ public class BattleshipCanvas
         }
 
         switch (gameState) {
-            case TypeBattleShips.STATE_LEVEL:
-                game.pointerPressed(x - cornerX, y - cornerY);
-                break;
+//            case TypeBattleShips.STATE_LEVEL:
+//                game.pointerPressed(x - cornerX, y - cornerY);
+//                break;
             case TypeBattleShips.STATE_MENU:
                 menu.pointerEvent(Menu.POINTER_PRESSED, x, y);
                 audioManager.playSample(r.SAMPLE_BUTTON);
@@ -707,9 +646,9 @@ public class BattleshipCanvas
         }
         // STOP loop
         switch (gameState) {
-            case TypeBattleShips.STATE_LEVEL:
-                game.pointerReleased(x - cornerX, y - cornerY);
-                break;
+//            case TypeBattleShips.STATE_LEVEL:
+//                game.pointerReleased(x - cornerX, y - cornerY);
+//                break;
             case TypeBattleShips.STATE_MENU:
                 menu.pointerEvent(Menu.POINTER_RELEASED, x, y);
                 break;
@@ -746,9 +685,9 @@ public class BattleshipCanvas
         this.y = y;
 
         switch (gameState) {
-            case TypeBattleShips.STATE_LEVEL:
-                game.pointerDragged(x - cornerX, y - cornerY);
-                break;
+//            case TypeBattleShips.STATE_LEVEL:
+//                game.pointerDragged(x - cornerX, y - cornerY);
+//                break;
             case TypeBattleShips.STATE_MENU:
                 menu.pointerEvent(Menu.POINTER_DRAGGED, x, y);
                 break;
@@ -799,7 +738,8 @@ public class BattleshipCanvas
                  }
             }
          
-        }, scaling);
+        }, scaling, DATA.getNameUser1(), DATA.getNameUser2(), DATA.getNameUser3(), r);
+        showMenu();
     }
     
     private void createOptionScreen() {
@@ -830,7 +770,7 @@ public class BattleshipCanvas
                public void itemClicked(int item) {
                 switch (item) {
                     case UserScreen.CAMPAIGN:
-                        newGame();        
+//                        newGame();        
                         break;
                     case UserScreen.ACTION:
                         showMisionScreen();                        
@@ -1043,19 +983,19 @@ public class BattleshipCanvas
     /**
      * Resume to game preserving the game state
      */
-    private void resumeGame() {
-        nextState = TypeBattleShips.STATE_LEVEL;
-        changeView(game);
-    }
+//    private void resumeGame() {
+//        nextState = TypeBattleShips.STATE_LEVEL;
+//        changeView(game);
+//    }
 
     /**
      * Start new game
      */
-    private void newGame() {
-        game.newGame();
-        nextState = TypeBattleShips.STATE_LEVEL;
-        changeView(game);
-    }
+//    private void newGame() {
+//        game.newGame();
+//        nextState = TypeBattleShips.STATE_LEVEL;
+//        changeView(game);
+//    }
 
     /**
      * Show menu screen
@@ -1112,8 +1052,8 @@ public class BattleshipCanvas
     /**
      * Change level
      */
-    public void nextLevel() {
-        nextState = TypeBattleShips.STATE_LEVEL;
-        changeView(game);
-    }
+//    public void nextLevel() {
+//        nextState = TypeBattleShips.STATE_LEVEL;
+//        changeView(game);
+//    }
 }

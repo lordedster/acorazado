@@ -30,7 +30,7 @@ public class BarcosScreen
     private int cornerY;
     
     public BarcosScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling) {
-        super(ITEM_COUNT, l, Graphics.LEFT | Graphics.TOP);
+        super(ITEM_COUNT, l);
         
         setItem(PORTAAVIONES, new MenuItem(loadSprite("/PortaAviones.png", 2, scaling)));
         setItem(ACORAZADO, new MenuItem(loadSprite("/Acorazado.png", 2, scaling)));

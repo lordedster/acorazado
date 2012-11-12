@@ -14,7 +14,6 @@ public class Menu {
     public static final int POINTER_PRESSED = 0;
     public static final int POINTER_DRAGGED = 1;
     public static final int POINTER_RELEASED = 2;
-    private final int anchor;
     private final MenuItem[] items;
     private final Listener listener;
 
@@ -23,10 +22,9 @@ public class Menu {
      * @param capacity Amount of menu items
      * @param listener Listener for menu events
      */
-    protected Menu(int capacity, Listener listener, int anchor) {
+    protected Menu(int capacity, Listener listener) {
         items = new MenuItem[capacity];
         this.listener = listener;
-        this.anchor = anchor;
     }
 
     /**
@@ -52,7 +50,7 @@ public class Menu {
      */
     protected void paint(Graphics g) {
         for (int i = 0; i < items.length; i++) {
-            items[i].paint(g, anchor);
+            items[i].paint(g);
         }
     }
 
