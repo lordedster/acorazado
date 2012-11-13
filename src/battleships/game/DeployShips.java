@@ -37,7 +37,6 @@ public class DeployShips
     private Sprite buttonGirar;
     private Sprite buttonBarcos;
     private Sprite imageShip;
-    private Map mapa;
     private BattleShip ship;
     private double scaling;
     private int barcosPuestos;

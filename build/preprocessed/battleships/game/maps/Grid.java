@@ -14,16 +14,18 @@ import javax.microedition.lcdui.game.Sprite;
 public class Grid {
     private int estado;
     private int barco;
+    private int seccion_barco;
     protected final Sprite sprite;
     protected final Sprite mira;
     private volatile boolean selected = false;
     
-    public Grid (int estado, int barco, Sprite sprite, Sprite mira)
+    public Grid (int estado, int barco, Sprite sprite, Sprite mira, int seccion_barco)
     {
         this.estado = estado;
         this.barco = barco;
         this.sprite = sprite;
         this.mira = mira;
+        this.seccion_barco = seccion_barco;
         
         
     }

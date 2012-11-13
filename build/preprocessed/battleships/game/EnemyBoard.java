@@ -30,8 +30,7 @@ public class EnemyBoard
     private int displayWidth;
     private int displayHeight;
     private Resources r;
-    //private Font font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL);
-    private Map mapa;    
+    //private Font font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL);   
     private double scaling;
     private Random rnd;
     private int dificultad;
@@ -115,7 +114,7 @@ public class EnemyBoard
             {
                 setGrid(i, j, new Grid(TypeBattleShips.AGUA, TypeBattleShips.EMPTY, 
                                         loadSprite(r.water, 1, scaling), 
-                                        loadSprite(r.mira, 2, scaling)));
+                                        loadSprite(r.mira, 2, scaling),TypeBattleShips.EMPTY));
             }
         }
         cargarBarcos(dificultad);

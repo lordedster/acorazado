@@ -30,8 +30,7 @@ public class EnemyBoard
     private int displayWidth;
     private int displayHeight;
     private Resources r;
-    //private Font font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL);
-    private Map mapa;    
+    //private Font font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL);   
     private double scaling;
     private Random rnd;
     private int dificultad;
