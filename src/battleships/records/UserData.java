@@ -26,7 +26,8 @@ public class UserData {
     private Grid[][] mapEnemy_campaign_1;
     private BattleShip[] shipEnemy_campaign_1;
     private Grid[][] mapUser_campaign_1;
-    private BattleShip[] shipUser_campaign_1; 
+    private BattleShip[] shipUser_campaign_1;
+    private int dif_user_1;
     //player 2
     private String userName_2;
     private Grid[][] mapEnemy_single_2;
@@ -36,7 +37,8 @@ public class UserData {
     private Grid[][] mapEnemy_campaign_2;
     private BattleShip[] shipEnemy_campaign_2;
     private Grid[][] mapUser_campaign_2;
-    private BattleShip[] shipUser_campaign_2;   
+    private BattleShip[] shipUser_campaign_2;
+    private int dif_user_2;
     //player 3
     private String userName_3;
     private Grid[][] mapEnemy_single_3;
@@ -46,8 +48,11 @@ public class UserData {
     private Grid[][] mapEnemy_campaign_3;
     private BattleShip[] shipEnemy_campaign_3;
     private Grid[][] mapUser_campaign_3;
-    private BattleShip[] shipUser_campaign_3; 
+    private BattleShip[] shipUser_campaign_3;
+    private int dif_user_3;
     
+    //general\
+    private int usuarioActual;
     
     public UserData(){
         
@@ -113,6 +118,30 @@ public class UserData {
         return new byte[0];
     }
     
+    public int getDificultad(int userNumber)
+    {
+        int ret = 0;
+        switch(userNumber)
+        {
+            case 1:
+            {
+             ret = dif_user_1;
+            break;
+            }
+            case 2:
+            {
+            ret = dif_user_2;
+            break;
+            }
+            case 3:
+            {
+                ret = dif_user_3;
+                break;
+            }
+        }     
+        return ret;
+    }
+    
     public String getNameUser1(){
         return userName_1;
     }
@@ -127,4 +156,14 @@ public class UserData {
         userName_2 = "";
         userName_3 = "";
     }
+
+    public int getUsuarioActual() {
+        return usuarioActual;
+    }
+
+    public void setUsuarioActual(int usuarioActual) {
+        this.usuarioActual = usuarioActual;
+    }
+    
+    
 }

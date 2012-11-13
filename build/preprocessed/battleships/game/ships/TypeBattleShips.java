@@ -31,13 +31,20 @@ public class TypeBattleShips {
     public static final int PORTAAVIONES = 0;
     public static final int PORTAAVIONES_SIZE = 5;
     public static final int ACORAZADO = 1;
-     public static final int ACORAZADO_SIZE = 4;
+    public static final int ACORAZADO_SIZE = 4;
     public static final int DESTRUCTOR = 2;
-     public static final int DESTRUCTOR_SIZE = 3;
+    public static final int DESTRUCTOR_SIZE = 3;
     public static final int SUBMARINO = 3;
-     public static final int SUBMARINO_SIZE = 3;
+    public static final int SUBMARINO_SIZE = 3;
     public static final int ESPIA = 4;
-     public static final int ESPIA_SIZE = 2;
+    public static final int ESPIA_SIZE = 2;
+    
+    // identificación de la parte del barco
+    public static final int SECCION_A = 0;
+    public static final int SECCION_B = 1;
+    public static final int SECCION_C = 2;
+    public static final int SECCION_D = 3;
+    public static final int SECCION_E = 4;
     /**
      * Nombre, largo
      */

@@ -37,7 +37,6 @@ public class DeployShips
     private Sprite buttonGirar;
     private Sprite buttonBarcos;
     private Sprite imageShip;
-    private Map mapa;
     private BattleShip ship;
     private double scaling;
     private int barcosPuestos;
@@ -102,7 +101,8 @@ public class DeployShips
             {
                 setGrid(i, j, new Grid(TypeBattleShips.AGUA, TypeBattleShips.EMPTY, 
                                         loadSprite(r.water, 1, scaling), 
-                                        loadSprite(r.mira, 2, scaling)));
+                                        loadSprite(r.mira, 2, scaling),
+                                        TypeBattleShips.EMPTY));
             }
         }           
     }    
