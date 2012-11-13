@@ -20,23 +20,23 @@ public class MainMenu
     private int x;
     private int y;
     
-     public MainMenu(int cornerX, int cornerY, int width, int height, Listener l, double scaling,String user1,String user2, String user3, Resources r){
+     public MainMenu(int cornerX, int cornerY, int width, int height, Listener l, double scaling,boolean user1,boolean user2, boolean user3, Resources r){
         super(ITEM_COUNT,l);
         
-        if (user1.equals("")){
+        if (!user1){
             setItem(SLOT1, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
         }else{
-            setItem(SLOT1, new MenuItem(new StringMenuItem(user1,r)));
+            setItem(SLOT1, new MenuItem(new StringMenuItem("a",r)));
         }
-        if (user2.equals("")){
+        if (!user2){
             setItem(SLOT2, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
         }else{
-            setItem(SLOT2, new MenuItem(new StringMenuItem(user2,r)));
+            setItem(SLOT2, new MenuItem(new StringMenuItem("b",r)));
         }
-        if (user3.equals("")){
+        if (!user3){
             setItem(SLOT3, new MenuItem(loadSprite("/vacio.png", 2, scaling)));
         }else{
-            setItem(SLOT3, new MenuItem(new StringMenuItem(user3,r)));
+            setItem(SLOT3, new MenuItem(new StringMenuItem("c",r)));
         }
         
         IN_CX = cornerX + width / 2;

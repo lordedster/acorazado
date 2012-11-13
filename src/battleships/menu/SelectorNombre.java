@@ -22,6 +22,7 @@ public class SelectorNombre
     public static final int POINTER_RELEASED = 2;
     public static final int BUTTON_OK = 0;
     public static final int BUTTON_CANCEL = 1;
+    public static final int VOLVER = -1;
     private final LetraItem[][] items;
     private LetraItem[] nombre;
     private MenuItem ok;
@@ -32,6 +33,8 @@ public class SelectorNombre
     public final int IN_CX;
     private final int middle;
     private final double scaling;
+    private final int width;
+    private final int height;
     private int x;
     private int y;
 
@@ -40,7 +43,7 @@ public class SelectorNombre
      * @param capacity Amount of menu items
      * @param listener Listener for menu events
      */
-    public SelectorNombre(int cornerX, int cornerY, int width, int height, Listener listener, double scaling) {
+    public SelectorNombre(int cornerX, int cornerY, int width, int height, Listener listener, double scaling,Resources r) {
         items = new LetraItem[3][9];
         nombre = new LetraItem[5];
         this.listener = listener;
@@ -48,53 +51,54 @@ public class SelectorNombre
         ok = new MenuItem(loadSprite("/button_ok.png", 2, scaling));
         cancel = new MenuItem(loadSprite("/back.png",2, scaling));
         
-        setNombreItem(0, new LetraItem(loadSprite("/letras/guion.png", 2, scaling), Letra.guion));
-        setNombreItem(1, new LetraItem(loadSprite("/letras/guion.png", 2, scaling), Letra.guion));
-        setNombreItem(2, new LetraItem(loadSprite("/letras/guion.png", 2, scaling), Letra.guion));
-        setNombreItem(3, new LetraItem(loadSprite("/letras/guion.png", 2, scaling), Letra.guion));
-        setNombreItem(4, new LetraItem(loadSprite("/letras/guion.png", 2, scaling), Letra.guion));
+        setNombreItem(0, new LetraItem(loadSprite(r.letra_guion, 2, scaling), Letra.guion));
+        setNombreItem(1, new LetraItem(loadSprite(r.letra_guion, 2, scaling), Letra.guion));
+        setNombreItem(2, new LetraItem(loadSprite(r.letra_guion, 2, scaling), Letra.guion));
+        setNombreItem(3, new LetraItem(loadSprite(r.letra_guion, 2, scaling), Letra.guion));
+        setNombreItem(4, new LetraItem(loadSprite(r.letra_guion, 2, scaling), Letra.guion));
         nombre[0].setSelected(true);
         
-        setItem(0,0, new LetraItem(loadSprite("/letras/A.png", 2, scaling), Letra.A));
-        setItem(0,1, new LetraItem(loadSprite("/letras/B.png", 2, scaling), Letra.B));
-        setItem(0,2, new LetraItem(loadSprite("/letras/C.png", 2, scaling), Letra.C));
-        setItem(0,3, new LetraItem(loadSprite("/letras/D.png", 2, scaling), Letra.D));
-        setItem(0,4, new LetraItem(loadSprite("/letras/E.png", 2, scaling), Letra.E));
-        setItem(0,5, new LetraItem(loadSprite("/letras/F.png", 2, scaling), Letra.F));
-        setItem(0,6, new LetraItem(loadSprite("/letras/G.png", 2, scaling), Letra.G));
-        setItem(0,7, new LetraItem(loadSprite("/letras/H.png", 2, scaling), Letra.H));
-        setItem(0,8, new LetraItem(loadSprite("/letras/I.png", 2, scaling), Letra.I));
-        setItem(1,0, new LetraItem(loadSprite("/letras/J.png", 2, scaling), Letra.J));
-        setItem(1,1, new LetraItem(loadSprite("/letras/K.png", 2, scaling), Letra.K));
-        setItem(1,2, new LetraItem(loadSprite("/letras/L.png", 2, scaling), Letra.L));
-        setItem(1,3, new LetraItem(loadSprite("/letras/M.png", 2, scaling), Letra.M));
-        setItem(1,4, new LetraItem(loadSprite("/letras/N.png", 2, scaling), Letra.N));
-        setItem(1,5, new LetraItem(loadSprite("/letras/Enie.png", 2, scaling), Letra.Enie));
-        setItem(1,6, new LetraItem(loadSprite("/letras/O.png", 2, scaling), Letra.O));
-        setItem(1,7, new LetraItem(loadSprite("/letras/P.png", 2, scaling), Letra.P));
-        setItem(1,8, new LetraItem(loadSprite("/letras/Q.png", 2, scaling), Letra.Q));
-        setItem(2,0, new LetraItem(loadSprite("/letras/R.png", 2, scaling), Letra.R));
-        setItem(2,1, new LetraItem(loadSprite("/letras/S.png", 2, scaling), Letra.S));
-        setItem(2,2, new LetraItem(loadSprite("/letras/T.png", 2, scaling), Letra.T));
-        setItem(2,3, new LetraItem(loadSprite("/letras/U.png", 2, scaling), Letra.U));
-        setItem(2,4, new LetraItem(loadSprite("/letras/V.png", 2, scaling), Letra.V));
-        setItem(2,5, new LetraItem(loadSprite("/letras/W.png", 2, scaling), Letra.W));
-        setItem(2,6, new LetraItem(loadSprite("/letras/X.png", 2, scaling), Letra.X));
-        setItem(2,7, new LetraItem(loadSprite("/letras/Y.png", 2, scaling), Letra.Y));
-        setItem(2,8, new LetraItem(loadSprite("/letras/Z.png", 2, scaling), Letra.Z));
+        setItem(0,0, new LetraItem(loadSprite(r.letra_A, 2, scaling), Letra.A));
+        setItem(0,1, new LetraItem(loadSprite(r.letra_B, 2, scaling), Letra.B));
+        setItem(0,2, new LetraItem(loadSprite(r.letra_C, 2, scaling), Letra.C));
+        setItem(0,3, new LetraItem(loadSprite(r.letra_D, 2, scaling), Letra.D));
+        setItem(0,4, new LetraItem(loadSprite(r.letra_E, 2, scaling), Letra.E));
+        setItem(0,5, new LetraItem(loadSprite(r.letra_F, 2, scaling), Letra.F));
+        setItem(0,6, new LetraItem(loadSprite(r.letra_G, 2, scaling), Letra.G));
+        setItem(0,7, new LetraItem(loadSprite(r.letra_H, 2, scaling), Letra.H));
+        setItem(0,8, new LetraItem(loadSprite(r.letra_I, 2, scaling), Letra.I));
+        setItem(1,0, new LetraItem(loadSprite(r.letra_J, 2, scaling), Letra.J));
+        setItem(1,1, new LetraItem(loadSprite(r.letra_K, 2, scaling), Letra.K));
+        setItem(1,2, new LetraItem(loadSprite(r.letra_L, 2, scaling), Letra.L));
+        setItem(1,3, new LetraItem(loadSprite(r.letra_M, 2, scaling), Letra.M));
+        setItem(1,4, new LetraItem(loadSprite(r.letra_N, 2, scaling), Letra.N));
+        setItem(1,5, new LetraItem(loadSprite(r.letra_Enie, 2, scaling), Letra.Enie));
+        setItem(1,6, new LetraItem(loadSprite(r.letra_O, 2, scaling), Letra.O));
+        setItem(1,7, new LetraItem(loadSprite(r.letra_P, 2, scaling), Letra.P));
+        setItem(1,8, new LetraItem(loadSprite(r.letra_Q, 2, scaling), Letra.Q));
+        setItem(2,0, new LetraItem(loadSprite(r.letra_R, 2, scaling), Letra.R));
+        setItem(2,1, new LetraItem(loadSprite(r.letra_S, 2, scaling), Letra.S));
+        setItem(2,2, new LetraItem(loadSprite(r.letra_T, 2, scaling), Letra.T));
+        setItem(2,3, new LetraItem(loadSprite(r.letra_U, 2, scaling), Letra.U));
+        setItem(2,4, new LetraItem(loadSprite(r.letra_V, 2, scaling), Letra.V));
+        setItem(2,5, new LetraItem(loadSprite(r.letra_W, 2, scaling), Letra.W));
+        setItem(2,6, new LetraItem(loadSprite(r.letra_X, 2, scaling), Letra.X));
+        setItem(2,7, new LetraItem(loadSprite(r.letra_Y, 2, scaling), Letra.Y));
+        setItem(2,8, new LetraItem(loadSprite(r.letra_Z, 2, scaling), Letra.Z));
         
       
         IN_CX = cornerX;
         OUT_CX = IN_CX - width;
         middle = calculateMiddle(width);
+        this.height = cornerY + height;
+        this.width = width;
         
 
         x = OUT_CX;
         y = cornerY + height / 2;
         positionItem();
         positionNombre();
-        ok.setPosition(cornerX, cornerY + height - ok.getHeight());
-        cancel.setPosition(x + width - cancel.getWidth(), cornerY + height - ok.getHeight());
+        positionBotones();
     }
     
     private int calculateMiddle(int width){
@@ -162,7 +166,7 @@ public class SelectorNombre
                 item = getItem(i,j);
                 item.setPosition(newx, newy);
                 value = item.getWidth();
-                newx += value -2;
+                newx += value - 2;
                 valuey = item.getHeight();
             }            
             newy += valuey - 3;
@@ -177,30 +181,12 @@ public class SelectorNombre
             newx += item.getWidth() - 2;
         }
     }
+    public final void positionBotones(){
+        
+        ok.setPosition(x, height - ok.getHeight());
+        cancel.setPosition(x + width - cancel.getWidth(), height - cancel.getHeight());
+    }
     
-//    public final void positionItemsHorizontally() {
-//        MenuItem item;
-//        for (int i = 0; i < items.length; i++) {
-//            for(int j = 0; j < items[0].length; j++){
-//                item = getItem(i,j);
-//                item.setHorizontalCenter(x);
-//            }
-//        }
-//    }
-//
-//    /**
-//     * Lay out menu items vertically
-//     */
-//    public final void positionItemsVertically() {
-//        int newY = y;
-//        for (int i = 0; i < items.length; i++) {
-//            for(int j = 0; j < items[0].length; j++){
-//                MenuItem item = getItem(i,j);
-//                item.setCenter(item.getX(), newY);
-//                newY += item.getHeight();
-//            }
-//        }
-//    }
     /**
      * Move view inwards
      */
@@ -210,7 +196,7 @@ public class SelectorNombre
         x = IN_CX + distance;
         positionItem();
         positionNombre();
-//        positionItemsHorizontally();
+        positionBotones();
         return distance != 0;
     }
 
@@ -223,7 +209,7 @@ public class SelectorNombre
         x = OUT_CX + distance;
         positionItem();
         positionNombre();
- //       positionItemsHorizontally();
+        positionBotones();
         return distance != 0;
     }
     
@@ -398,34 +384,62 @@ public class SelectorNombre
     }
     
     public void AgregarLetra(int x, int y, Resources r){
-        int codigo = items[x][y].getCodigo();
-        for(int i = 0; i < nombre.length; i++){
-            if (nombre[i].isSelected())
-            {
-                nombre[i] = new LetraItem(loadSprite(r.getLetra(codigo), 2, scaling),codigo);
-                if (i < nombre.length-1){
-                    nombre[i+1].setSelected(true);
+        if (x > -1 && y >-1){
+            int codigo = items[x][y].getCodigo();
+            for(int i = 0; i < nombre.length; i++){
+                if (nombre[i].isSelected())
+                {
+                    nombre[i] = new LetraItem(loadSprite(r.getLetra(codigo), 2, scaling),codigo);
+                    if (i < nombre.length-1){
+                        nombre[i+1].setSelected(true);
+                    }
+                    nombre[i].setSelected(false);
+                    break;
                 }
-                nombre[i].setSelected(false);
+            }
+            positionNombre();
+        }
+    }
+    
+    public void borrarLetra(Resources r){
+        boolean completo = true;
+         for(int i = nombre.length - 1; i > -1; i--){
+            if (nombre[i].isSelected())
+            {                
+                if(i > 0){
+                    nombre[i-1] = new LetraItem(loadSprite(r.getLetra(Letra.guion), 2, scaling), Letra.guion);
+                    nombre[i-1].setSelected(true);                
+                    nombre[i].setSelected(false);
+                }
                 break;
             }
+        }
+        for(int i = 0; i < nombre.length; i++){
+            if(nombre[i].getCodigo()!= Letra.guion){
+                completo = false;
+                break;
+            }
+        }
+        if (completo){
+            listener.changeState(VOLVER);
         }
         positionNombre();
     }
     
-    public void borrarLetra(Resources r){
-         for(int i = nombre.length - 1; i > -1; i--){
-            if (nombre[i].isSelected())
-            {
-                nombre[i] = new LetraItem(loadSprite(r.getLetra(Letra.guion), 2, scaling), Letra.guion);
-                if (i > 0){
-                    nombre[i+-1].setSelected(true);
-                }
-                nombre[i].setSelected(false);
-                break;
-            }
+    public int[] obtenerNombre(){
+        int[] n = new int[5];
+        for(int i = 0; i < nombre.length; i++){
+            n[i] = nombre[i].getCodigo();
         }
-        positionNombre();
+        return n;
+    }
+    
+    public boolean isNombreListo(){
+        boolean done = true;
+        if (nombre[0].getCodigo() == Letra.guion){
+            done = false;
+        }
+        return done;
     }
     
 //    public void Confirmar

@@ -104,6 +104,7 @@ public class Resources {
      public Image letra_X;
      public Image letra_Y;
      public Image letra_Z;
+     public Image letra_guion;
     
     /** 
      * Recursos de AUDIO
@@ -118,7 +119,7 @@ public class Resources {
     
     public Resources(float scaling) {
         this.scaling = scaling;
-        loadResources();
+        //loadResources();
     }
     
         /**
@@ -181,6 +182,7 @@ public class Resources {
         letra_X = null;
         letra_Y = null;
         letra_Z = null;
+        letra_guion = null;
         
         s_portaaviones_0 = null;
         s_portaaviones_1 = null;
@@ -251,7 +253,9 @@ public class Resources {
         letra_W = ih.loadImage("/letras/W.png",scaling);
         letra_X = ih.loadImage("/letras/X.png",scaling);
         letra_Y = ih.loadImage("/letras/Y.png",scaling);
-        letra_Z = ih.loadImage("/letras/Z.png",scaling);
+        letra_Z = ih.loadImage("/letras/Z.png",scaling);   
+        letra_guion = ih.loadImage("/letras/guion.png",scaling);
+
     }
     
     public void loadResources() {
@@ -391,6 +395,8 @@ public class Resources {
                 return letra_Y;
             case Letra.Z:
                 return letra_Z;
+            case Letra.guion:
+                return letra_guion;
         }
         return null;
     }

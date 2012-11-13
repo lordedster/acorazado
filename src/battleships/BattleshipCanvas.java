@@ -26,13 +26,12 @@ import battleships.menu.InfoScreen;
 import battleships.menu.MainMenu;
 import battleships.menu.Menu;
 import battleships.game.ships.TypeBattleShips;
-import battleships.menu.CreateUserScreen;
 import battleships.menu.MisionScreen;
 import battleships.menu.SelectorNombre;
 import battleships.menu.UserScreen;
 import battleships.records.UserData;
 import java.util.Random;
-import javax.microedition.amms.control.tuner.TunerControl;
+//import javax.microedition.amms.control.tuner.TunerControl;
 import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.lcdui.*;
 import javax.microedition.lcdui.game.*;
@@ -83,7 +82,6 @@ public class BattleshipCanvas
     private boolean audioEnabled;
     
     // estructura para el guardado de memoria
-    private int playerSelected;
     private UserData DATA;
     private int modeSelected;
     
@@ -385,11 +383,14 @@ public class BattleshipCanvas
                 break;
             case TypeBattleShips.STATE_CREATE_NOMBRE:
                 switch (key) {
-                    case LEFT_SOFTKEY:
-                        selectorNombre.borrarLetra(r);
+                    case LEFT_SOFTKEY:                        
+                        if (selectorNombre.isNombreListo()){
+                            DATA.setNombreUsuario(selectorNombre.obtenerNombre());
+                            showUserScreen();
+                        }
                         break;
                     case RIGHT_SOFTKEY:
-                        //selectorNombre.confirmarNombre();
+                        selectorNombre.borrarLetra(r);
                         break;
                     default: 
                         break;
@@ -771,21 +772,26 @@ public class BattleshipCanvas
             public void itemClicked(int item) {
                 switch(item){
                      case MainMenu.SLOT1:
-                         if (DATA.getNameUser1().equals("")){
+                         DATA.setUsuarioActual(UserData.PERFIL_A);
+                         if (!DATA.existeNameUser1()){
                              showSelectorNombre();
                          }else{
                              showUserScreen();
                          }
                          break;
                      case MainMenu.SLOT2:
-                         if (DATA.getNameUser2().equals("")){
+                         
+                         DATA.setUsuarioActual(UserData.PERFIL_B);
+                         if (!DATA.existeNameUser2()){
                              showSelectorNombre();
                          }else{
                              showUserScreen();
                          }
                          break;
                      case MainMenu.SLOT3:
-                         if (DATA.getNameUser3().equals("")){
+                         
+                         DATA.setUsuarioActual(UserData.PERFIL_C);
+                         if (!DATA.existeNameUser3()){
                              showSelectorNombre();
                          }else{
                              showUserScreen();
@@ -794,7 +800,7 @@ public class BattleshipCanvas
                  }
             }
          
-        }, scaling, DATA.getNameUser1(), DATA.getNameUser2(), DATA.getNameUser3(), r);
+        }, scaling, DATA.existeNameUser1(), DATA.existeNameUser2(), DATA.existeNameUser3(), r);
         showMenu();
     }
     
@@ -1034,19 +1040,13 @@ public class BattleshipCanvas
             }    
 
             public void changeState(int item) {
-                switch (item) {
-                    case SelectorNombre.BUTTON_OK:
-                        tableroEnemigo.generarMapa();
-                        showTableroEnemigo();
+                switch (item) {       
+                    case SelectorNombre.VOLVER:
+                        showMenu();
                         break;
-                    case SelectorNombre.BUTTON_CANCEL:
-                        deployShips.generarMapa();
-                        barcos.verItems();
-                        showBarcos();
-                        break;                        
                 }
             }
-       }, scaling);
+       }, scaling, r);
     }
 
     /**
