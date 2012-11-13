@@ -123,8 +123,8 @@ public class UserData {
         return userName_3;
     }
     public void reset(){
-        userName_1 = "PE";
+        userName_1 = "";
         userName_2 = "";
-        userName_3 = "Andresita Martinez";
+        userName_3 = "";
     }
 }

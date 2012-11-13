@@ -102,7 +102,8 @@ public class DeployShips
             {
                 setGrid(i, j, new Grid(TypeBattleShips.AGUA, TypeBattleShips.EMPTY, 
                                         loadSprite(r.water, 1, scaling), 
-                                        loadSprite(r.mira, 2, scaling)));
+                                        loadSprite(r.mira, 2, scaling),
+                                        TypeBattleShips.EMPTY));
             }
         }           
     }    

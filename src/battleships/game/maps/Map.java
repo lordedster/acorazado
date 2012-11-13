@@ -259,7 +259,7 @@ public class Map {
             } else {
                 agua = loadSprite(r.water, 1, scaling);
             }
-            board[y][x] = new Grid(TypeBattleShips.INTACTO, ship.getType(), agua, loadSprite(r.mira, 2, scaling));
+            board[y][x] = new Grid(TypeBattleShips.INTACTO, ship.getType(), agua, loadSprite(r.mira, 2, scaling), i);
             switch(ship.getOrientacion())
             {
                 case TypeBattleShips.HORIZONTAL:
