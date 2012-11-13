@@ -5,6 +5,7 @@
 package battleships.game;
 
 import battleships.ImageHelper;
+import battleships.menu.Letra;
 import javax.microedition.lcdui.Image;
 /**
  *
@@ -76,6 +77,34 @@ public class Resources {
     public Image s_espia_0_ver;
     public Image s_espia_1_ver;
     
+     public Image letra_A;
+     public Image letra_B;
+     public Image letra_C;
+     public Image letra_D;
+     public Image letra_E;
+     public Image letra_F;
+     public Image letra_G;
+     public Image letra_H;
+     public Image letra_I;
+     public Image letra_J;
+     public Image letra_K;
+     public Image letra_L;
+     public Image letra_M;
+     public Image letra_N;
+     public Image letra_Enie;
+     public Image letra_O;
+     public Image letra_P;
+     public Image letra_Q;
+     public Image letra_R;
+     public Image letra_S;
+     public Image letra_T;
+     public Image letra_U;
+     public Image letra_V;
+     public Image letra_W;
+     public Image letra_X;
+     public Image letra_Y;
+     public Image letra_Z;
+    
     /** 
      * Recursos de AUDIO
      */
@@ -124,6 +153,34 @@ public class Resources {
         fondo_letra_izq = null;
         fondo_letra_der = null;
         fondo_letra_cent = null;
+       
+        letra_A = null;
+        letra_B = null;
+        letra_C = null;
+        letra_D = null;
+        letra_E = null;
+        letra_F = null;
+        letra_G = null;
+        letra_H = null;
+        letra_I = null;
+        letra_J = null;
+        letra_K = null;
+        letra_L = null;
+        letra_M = null;
+        letra_M = null;
+        letra_Enie = null;
+        letra_O = null;
+        letra_P = null;
+        letra_Q = null;
+        letra_R = null;
+        letra_S = null;
+        letra_T = null;
+        letra_U = null;
+        letra_V = null;
+        letra_W = null;
+        letra_X = null;
+        letra_Y = null;
+        letra_Z = null;
         
         s_portaaviones_0 = null;
         s_portaaviones_1 = null;
@@ -160,17 +217,52 @@ public class Resources {
         s_destructor_2 = null;
         s_espia_0 = null;
         s_espia_1 = null;
+        
+        
     }
     
     /**
      * Load resources
-     */
+     */    
+    private void loadLetras(ImageHelper ih) {
+        letra_A = ih.loadImage("/letras/A.png",scaling);
+        letra_B = ih.loadImage("/letras/B.png",scaling);
+        letra_C = ih.loadImage("/letras/C.png",scaling);
+        letra_D = ih.loadImage("/letras/D.png",scaling);
+        letra_E = ih.loadImage("/letras/E.png",scaling);
+        letra_F = ih.loadImage("/letras/F.png",scaling);
+        letra_G = ih.loadImage("/letras/G.png",scaling);
+        letra_H = ih.loadImage("/letras/H.png",scaling);
+        letra_I = ih.loadImage("/letras/I.png",scaling);
+        letra_J = ih.loadImage("/letras/J.png",scaling);
+        letra_K = ih.loadImage("/letras/K.png",scaling);
+        letra_L = ih.loadImage("/letras/L.png",scaling);
+        letra_M = ih.loadImage("/letras/M.png",scaling);
+        letra_N = ih.loadImage("/letras/N.png",scaling);
+        letra_Enie = ih.loadImage("/letras/Enie.png",scaling);
+        letra_O = ih.loadImage("/letras/O.png",scaling);
+        letra_P = ih.loadImage("/letras/P.png",scaling);
+        letra_Q = ih.loadImage("/letras/Q.png",scaling);
+        letra_R = ih.loadImage("/letras/R.png",scaling);
+        letra_S = ih.loadImage("/letras/S.png",scaling);
+        letra_T = ih.loadImage("/letras/T.png",scaling);
+        letra_U = ih.loadImage("/letras/U.png",scaling);
+        letra_V = ih.loadImage("/letras/V.png",scaling);
+        letra_W = ih.loadImage("/letras/W.png",scaling);
+        letra_X = ih.loadImage("/letras/X.png",scaling);
+        letra_Y = ih.loadImage("/letras/Y.png",scaling);
+        letra_Z = ih.loadImage("/letras/Z.png",scaling);
+    }
+    
     public void loadResources() {
         if (!initialized) {
-            ImageHelper ih = ImageHelper.getInstance();
+            ImageHelper ih = ImageHelper.getInstance(); 
             background = ih.loadImage("/background.png", scaling);
+            vacio = ih.loadImage("/vacio.png",scaling);
             signOn = ih.loadImage("/acorazados_on.png", scaling);
             signOff = ih.loadImage("/acorazados_off.png", scaling);
+            fondo = ih.loadImage("/fondo.png",scaling);
+            loadLetras(ih);           
             water = ih.loadImage("/water.png", scaling);
             dashboard = ih.loadImage("/dashboard.png",scaling);
             menuButton = ih.loadImage("/menu_button.png", scaling);
@@ -188,10 +280,8 @@ public class Resources {
             button_ok = ih.loadImage("/button_ok.png", scaling);
             button_cancel = ih.loadImage("/button_cancel.png", scaling);
             mira = ih.loadImage("/mira.png", scaling);
-            fondo = ih.loadImage("/fondo.png",scaling);
             girar = ih.loadImage("/girar.png",scaling);
             buttonBarcos = ih.loadImage("/barcos.png",scaling);
-            vacio = ih.loadImage("/vacio.png",scaling);
             fondo_letra_izq = ih.loadImage("/fondo_letra_izq.png",scaling);
             fondo_letra_der = ih.loadImage("/fondo_letra_der.png",scaling);
             fondo_letra_cent = ih.loadImage("/fondo_letra_cent.png",scaling);
@@ -243,5 +333,66 @@ public class Resources {
     public int scale(double value) {
         double result = scaling * value;
         return (result < 0) ? (int) (result - 0.5) : (int) (result + 0.5);
+    }   
+    
+    public Image getLetra(int codigo){
+        switch(codigo){
+            case Letra.A:
+                return letra_A;
+            case Letra.B:
+                return letra_B;
+            case Letra.C:
+                return letra_C;
+            case Letra.D:
+                return letra_D;
+            case Letra.E:
+                return letra_E;
+            case Letra.F:
+                return letra_F;
+            case Letra.G:
+                return letra_G;
+            case Letra.H:
+                return letra_H;
+            case Letra.I:
+                return letra_I;
+            case Letra.J:
+                return letra_J;
+            case Letra.K:
+                return letra_K;
+            case Letra.L:
+                return letra_L;
+            case Letra.M:
+                return letra_M;
+            case Letra.N:
+                return letra_N;
+            case Letra.Enie:
+                return letra_Enie;
+            case Letra.O:
+                return letra_O;
+            case Letra.P:
+                return letra_P;
+            case Letra.Q:
+                return letra_Q;
+            case Letra.R:
+                return letra_R;
+            case Letra.S:
+                return letra_S;
+            case Letra.T:
+                return letra_T;
+            case Letra.U:
+                return letra_U;
+            case Letra.V:
+                return letra_V;
+            case Letra.W:
+                return letra_W;
+            case Letra.X:
+                return letra_X;
+            case Letra.Y:
+                return letra_Y;
+            case Letra.Z:
+                return letra_Z;
+        }
+        return null;
     }
+     
 }

@@ -26,7 +26,9 @@ import battleships.menu.InfoScreen;
 import battleships.menu.MainMenu;
 import battleships.menu.Menu;
 import battleships.game.ships.TypeBattleShips;
+import battleships.menu.CreateUserScreen;
 import battleships.menu.MisionScreen;
+import battleships.menu.SelectorNombre;
 import battleships.menu.UserScreen;
 import battleships.records.UserData;
 import java.util.Random;
@@ -69,6 +71,7 @@ public class BattleshipCanvas
     private BarcosScreen barcos;
     private MisionScreen misionScreen;
     private UserScreen userScreen;
+    private SelectorNombre selectorNombre;
     private EnemyBoard tableroEnemigo;
     private Slideable currentView;
     private Slideable targetView;
@@ -380,6 +383,37 @@ public class BattleshipCanvas
                         break; 
                 }
                 break;
+            case TypeBattleShips.STATE_CREATE_NOMBRE:
+                switch (key) {
+                    case LEFT_SOFTKEY:
+                        selectorNombre.borrarLetra(r);
+                        break;
+                    case RIGHT_SOFTKEY:
+                        //selectorNombre.confirmarNombre();
+                        break;
+                    default: 
+                        break;
+                }
+                switch(getGameAction(key)){                
+                    case UP:
+                        selectorNombre.selectUp();
+                        break;
+                    case DOWN:
+                        selectorNombre.selectDown();
+                        break;
+                    case LEFT:
+                        selectorNombre.selectLeft();
+                        break;
+                    case RIGHT:
+                        selectorNombre.selectRight();
+                        break;
+                    case FIRE:
+                        selectorNombre.clickSelected();
+                        break;
+                    default: 
+                        break;
+                }
+                break;
         }
     }
 
@@ -437,9 +471,6 @@ public class BattleshipCanvas
             if (currentView != null) {
                 currentView.paint(g);
             }
-            if (targetView != null) {
-                targetView.paint(g);
-            }
         }
         catch (NullPointerException npe) {
             // just no painting then
@@ -461,6 +492,10 @@ public class BattleshipCanvas
         if (menu == null) {
             createMenu();
            // menu.hideResume();
+        }
+        r.loadResources();
+        if (selectorNombre == null){
+            createSelectorNombre();
         }
         if (info == null) {
             createInfoScreen();
@@ -629,6 +664,10 @@ public class BattleshipCanvas
                 misionScreen.pointerEvent(Menu.POINTER_PRESSED, x, y);
                 audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
+            case TypeBattleShips.STATE_CREATE_NOMBRE:
+                selectorNombre.pointerEvent(SelectorNombre.POINTER_PRESSED, x, y);
+                audioManager.playSample(r.SAMPLE_BUTTON);
+                break;
 //            case TypeBattleShips.STATE_MISION_LEVEL:
 //                misionScreen.pointerEvent(Menu.POINTER_PRESSED, x, y);
 //                audioManager.playSample(r.SAMPLE_BUTTON);
@@ -670,6 +709,9 @@ public class BattleshipCanvas
             case TypeBattleShips.STATE_MISION:
                 misionScreen.pointerEvent(Menu.POINTER_RELEASED, x, y);
                 break;
+            case TypeBattleShips.STATE_CREATE_NOMBRE:
+                selectorNombre.pointerEvent(SelectorNombre.POINTER_RELEASED, x, y);
+                break;
             case TypeBattleShips.STATE_MISION_LEVEL:
                 tableroEnemigo.pointerEvent(Map.POINTER_RELEASED, x, y);
                 break;
@@ -695,25 +737,27 @@ public class BattleshipCanvas
                 userScreen.pointerEvent(Menu.POINTER_DRAGGED, x, y);
                 break;
             case TypeBattleShips.STATE_INFO:
-                info.pointerEvent(Menu.POINTER_PRESSED, x, y);
+                info.pointerEvent(Menu.POINTER_DRAGGED, x, y);
                 break;
             case TypeBattleShips.STATE_OPTIONS:
-                options.pointerEvent(Menu.POINTER_PRESSED, x, y);
+                options.pointerEvent(Menu.POINTER_DRAGGED, x, y);
                 break;
             case TypeBattleShips.STATE_SELECTOR:
-                selector.pointerEvent(Menu.POINTER_PRESSED, x, y);
+                selector.pointerEvent(Menu.POINTER_DRAGGED, x, y);
                 break;
             case TypeBattleShips.STATE_DEPLOYSHIPS:
-                deployShips.pointerEvent(Map.POINTER_PRESSED, x, y);
+                deployShips.pointerEvent(Map.POINTER_DRAGGED, x, y);
                 break;
             case TypeBattleShips.STATE_BARCOS:
-                barcos.pointerEvent(Menu.POINTER_PRESSED, x, y);
+                barcos.pointerEvent(Menu.POINTER_DRAGGED, x, y);
                 break;
             case TypeBattleShips.STATE_MISION:
-                misionScreen.pointerEvent(Menu.POINTER_PRESSED, x, y);
+                misionScreen.pointerEvent(Menu.POINTER_DRAGGED, x, y);
                 break;
+            case TypeBattleShips.STATE_CREATE_NOMBRE:
+                selectorNombre.pointerEvent(SelectorNombre.POINTER_DRAGGED, x, y);
             case TypeBattleShips.STATE_MISION_LEVEL:
-                tableroEnemigo.pointerEvent(Map.POINTER_PRESSED, x, y);
+                tableroEnemigo.pointerEvent(Map.POINTER_DRAGGED, x, y);
                 break;
         }
     }
@@ -727,13 +771,25 @@ public class BattleshipCanvas
             public void itemClicked(int item) {
                 switch(item){
                      case MainMenu.SLOT1:
-                         showUserScreen();
+                         if (DATA.getNameUser1().equals("")){
+                             showSelectorNombre();
+                         }else{
+                             showUserScreen();
+                         }
                          break;
                      case MainMenu.SLOT2:
-                         showUserScreen();
+                         if (DATA.getNameUser2().equals("")){
+                             showSelectorNombre();
+                         }else{
+                             showUserScreen();
+                         }
                          break;
                      case MainMenu.SLOT3:
-                         showUserScreen();
+                         if (DATA.getNameUser3().equals("")){
+                             showSelectorNombre();
+                         }else{
+                             showUserScreen();
+                         }
                          break;
                  }
             }
@@ -968,7 +1024,30 @@ public class BattleshipCanvas
                 }
             }          
        }, scaling);
-   }
+    }
+    
+    private void createSelectorNombre(){
+        selectorNombre = new SelectorNombre(cornerX, cornerY, gameWidth, gameHeight, new SelectorNombre.Listener() {
+
+            public void itemClicked(int x, int y) {
+                selectorNombre.AgregarLetra(x,y,r);                
+            }    
+
+            public void changeState(int item) {
+                switch (item) {
+                    case SelectorNombre.BUTTON_OK:
+                        tableroEnemigo.generarMapa();
+                        showTableroEnemigo();
+                        break;
+                    case SelectorNombre.BUTTON_CANCEL:
+                        deployShips.generarMapa();
+                        barcos.verItems();
+                        showBarcos();
+                        break;                        
+                }
+            }
+       }, scaling);
+    }
 
     /**
      * Change view
@@ -1047,6 +1126,11 @@ public class BattleshipCanvas
     private void showTableroEnemigo(){
         nextState = TypeBattleShips.STATE_MISION_LEVEL;
         changeView(tableroEnemigo);
+    }
+    
+    private void showSelectorNombre(){
+        nextState = TypeBattleShips.STATE_CREATE_NOMBRE;
+        changeView(selectorNombre);
     }
 
     /**

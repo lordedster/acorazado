@@ -74,6 +74,7 @@ public class TypeBattleShips {
     public static final int STATE_MULTI = 13;
     public static final int STATE_PERFIL = 14;
     public static final int STATE_USER = 15;
+    public static final int STATE_CREATE_NOMBRE = 16;
     public static final int GIRAR = 16;
     
     //Dificultades
