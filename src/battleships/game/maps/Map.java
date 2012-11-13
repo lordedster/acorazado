@@ -18,8 +18,8 @@ import javax.microedition.lcdui.game.Sprite;
  */
 public class Map {    
     
-    private BattleShip[] ships;
-    private Grid[][] board;
+    protected BattleShip[] ships;
+    protected Grid[][] board;
     public static final int POINTER_PRESSED = 0;
     public static final int POINTER_DRAGGED = 1;
     public static final int POINTER_RELEASED = 2;
@@ -523,4 +523,5 @@ public class Map {
         }
         return done;
     }
+    
 }
