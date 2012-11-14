@@ -119,7 +119,7 @@ public class BattleshipCanvas
 
         audioManager = AudioManager.getInstance();
         vibratorManager = VibratorManager.getInstance();
-        gameState = TypeBattleShips.STATE_USER;
+        
     }
 
     /**
@@ -203,6 +203,13 @@ public class BattleshipCanvas
     protected void keyPressed(int key) {
         switch (gameState) {
             case TypeBattleShips.STATE_MENU:
+                switch (key) {
+                    case RIGHT_SOFTKEY:
+                        menu.eliminarUsuario(r);
+                        break;
+                    default: 
+                        break;
+                }
                 switch (getGameAction(key)) {
                     case UP:
                         menu.selectPrev();
@@ -385,7 +392,8 @@ public class BattleshipCanvas
                 switch (key) {
                     case LEFT_SOFTKEY:                        
                         if (selectorNombre.isNombreListo()){
-                            DATA.setNombreUsuario(selectorNombre.obtenerNombre());
+                            DATA.setNombreUsuarioActual(selectorNombre.obtenerNombre());
+                            saveGame();
                             showUserScreen();
                         }
                         break;
@@ -461,8 +469,7 @@ public class BattleshipCanvas
         if (gameState == TypeBattleShips.STATE_DEPLOYSHIPS || gameState == TypeBattleShips.STATE_MISION_LEVEL){
             g.drawImage(r.fondo, cornerX, cornerY, anchor);
         }
-        g.drawImage((gameState == TypeBattleShips.STATE_MENU || gameState == TypeBattleShips.STATE_INFO) ? r.signOn : r.signOff,
-                    cornerX, cornerY + (int) (scaling * 86 + 0.5), anchor);
+        g.drawImage(r.signOn, cornerX, cornerY + (int) (scaling * 86 + 0.5), anchor);
         if(gameState == TypeBattleShips.STATE_TRANSITION) {
             g.setClip(cornerX, cornerY, gameWidth, gameHeight);
         } else {
@@ -472,9 +479,13 @@ public class BattleshipCanvas
             if (currentView != null) {
                 currentView.paint(g);
             }
+            if (targetView != null) {
+                targetView.paint(g);
+            }
         }
         catch (NullPointerException npe) {
             // just no painting then
+            g.drawString("JOJOJO", x, y, anchor);
         }
         if ((gameState == TypeBattleShips.STATE_MENU || gameState == TypeBattleShips.STATE_INFO) && pressed) {
             ElectricArc arc = new ElectricArc();
@@ -494,7 +505,6 @@ public class BattleshipCanvas
             createMenu();
            // menu.hideResume();
         }
-        r.loadResources();
         if (selectorNombre == null){
             createSelectorNombre();
         }
@@ -537,7 +547,7 @@ public class BattleshipCanvas
      * Stop the game loop
      */
     public void stopApp() {
-        gameState = TypeBattleShips.STATE_MENU;
+        gameState = TypeBattleShips.STATE_USER;
         this.gameThread.requestStop();
         LightManager.allowDimming();
     }
@@ -779,8 +789,7 @@ public class BattleshipCanvas
                              showUserScreen();
                          }
                          break;
-                     case MainMenu.SLOT2:
-                         
+                     case MainMenu.SLOT2:                         
                          DATA.setUsuarioActual(UserData.PERFIL_B);
                          if (!DATA.existeNameUser2()){
                              showSelectorNombre();
@@ -788,8 +797,7 @@ public class BattleshipCanvas
                              showUserScreen();
                          }
                          break;
-                     case MainMenu.SLOT3:
-                         
+                     case MainMenu.SLOT3:                         
                          DATA.setUsuarioActual(UserData.PERFIL_C);
                          if (!DATA.existeNameUser3()){
                              showSelectorNombre();
@@ -797,10 +805,18 @@ public class BattleshipCanvas
                              showUserScreen();
                          }
                          break;
+                     case MainMenu.ELIMINADO:
+                         DATA.eliminarUsuario(menu.getCodeEliminado());
+                         saveGame();
+                         break;
+                         
                  }
             }
          
-        }, scaling, DATA.existeNameUser1(), DATA.existeNameUser2(), DATA.existeNameUser3(), r);
+        }, scaling, 
+           DATA.getNombreUsuario(UserData.PERFIL_A), 
+           DATA.getNombreUsuario(UserData.PERFIL_B), 
+           DATA.getNombreUsuario(UserData.PERFIL_C), r);
         showMenu();
     }
     

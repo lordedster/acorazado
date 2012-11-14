@@ -4,6 +4,7 @@
  */
 package battleships.menu;
 
+import battleships.game.Resources;
 import javax.microedition.lcdui.game.Sprite;
 
 /**
@@ -13,8 +14,8 @@ import javax.microedition.lcdui.game.Sprite;
 public class LetraItem extends MenuItem {
     private int codigo;
     
-    public LetraItem(Sprite sprite, int codigo){
-        super(sprite);
+    public LetraItem(String letra, int codigo, Resources r){
+        super(new StringMenuItem(letra, r));
         this.codigo = codigo;
     }
 

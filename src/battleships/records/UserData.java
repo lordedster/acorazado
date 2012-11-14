@@ -62,6 +62,9 @@ public class UserData {
     private int usuarioActual;
     
     public UserData(){
+        userName_1 = new int[5];
+        userName_2 = new int[5];
+        userName_3 = new int[5];
         
     }
     
@@ -73,21 +76,27 @@ public class UserData {
          if (record == null) {
             return false;
         }
-//        try {
-//            DataInputStream din = new DataInputStream(new ByteArrayInputStream(record));
-////            userName_1 = din.readUTF();
-////            userName_2 = din.readUTF();
-////            userName_3 = din.readUTF();            
+        try {
+            DataInputStream din = new DataInputStream(new ByteArrayInputStream(record));
+            for(int i = 0; i < userName_1.length; i++){       
+                userName_1[i] = din.readInt();
+            }
+            for(int i = 0; i < userName_2.length; i++){       
+                userName_2[i] = din.readInt();
+            }
+            for(int i = 0; i < userName_3.length; i++){       
+                userName_3[i] = din.readInt();
+            }          
 ////          initDashboard(din.readInt());
 ////            plate.setPosition(din.readInt(), din.readInt());
 ////            ball.setPosition(din.readInt(), din.readInt());
 ////            ball.setVelocityX(din.readInt());
 ////            ball.setVelocityY(din.readInt());
 ////            bricks.load(this, bricks.readFrom(din));
-//            return true;
-//        }
-////        catch (IOException e) {
-////        }
+            return true;
+        }
+        catch (IOException e) {
+        }
         return false;
     }
     public byte[] getSnapshot(){
@@ -96,23 +105,19 @@ public class UserData {
         try {
             bout = new ByteArrayOutputStream();
             DataOutputStream dout = new DataOutputStream(bout);
-//            dout.writeChars(userName_1);            
-//            dout.writeChars(userName_2);            
-//            dout.writeChars(userName_3);
-            
-//            dout.writeInt(lives.size());
-//            dout.writeBoolean(aiming);
-//            dout.writeInt(plate.getX());
-//            dout.writeInt(plate.getY());
-//            dout.writeInt(ball.getX());
-//            dout.writeInt(ball.getY());
-//            dout.writeInt(ball.getVelocityX());
-//            dout.writeInt(ball.getVelocityY());
-//            bricks.writeTo(dout);
+            for(int i = 0; i < userName_1.length; i++){                
+                dout.writeInt(userName_1[i]);     
+            }
+            for(int i = 0; i < userName_2.length; i++){
+                 dout.writeInt(userName_2[i]);     
+            }
+            for(int i = 0; i < userName_3.length; i++){
+                 dout.writeInt(userName_3[i]);     
+            }       
             return bout.toByteArray();
         }
-//        catch (IOException e) {
-//        }
+        catch (IOException e) {
+        }
         finally {
             try {
                 if (bout != null) {
@@ -122,7 +127,7 @@ public class UserData {
             catch (IOException e) {
             }
         }
-//        return new byte[0];
+        return new byte[0];
     }
     
     public int getDificultad(int userNumber)
@@ -130,21 +135,15 @@ public class UserData {
         int ret = 0;
         switch(userNumber)
         {
-            case 1:
-            {
-             ret = dif_user_1;
-            break;
-            }
+            case 1:            
+                ret = dif_user_1;
+                break;
             case 2:
-            {
-            ret = dif_user_2;
-            break;
-            }
+                ret = dif_user_2;
+                break;
             case 3:
-            {
                 ret = dif_user_3;
                 break;
-            }
         }     
         return ret;
     }
@@ -204,19 +203,26 @@ public class UserData {
         return null;
     }
     
-    public int[] getNombreUsuario(int usuario){
+    public String getNombreUsuario(int usuario){
         switch(usuario){
             case PERFIL_A:
-                return userName_1;
+                return tranformarNombre(userName_1);
             case PERFIL_B:
-                return userName_2;
+                return tranformarNombre(userName_2);
             case PERFIL_C:
-                return userName_3;
+                return tranformarNombre(userName_3);
         }
         return null;
     }
+    private String tranformarNombre(int[] nombre){
+        String n = "";
+        for(int i = 0; i < nombre.length; i++){
+            n = n + Letra.obtenerLetra(nombre[i]);
+        }
+        return n;
+    }
     
-    public void setNombreUsuario(int[] nombre){
+    public void setNombreUsuarioActual(int[] nombre){
         switch(usuarioActual){
             case PERFIL_A:
                 userName_1 = nombre;
@@ -228,5 +234,25 @@ public class UserData {
                 userName_3 = nombre;
                 break;    
         }
-    }       
+    }  
+    
+    public void eliminarUsuario(int usuario){
+         switch(usuario){
+            case PERFIL_A:
+                for(int i = 0; i< 5; i++){
+                    userName_1[i] = Letra.guion;
+                }
+                break;
+            case PERFIL_B:
+                for(int i = 0; i< 5; i++){
+                    userName_2[i] = Letra.guion;
+                }
+                break;  
+            case PERFIL_C:
+                for(int i = 0; i< 5; i++){
+                    userName_3[i] = Letra.guion;
+                }
+                break;    
+        }
+    }
 }

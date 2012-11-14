@@ -68,7 +68,7 @@ public class Menu {
      * Get the index of currently selected menu item.
      * @return Currently selected item or -1, if none is selected
      */
-    private int getSelected() {
+    protected int getSelected() {
         for (int i = 0; i < items.length; i++) {
             if (items[i].isSelected()) {
                 return i;
@@ -157,6 +157,10 @@ public class Menu {
         return ImageHelper.scaleImage(i, (int) (scaling * i.getWidth() + 0.5),
                                       (int) (scaling * i.getHeight() / lines + 0.5) * lines);
     }
+    
+//    protected void ejecutarListener(int item){
+//        listener.itemClicked(item);
+//    }
 
     /**
      * Listener interface for menu events

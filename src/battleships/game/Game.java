@@ -143,8 +143,8 @@ public class Game
 //        rightWall.setPosition(displayWidth + r.scale(3) - rightWall.getWidth(), 0);
 //
         // Create Dashboard
-        dashboard = new Sprite(r.dashboard);
-        dashboard.setPosition(0, displayHeight - dashboard.getHeight());
+//        dashboard = new Sprite(r.dashboard);
+//        dashboard.setPosition(0, displayHeight - dashboard.getHeight());
 //
         // Create Buttons
         menuButton = new Sprite(r.menuButton);

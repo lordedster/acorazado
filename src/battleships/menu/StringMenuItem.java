@@ -5,6 +5,7 @@
 package battleships.menu;
 
 import battleships.game.Resources;
+import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
@@ -47,14 +48,20 @@ public class StringMenuItem {
     }
     
     private void paintBackground(Graphics g){
-        g.drawImage(left, X - 2, Y - 3, anchor);
-        paintCenterBackground(g);
-        g.drawImage(right,X + getWidth() - 8,Y - 3,anchor);
+        if (left.getWidth() + right.getWidth() < getWidth()){
+            g.drawImage(left, X - 4, Y - 3, anchor);
+            paintCenterBackground(g);
+            g.drawImage(right,X + getWidth() - 8, Y - 3,anchor);
+        }else{            
+            g.drawImage(left, X - 4, Y - 3, anchor);
+            g.drawImage(right,X - 4 + left.getWidth(), Y - 3,anchor);
+        }
+        
     }
     
     private void paintCenterBackground(Graphics g){
-        int x = getWidth() - 16;
-        int x_start = X + 8;
+        int x = getWidth() - 14;
+        int x_start = X + 6;
         for(int i = 0; i < x; i++){
             g.drawImage(center, x_start, Y - 3, anchor);
             x_start++;
@@ -86,8 +93,8 @@ public class StringMenuItem {
         visible = bln;
     }
     
-    public int getWidth(){
-        return (texto.length() * 13);
+    public int getWidth(){        
+        return (FONT.stringWidth(texto));
     }
     
     public int getHeight(){
