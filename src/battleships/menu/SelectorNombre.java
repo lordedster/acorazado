@@ -402,17 +402,6 @@ public class SelectorNombre
     }
     
     public void borrarLetra(Resources r){
-         for(int i = nombre.length - 1; i > -1; i--){
-            if (nombre[i].isSelected())
-            {                
-                if(i > 0){
-                    nombre[i-1] = new LetraItem(Letra.obtenerLetra(Letra.guion),Letra.guion, r);
-                    nombre[i-1].setSelected(true);                
-                    nombre[i].setSelected(false);
-                }
-                break;
-            }
-        }
         int completed = 0;
         for(int i = 0; i < nombre.length; i++){
             if(nombre[i].getCodigo()!= Letra.guion){
@@ -426,6 +415,19 @@ public class SelectorNombre
                 break;
             case 0:
                 listener.changeState(VOLVER);
+                break;
+            default:
+                for(int i = nombre.length - 1; i > -1; i--){
+                    if (nombre[i].isSelected())
+                    {                
+                        if(i > 0){
+                            nombre[i-1] = new LetraItem(Letra.obtenerLetra(Letra.guion),Letra.guion, r);
+                            nombre[i-1].setSelected(true);                
+                            nombre[i].setSelected(false);
+                        }
+                        break;
+                    }
+                }
                 break;
         }               
         positionNombre();
