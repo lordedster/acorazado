@@ -834,12 +834,15 @@ public class BattleshipCanvas
                         audioEnabled = enabled;
                         audioManager.playSample(r.SAMPLE_BONUS);
                         break;
+                    case OptionScreen.USUARIO:
+                        showMenu();
+                        break;
                     case OptionScreen.BACK:
                         showUserScreen();
                         break;
                 }
             }
-        }, scaling);        
+        }, scaling, r);        
     }
     
     private void createUserScreen(){
@@ -937,7 +940,7 @@ public class BattleshipCanvas
                          break;
                  }
              }
-         }, scaling);
+         }, scaling, r);
     }
 
     /**
@@ -963,7 +966,7 @@ public class BattleshipCanvas
                         break;
                 }
             }
-        }, scaling);
+        }, scaling, r);
     }
     
     private void createBarcosScreen(){
@@ -1026,7 +1029,7 @@ public class BattleshipCanvas
                         break;
                 }
             }
-        }, scaling);
+        }, scaling, r);
     }
     
     private void  createSelectorScreen() {
@@ -1045,7 +1048,7 @@ public class BattleshipCanvas
                         break;                        
                 }
             }          
-       }, scaling);
+       }, scaling, r);
     }
     
     private void createSelectorNombre(){

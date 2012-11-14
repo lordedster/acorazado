@@ -5,6 +5,7 @@
 package battleships.menu;
 
 import battleships.effects.Slideable;
+import battleships.game.Resources;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 /**
@@ -26,13 +27,13 @@ public class SelectorScreen
     private int cornerY;
     private Image mensaje;
     
-    public SelectorScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling) {
+    public SelectorScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling, Resources r) {
         super(ITEM_COUNT, l);
         this.width = width;  
         this.height = height;
         this.cornerY = cornerY;        
-        setItem(BUTTON_OK, new MenuItem(loadSprite("/button_ok.png", 2, scaling)));
-        setItem(BUTTON_CANCEL,new MenuItem(loadSprite("/button_cancel.png", 2, scaling)));
+        setItem(BUTTON_OK, new MenuItem(new StringMenuItem("Si", r)));
+        setItem(BUTTON_CANCEL,new MenuItem(new StringMenuItem("No", r)));
         
         mensaje = loadImage("/automatico.png", 1, scaling);
         

@@ -5,6 +5,7 @@
 package battleships.menu;
 
 import battleships.effects.Slideable;
+import battleships.game.Resources;
 import javax.microedition.lcdui.Graphics;
 
 /**
@@ -29,7 +30,7 @@ public class BarcosScreen
     private int width;
     private int cornerY;
     
-    public BarcosScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling) {
+    public BarcosScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling, Resources r) {
         super(ITEM_COUNT, l);
         
         setItem(PORTAAVIONES, new MenuItem(loadSprite("/PortaAviones.png", 2, scaling)));
@@ -37,7 +38,7 @@ public class BarcosScreen
         setItem(SUBMARINO,new MenuItem(loadSprite("/Submarino.png", 2, scaling)));
         setItem(DESTRUCTOR, new MenuItem(loadSprite("/Destructor.png", 2, scaling)));
         setItem(ESPIA,new MenuItem(loadSprite("/Espia.png", 2, scaling)));
-        setItem(BACK, new MenuItem(loadSprite("/back.png", 2, scaling)));
+        setItem(BACK, new MenuItem(new StringMenuItem("Atrás", r)));
         IN_CX = cornerX + width / 2;
         OUT_CX = IN_CX - width;
 

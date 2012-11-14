@@ -5,6 +5,7 @@
 package battleships.menu;
 
 import battleships.effects.Slideable;
+import battleships.game.Resources;
 import javax.microedition.lcdui.Graphics;
 
 /**
@@ -23,12 +24,12 @@ public class MisionScreen
     private int x;
     private int y;
     
-    public MisionScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling){
+    public MisionScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling, Resources r){
         super(ITEM_COUNT,l);
         
         setItem(RESUME, new MenuItem(loadSprite("/continuar.png", 2, scaling)));
         setItem(NEWGAME, new MenuItem(loadSprite("/nuevo_juego.png",2,scaling)));
-        setItem(BACK, new MenuItem(loadSprite("/back.png", 2, scaling)));
+        setItem(BACK, new MenuItem(new StringMenuItem("Atrás", r)));
         
         IN_CX = cornerX + width / 2;
         OUT_CX = IN_CX - width;

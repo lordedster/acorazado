@@ -5,6 +5,7 @@
 package battleships.menu;
 
 import battleships.effects.Slideable;
+import battleships.game.Resources;
 import javax.microedition.lcdui.Graphics;
 /**
  *
@@ -14,10 +15,11 @@ public class OptionScreen
         extends Menu
         implements Slideable {
     
-    public static final int ITEM_COUNT = 3;
+    public static final int ITEM_COUNT = 4;
     public static final int VIBRATOR = 0;
     public static final int SOUNDS = 1;
-    public static final int BACK = 2;
+    public static final int USUARIO = 2;
+    public static final int BACK = 3;
     public final int OUT_CX;
     public final int IN_CX;
     private final ToggleMenuItem sounds;
@@ -25,15 +27,16 @@ public class OptionScreen
     private int x;
     private int y;
     
-    public OptionScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling) {
+    public OptionScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling, Resources r) {
         super(ITEM_COUNT, l);
 //        this.width = width;       
 //        this.cornerY = cornerY;
         vibrator = new ToggleMenuItem(loadSprite("/sensors.png", 4, scaling));
         setItem(VIBRATOR, vibrator);
         sounds = new ToggleMenuItem(loadSprite("/sounds.png", 4, scaling));
-        setItem(SOUNDS, sounds);
-        setItem(BACK, new MenuItem(loadSprite("/back.png", 2, scaling)));
+        setItem(SOUNDS, sounds);        
+        setItem(USUARIO, new MenuItem(new StringMenuItem("Cambiar de Perfil", r)));
+        setItem(BACK, new MenuItem(new StringMenuItem("Atrás", r)));
         
         IN_CX = cornerX + width / 2;
         OUT_CX = IN_CX - width;

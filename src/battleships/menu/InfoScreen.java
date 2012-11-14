@@ -5,6 +5,7 @@
 package battleships.menu;
 
 import battleships.effects.Slideable;
+import battleships.game.Resources;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
@@ -23,7 +24,7 @@ public class InfoScreen
     private int cornerY;
     private Image info;
 
-    public InfoScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling) {
+    public InfoScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling, Resources r) {
         super(ITEM_COUNT, l);
         this.height = height;
         this.cornerY = cornerY;
@@ -40,7 +41,7 @@ public class InfoScreen
         item.setCenter(x, y);
 
         y += item.getHeight();
-        item = new MenuItem(loadSprite("/back.png", 2, scaling));
+        item = new MenuItem(new StringMenuItem("Atrás", r));
         setItem(BACK, item);
         item.setCenter(x, y);
         selectItem(BACK);

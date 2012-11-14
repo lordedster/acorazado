@@ -27,9 +27,6 @@ public class Resources {
     public Image submarino_hor;
     public Image espia;
     public Image espia_hor;
-    public Image automatico;
-    public Image button_ok;
-    public Image button_cancel;
     public Image mira;
     public Image fondo;
     public Image girar;
@@ -109,9 +106,6 @@ public class Resources {
         submarino_hor = null;
         espia = null;
         espia_hor = null;
-        automatico = null;
-        button_cancel = null;
-        button_ok = null;
         mira = null;
         fondo = null;
         girar = null;
@@ -181,9 +175,6 @@ public class Resources {
             submarino_hor = ih.loadImage("/Submarino-hor.png", scaling);
             espia = ih.loadImage("/Espia.png", scaling);
             espia_hor = ih.loadImage("/Espia-hor.png", scaling);
-            automatico = ih.loadImage("/automatico.png", scaling);
-            button_ok = ih.loadImage("/button_ok.png", scaling);
-            button_cancel = ih.loadImage("/button_cancel.png", scaling);
             mira = ih.loadImage("/mira.png", scaling);
             girar = ih.loadImage("/girar.png",scaling);
             buttonBarcos = ih.loadImage("/barcos.png",scaling);
