@@ -204,14 +204,37 @@ public class Map {
      * @param scaling Scaling factor
      * @return Loaded sprite
      */
-    protected Sprite loadSprite(String fileName, int lines, double scaling) {
-        Image i = loadImage(fileName, lines, scaling);
-        return new Sprite(i, i.getWidth(), i.getHeight() / lines);
-    }
+        protected Sprite loadSprite(String fileName, int lines, double scaling) {
+            Image i = loadImage(fileName, lines, scaling);
+            return new Sprite(i, i.getWidth(), i.getHeight() / lines);
+        }
     
-       protected Sprite loadSprite(Image file, int lines, double scaling) {
-        return new Sprite(file, file.getWidth(), file.getHeight() / lines);
-    }
+        protected Sprite loadSprite(Image file, int lines, double scaling) {
+            return new Sprite(file, file.getWidth(), file.getHeight() / lines);
+        }
+//    protected Sprite loadSprite(String fileName, int lines, double scaling, int orientation) {
+//        switch(orientation){
+//            case TypeBattleShips.HORIZONTAL:
+//                Image i = loadImage(fileName, lines, scaling);
+//                return new Sprite(i, i.getWidth(), i.getHeight() / lines);
+//            case TypeBattleShips.VERTICAL:                
+//                Image x = loadImage(fileName, lines, scaling);
+//                return new Sprite(x, x.getWidth()/2, x.getHeight() / lines);
+//                
+//       }
+//        return null;
+//    }
+//    
+//       protected Sprite loadSprite(Image file, int lines, double scaling, int orientation) {
+//                switch(orientation){
+//            case TypeBattleShips.HORIZONTAL:
+//                return new Sprite(file, file.getWidth(), file.getHeight() / lines);
+//            case TypeBattleShips.VERTICAL:                
+//                return new Sprite(file, file.getWidth(), file.getHeight()/2 / lines);
+//                
+//       }
+//        return null;        
+//    }
 
     /**
      * Load and scale image
@@ -255,7 +278,13 @@ public class Map {
         for (int i = 0; i < ship.getLargo(); i ++ )
         {
             if (visibility){
-                agua = loadSprite(SeccionBarco(i, ship.getType(), r, ship.getOrientacion()),1, scaling);
+                
+                agua = loadSprite(SeccionBarco(i, ship.getType(), r),1, scaling);
+                if (ship.getOrientacion() == TypeBattleShips.VERTICAL)
+                {
+                    agua.setTransform(Sprite.TRANS_MIRROR_ROT270);
+                }      
+               
             } else {
                 agua = loadSprite(r.water, 1, scaling);
             }
@@ -343,162 +372,60 @@ public class Map {
         return y;
     }
     
-    private Image SeccionBarco(int seccion, int Type, Resources r, int orientacion){
+    private Image SeccionBarco(int seccion, int Type, Resources r){
         switch(Type){
             case TypeBattleShips.PORTAAVIONES:
                 switch(seccion){
-                    case 0:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_portaaviones_0_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_portaaviones_0;
-                        }
-                        break;
-                    case 1:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_portaaviones_1_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_portaaviones_1;
-                        }
-                        break;
-                    case 2:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_portaaviones_2_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_portaaviones_2;
-                        }
-                        break;
-                    case 3:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_portaaviones_3_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_portaaviones_3;
-                        }
-                break;
-                    case 4:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_portaaviones_4_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_portaaviones_4;
-                        }
-                        break;                        
+                    case 0:                        
+                        return r.s_portaaviones_0; 
+                    case 1:                               
+                        return r.s_portaaviones_1;
+                    case 2:    
+                        return r.s_portaaviones_2;
+                    case 3:                                                 
+                        return r.s_portaaviones_3;
+                    case 4:                               
+                        return r.s_portaaviones_4;
                 }
                 break;
             case TypeBattleShips.ACORAZADO:
                 switch(seccion){
-                    case 0:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_acorazado_0_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_acorazado_0;
-                        }
-                        break;
-                    case 1:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_acorazado_1_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_acorazado_1;
-                        }
-                        break;
-                    case 2:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_acorazado_2_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_acorazado_2;
-                        }
-                        break;
-                    case 3:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_acorazado_3_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_acorazado_3;
-                        }
-                        break;
+                    case 0:                                
+                        return r.s_acorazado_0;
+                    case 1:              
+                        return r.s_acorazado_1;
+                    case 2:                               
+                        return r.s_acorazado_2;
+                    case 3:               
+                        return r.s_acorazado_3;
                 }
                 break;
             case TypeBattleShips.SUBMARINO:
                 switch(seccion){
-                    case 0:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_submarino_0_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_submarino_0;
-                        }
-                        break;
-                    case 1:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_submarino_1_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_submarino_1;
-                        }
-                        break;
-                    case 2:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_submarino_2_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_submarino_2;
-                        }
-                        break;
+                    case 0:                            
+                        return r.s_submarino_0;
+                    case 1:                              
+                        return r.s_submarino_1;
+                    case 2:      
+                        return r.s_submarino_2;
                     }
                     break;
                 case TypeBattleShips.DESTRUCTOR:
                     switch(seccion){
-                    case 0:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_destructor_0_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_destructor_0;
-                        }
-                        break;
-                    case 1:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_destructor_1_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_destructor_1;
-                        }
-                        break;
-                    case 2:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_destructor_2_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_destructor_2;
-                        }
-                        break;
+                    case 0:                     
+                        return r.s_destructor_0;
+                    case 1:           
+                        return r.s_destructor_1;
+                    case 2:                     
+                        return r.s_destructor_2;
                     }
                     break;
                 case TypeBattleShips.ESPIA:
                     switch(seccion){
-                    case 0:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_espia_0_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_espia_0;
-                        }
-                        break;
-                    case 1:
-                        switch(orientacion){
-                            case TypeBattleShips.VERTICAL:
-                                return r.s_espia_1_ver;
-                            case TypeBattleShips.HORIZONTAL:                                
-                                return r.s_espia_1;
-                        }
-                        break;
+                    case 0:                              
+                        return r.s_espia_0;
+                    case 1:                   
+                        return r.s_espia_1;
                     }
                     break;
         }

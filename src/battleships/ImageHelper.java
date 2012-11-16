@@ -6,6 +6,7 @@ package battleships;
 
 import java.io.InputStream;
 import javax.microedition.lcdui.Image;
+import javax.microedition.lcdui.game.Sprite;
 
 public class ImageHelper {
 
@@ -20,8 +21,7 @@ public class ImageHelper {
         }
         return self;
     }
-
-    public Image loadImage(String imagepath, int width, int height) throws RuntimeException {
+    public Image loadImage(String imagepath, int width, int height ) throws RuntimeException {
         return scaleImage(this.loadImage(imagepath), width, height);
     }
 
@@ -40,6 +40,33 @@ public class ImageHelper {
         }
         return image;
     }
+    public Image transformImage(Image image, int orientation){
+        return Image.createImage(image, 0, 0, image.getWidth(), image.getHeight(), orientation);
+    }
+
+
+//    public Image loadImage(String imagepath, int width, int height, boolean orientation) throws RuntimeException {
+//        return scaleImage(this.loadImage(imagepath, orientation), width, height);
+//    }
+//
+//    public Image loadImage(String imagepath, float scaling, boolean orientation) throws RuntimeException {
+//        return scaleImage(this.loadImage(imagepath, orientation), scaling);
+//    }
+//
+//    public Image loadImage(String imagepath, boolean orientation) throws RuntimeException {
+//        Image image;
+//        try {
+//            InputStream in = getClass().getResourceAsStream(imagepath);
+//            image = Image.createImage(in);
+//            if(orientation){
+//                image = Image.createImage(image, 0, 0, image.getHeight(), image.getWidth(), Sprite.TRANS_ROT90);
+//            }
+//        }
+//        catch (Exception e) {
+//            throw new RuntimeException("ImageLoader failed to load image:" + imagepath + " " + e.getMessage());
+//        }
+//        return image;
+//    }
 
     public static Image scaleImage(Image original, float scaling) {
         return scaleImage(original, (int) (scaling * original.getWidth() + 0.5),

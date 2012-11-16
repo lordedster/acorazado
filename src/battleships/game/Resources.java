@@ -7,6 +7,7 @@ package battleships.game;
 import battleships.ImageHelper;
 import battleships.menu.Letra;
 import javax.microedition.lcdui.Image;
+import javax.microedition.lcdui.game.Sprite;
 /**
  *
  * @author edster
@@ -16,17 +17,11 @@ public class Resources {
     public Image background;    
     public Image signOn;
     public Image water;
-    public Image menuButton;
     public Image portaaviones;
-    public Image portaaviones_hor;
     public Image acorazado;
-    public Image acorazado_hor;
     public Image destructor;
-    public Image destructor_hor;
     public Image submarino;
-    public Image submarino_hor;
     public Image espia;
-    public Image espia_hor;
     public Image mira;
     public Image fondo;
     public Image girar;
@@ -53,23 +48,6 @@ public class Resources {
     public Image s_espia_0;
     public Image s_espia_1;
     
-    public Image s_portaaviones_0_ver;
-    public Image s_portaaviones_1_ver;
-    public Image s_portaaviones_2_ver;
-    public Image s_portaaviones_3_ver;
-    public Image s_portaaviones_4_ver;
-    public Image s_acorazado_0_ver;
-    public Image s_acorazado_1_ver;
-    public Image s_acorazado_2_ver;
-    public Image s_acorazado_3_ver;
-    public Image s_submarino_0_ver;
-    public Image s_submarino_1_ver;
-    public Image s_submarino_2_ver;
-    public Image s_destructor_0_ver;
-    public Image s_destructor_1_ver;
-    public Image s_destructor_2_ver;
-    public Image s_espia_0_ver;
-    public Image s_espia_1_ver;
              
     /** 
      * Recursos de AUDIO
@@ -95,17 +73,11 @@ public class Resources {
         background = null;
         signOn = null;
         water = null;
-        menuButton = null;
         portaaviones = null;
-        portaaviones_hor = null;
         acorazado = null;
-        acorazado_hor = null;
         destructor = null;
-        destructor_hor = null;
         submarino = null;
-        submarino_hor = null;
         espia = null;
-        espia_hor = null;
         mira = null;
         fondo = null;
         girar = null;
@@ -125,25 +97,7 @@ public class Resources {
         s_acorazado_3 = null;
         s_submarino_0 = null;
         s_submarino_1 = null;
-        s_submarino_2 = null;
-        
-        s_portaaviones_0_ver = null;
-        s_portaaviones_1_ver = null;
-        s_portaaviones_2_ver = null;
-        s_portaaviones_3_ver = null;
-        s_portaaviones_4_ver = null;
-        s_acorazado_0_ver = null;
-        s_acorazado_1_ver = null;
-        s_acorazado_2_ver = null;
-        s_acorazado_3_ver = null;
-        s_submarino_0_ver = null;
-        s_submarino_1_ver = null;
-        s_submarino_2_ver = null;
-        s_destructor_0_ver = null;
-        s_destructor_1_ver = null;
-        s_destructor_2_ver = null;
-        s_espia_0_ver = null;
-        s_espia_1_ver = null;
+        s_submarino_2 = null;        
         s_destructor_0 = null;
         s_destructor_1 = null;
         s_destructor_2 = null;
@@ -164,17 +118,11 @@ public class Resources {
             signOn = ih.loadImage("/acorazados_on.png", scaling);
             fondo = ih.loadImage("/fondo.png",scaling);
             water = ih.loadImage("/water.png", scaling);
-            menuButton = ih.loadImage("/menu_button.png", scaling);
             portaaviones = ih.loadImage("/PortaAviones.png", scaling);
-            portaaviones_hor = ih.loadImage("/PortaAviones-hor.png", scaling);
             acorazado = ih.loadImage("/Acorazado.png", scaling);
-            acorazado_hor = ih.loadImage("/Acorazado-hor.png", scaling);
             destructor = ih.loadImage("/Destructor.png", scaling);
-            destructor_hor = ih.loadImage("/Destructor-hor.png", scaling);
             submarino = ih.loadImage("/Submarino.png", scaling);
-            submarino_hor = ih.loadImage("/Submarino-hor.png", scaling);
             espia = ih.loadImage("/Espia.png", scaling);
-            espia_hor = ih.loadImage("/Espia-hor.png", scaling);
             mira = ih.loadImage("/mira.png", scaling);
             girar = ih.loadImage("/girar.png",scaling);
             buttonBarcos = ih.loadImage("/barcos.png",scaling);
@@ -201,24 +149,6 @@ public class Resources {
             s_espia_0 = ih.loadImage("/barco_part/espia0.png",scaling);
             s_espia_1 = ih.loadImage("/barco_part/espia1.png",scaling);
             
-            s_portaaviones_0_ver = ih.loadImage("/barco_part/port0_ver.png",scaling);
-            s_portaaviones_1_ver = ih.loadImage("/barco_part/port1_ver.png",scaling);
-            s_portaaviones_2_ver = ih.loadImage("/barco_part/port2_ver.png",scaling);
-            s_portaaviones_3_ver = ih.loadImage("/barco_part/port3_ver.png",scaling);
-            s_portaaviones_4_ver = ih.loadImage("/barco_part/port4_ver.png",scaling);
-            s_acorazado_0_ver = ih.loadImage("/barco_part/aco0_ver.png",scaling);
-            s_acorazado_1_ver = ih.loadImage("/barco_part/aco1_ver.png",scaling);
-            s_acorazado_2_ver = ih.loadImage("/barco_part/aco2_ver.png",scaling);
-            s_acorazado_3_ver = ih.loadImage("/barco_part/aco3_ver.png",scaling);
-            s_submarino_0_ver = ih.loadImage("/barco_part/sub0_ver.png",scaling);
-            s_submarino_1_ver = ih.loadImage("/barco_part/sub1_ver.png",scaling);
-            s_submarino_2_ver = ih.loadImage("/barco_part/sub2_ver.png",scaling);
-            s_destructor_0_ver = ih.loadImage("/barco_part/des0_ver.png",scaling);
-            s_destructor_1_ver = ih.loadImage("/barco_part/des1_ver.png",scaling);
-            s_destructor_2_ver = ih.loadImage("/barco_part/des2_ver.png",scaling);
-            s_espia_0_ver = ih.loadImage("/barco_part/espia0_ver.png",scaling);
-            s_espia_1_ver = ih.loadImage("/barco_part/espia1_ver.png",scaling);
-            
             initialized = true;
         }
     }
@@ -230,4 +160,9 @@ public class Resources {
         double result = scaling * value;
         return (result < 0) ? (int) (result - 0.5) : (int) (result + 0.5);
     }       
+    
+    public Image rotate90(Image image){        
+        ImageHelper ih = ImageHelper.getInstance();
+        return ih.transformImage(image, Sprite.TRANS_ROT270);
+    }
 }

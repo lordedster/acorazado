@@ -281,7 +281,8 @@ public class DeployShips
                         i -= ix;
                         ship.setY(calcMatrizY(i));
                     }
-                    imageShip = loadSprite(obtenerImagenCorrecta(ship.getType(), ship.getOrientacion()), 2, scaling);                
+                    imageShip = loadSprite(obtenerImagen(ship.getType()), 2, scaling);  
+                    imageShip.setTransform(Sprite.TRANS_MIRROR_ROT270);              
                     imageShip.setFrame(1);
                     break;
                 case TypeBattleShips.HORIZONTAL:
@@ -291,7 +292,7 @@ public class DeployShips
                         b -= ix;
                         ship.setX(calcMatrizX(b));
                     }                
-                    imageShip = loadSprite(obtenerImagenCorrecta(ship.getType(), ship.getOrientacion()), 2, scaling);
+                    imageShip = loadSprite(obtenerImagen(ship.getType()), 2, scaling);
                     imageShip.setFrame(1);
                     break;
             }
@@ -300,23 +301,40 @@ public class DeployShips
     }
     
     
-    private Image obtenerImagenCorrecta(int Type, int orientacion){
-        switch(orientacion){
-            case TypeBattleShips.VERTICAL:
-                switch(Type){
-                case TypeBattleShips.ACORAZADO:
-                    return r.acorazado_hor;
-                case TypeBattleShips.PORTAAVIONES:
-                    return r.portaaviones_hor;
-                case TypeBattleShips.SUBMARINO:
-                    return r.submarino_hor;
-                case TypeBattleShips.DESTRUCTOR:
-                    return r.destructor_hor;
-                case TypeBattleShips.ESPIA:
-                    return r.espia_hor;
-                }
-                break;
-            case TypeBattleShips.HORIZONTAL:
+//    private Image obtenerImagenC(int Type, int orientacion){
+//        switch(orientacion){
+//            case TypeBattleShips.VERTICAL:
+//                switch(Type){
+//                case TypeBattleShips.ACORAZADO:
+//                    return r.rotate90(r.acorazado);
+//                case TypeBattleShips.PORTAAVIONES:
+//                    return r.rotate90(r.portaaviones);
+//                case TypeBattleShips.SUBMARINO:
+//                    return r.rotate90(r.submarino);
+//                case TypeBattleShips.DESTRUCTOR:
+//                    return r.rotate90(r.destructor);
+//                case TypeBattleShips.ESPIA:
+//                    return r.rotate90(r.espia);
+//                }
+//                break;
+//            case TypeBattleShips.HORIZONTAL:
+//                switch(Type){
+//                case TypeBattleShips.ACORAZADO:
+//                    return r.acorazado;
+//                case TypeBattleShips.PORTAAVIONES:
+//                    return r.portaaviones;
+//                case TypeBattleShips.SUBMARINO:
+//                    return r.submarino;
+//                case TypeBattleShips.DESTRUCTOR:
+//                    return r.destructor;
+//                case TypeBattleShips.ESPIA:
+//                    return r.espia;
+//                }
+//                break;
+//        }
+//        return null;
+//    }
+     private Image obtenerImagen(int Type){
                 switch(Type){
                 case TypeBattleShips.ACORAZADO:
                     return r.acorazado;
@@ -328,9 +346,7 @@ public class DeployShips
                     return r.destructor;
                 case TypeBattleShips.ESPIA:
                     return r.espia;
-                }
-                break;
-        }
+                }       
         return null;
     }
     
