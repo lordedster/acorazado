@@ -467,7 +467,11 @@ public class BattleshipCanvas
         
         g.drawImage(r.background, cornerX, cornerY, anchor);
         if (gameState == TypeBattleShips.STATE_DEPLOYSHIPS || gameState == TypeBattleShips.STATE_MISION_LEVEL){
-            g.drawImage(r.fondo, cornerX, cornerY, anchor);
+            int c = cornerX;
+            for(int i = 0; i < 240; i++){
+                g.drawImage(r.fondo, c, cornerY, anchor);
+                c++;
+            }
         }
         g.drawImage(r.signOn, cornerX, cornerY + (int) (scaling * 86 + 0.5), anchor);
         if(gameState == TypeBattleShips.STATE_TRANSITION) {
