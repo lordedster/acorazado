@@ -217,8 +217,10 @@ public class UserData {
     private String tranformarNombre(int[] nombre){
         String n = "";
         for(int i = 0; i < nombre.length; i++){
-            n = n + Letra.obtenerLetra(nombre[i]);
-        }
+            if (nombre[i] != Letra.guion){
+                n = n + Letra.obtenerLetra(nombre[i]);
+            }
+        }        
         return n;
     }
     
