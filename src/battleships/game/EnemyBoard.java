@@ -200,6 +200,7 @@ public class EnemyBoard
             {
                 board[x][y].setEstado(TypeBattleShips.ACERTADO);
                 acertarBaraco(board[x][y].getBarco(), board[x][y].getSeccion_barco());
+                Listener(TypeBattleShips.SP_TURNO);
             }
         }
              
