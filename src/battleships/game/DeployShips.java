@@ -180,7 +180,7 @@ public class DeployShips
             ship = null;
             if((obtenerBarcos().length) == barcosPuestos){
                 barcosPuestos = 0;                
-                Listener(TypeBattleShips.STATE_MENU);
+                Listener(TypeBattleShips.STATE_MISION);
             }
         }        
     }

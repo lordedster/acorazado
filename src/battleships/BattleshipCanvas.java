@@ -17,6 +17,8 @@ import battleships.effects.VibratorManager;
 import battleships.audio.AudioManager;
 import battleships.effects.LightManager;
 import battleships.game.EnemyBoard;
+import battleships.game.FriendlyBoard;
+import battleships.game.maps.Grid;
 import battleships.game.maps.Map;
 import battleships.game.ships.BattleShip;
 import battleships.menu.BarcosScreen;
@@ -72,6 +74,7 @@ public class BattleshipCanvas
     private UserScreen userScreen;
     private SelectorNombre selectorNombre;
     private EnemyBoard tableroEnemigo;
+    private FriendlyBoard tableroAmigo;
     private Slideable currentView;
     private Slideable targetView;
     private Player electricity;
@@ -505,6 +508,10 @@ public class BattleshipCanvas
             createMenu();
            // menu.hideResume();
         }
+        if (tableroAmigo == null)
+        {
+            createTableroAmigo();
+        }
         if (selectorNombre == null){
             createSelectorNombre();
         }
@@ -890,7 +897,11 @@ public class BattleshipCanvas
                     case TypeBattleShips.GIRAR:
                         deployShips.girarBarco();
                         break;
-                    case TypeBattleShips.STATE_MENU:
+
+                    case TypeBattleShips.STATE_MISION:
+                        
+                        tableroAmigo.setBoard(deployShips.ObtenerMapa());
+                        tableroAmigo.setShips(deployShips.ObtenerBarcos());
                         tableroEnemigo.generarMapa();
                         showTableroEnemigo();
                         break;
@@ -901,6 +912,45 @@ public class BattleshipCanvas
     
     private void createTableroEnemigo(){
         tableroEnemigo = new EnemyBoard(cornerX, cornerY, gameWidth, gameHeight, r, new Map.Listener() {
+
+            public void itemClicked(int x, int y) {
+             
+                tableroEnemigo.PlayerShoot(x, y);
+            }
+            
+            public void changeState(int state){
+                switch(state)
+                {
+//                    case TypeBattleShips.STATE_BARCOS:
+//                        showBarcos();
+//                        break;
+//                    case TypeBattleShips.GIRAR:
+////                        deployShips.ObtenerBarcos();
+////                        deployShips.ObtenerMapa();
+////                        showUserScreen();
+//                        deployShips.girarBarco();
+//                        break;
+                    case TypeBattleShips.STATE_MENU:
+                        showUserScreen();
+                        break;
+                    case TypeBattleShips.SP_TURNO:
+                        if(tableroAmigo.sinBarcos())
+                            {
+                                    //ganaste
+                            }
+                            else
+                            {
+                                showTableroEnemigo();
+                                
+                            }
+                        break;
+                }
+            }
+        }, scaling, TypeBattleShips.FACIL);
+    }
+    
+        private void createTableroAmigo(){
+        tableroAmigo = new FriendlyBoard(cornerX, cornerY, gameWidth, gameHeight, r, new Map.Listener() {
 
             public void itemClicked(int x, int y) {
 //                deployShips.colocarBarco();
@@ -921,6 +971,19 @@ public class BattleshipCanvas
                     case TypeBattleShips.STATE_MENU:
                         showUserScreen();
                         break;
+                        
+                    case TypeBattleShips.SP_TURNO:
+                        if(tableroEnemigo.sinBarcos())
+                            {
+                                    //ganaste
+                            }
+                            else
+                            {
+                                showTableroAmigo();
+                                tableroAmigo.pcshoot();
+                            }
+                        break;
+    
                 }
             }
         }, scaling, TypeBattleShips.FACIL);
@@ -1035,9 +1098,10 @@ public class BattleshipCanvas
     private void  createSelectorScreen() {
        selector = new SelectorScreen(cornerX, cornerY, gameWidth, gameHeight, new Menu.Listener() {
 
-            public void itemClicked(int item) {
+   public void itemClicked(int item) {
                 switch (item) {
                     case SelectorScreen.BUTTON_OK:
+                        tableroAmigo.generarMapa();
                         tableroEnemigo.generarMapa();
                         showTableroEnemigo();
                         break;
@@ -1147,11 +1211,32 @@ public class BattleshipCanvas
         changeView(tableroEnemigo);
     }
     
+     private void showTableroAmigo(){
+        nextState = TypeBattleShips.STATE_MISION_LEVEL;
+        changeView(tableroAmigo);
+    }
+    
     private void showSelectorNombre(){
         nextState = TypeBattleShips.STATE_CREATE_NOMBRE;
         changeView(selectorNombre);
     }
 
+    
+    
+ 
+    
+    public void singlePlayer_playerDispara()
+    {
+    if(tableroAmigo.sinBarcos())
+        {
+            //perdiste
+        }
+        else
+        {}
+    }
+
+       
+    
     /**
      * Change level
      */

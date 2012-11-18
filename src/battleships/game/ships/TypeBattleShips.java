@@ -76,6 +76,10 @@ public class TypeBattleShips {
     public static final int STATE_USER = 15;
     public static final int STATE_CREATE_NOMBRE = 16;
     public static final int GIRAR = 16;
+    public static final int STATE_SINGLEPLAYER = 17;
+    public static final int SP_TURNO = 18;
+    public static final int TABLERO_AMIGO = 19;
+    public static final int TABLERO_ENEMIGO = 20;
     
     //Dificultades
     public static final int FACIL = 0;

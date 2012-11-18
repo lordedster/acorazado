@@ -346,6 +346,24 @@ public class Map {
     protected void ReemplazarBarcos(BattleShip[] barcos){
         ships = barcos;
     }   
+
+    public BattleShip[] getShips() {
+        return ships;
+    }
+
+    public void setShips(BattleShip[] ships) {
+        this.ships = ships;
+    }
+
+    public Grid[][] getBoard() {
+        return board;
+    }
+
+    public void setBoard(Grid[][] board) {
+        this.board = board;
+    }
+    
+    
     
     
     
@@ -449,6 +467,20 @@ public class Map {
             }
         }
         return done;
+    }
+    
+    public boolean sinBarcos()
+    {
+        boolean r = true;
+        
+            for (int i = 0; i < ships.length -1; i++)
+            {
+                if(!ships[i].isSunked())
+                {
+                    r=false;
+                }
+            }
+        return r;
     }
     
 }

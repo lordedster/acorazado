@@ -147,8 +147,8 @@ public class Game
 //        dashboard.setPosition(0, displayHeight - dashboard.getHeight());
 //
         // Create Buttons
-        menuButton = new Sprite(r.menuButton);
-        menuButton.setPosition(r.scale(180), displayHeight - menuButton.getHeight());
+//        menuButton = new Sprite(r.menuButton);
+//        menuButton.setPosition(r.scale(180), displayHeight - menuButton.getHeight());
 //        newGameButton = new Sprite(r.newGameButton);
 //        newGameButton.setPosition(r.scale(10), displayHeight - newGameButton.getHeight());
 //

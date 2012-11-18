@@ -143,6 +143,7 @@ public class EnemyBoard
         AlgoritmoFacil(TypeBattleShips.DESTRUCTOR, TypeBattleShips.DESTRUCTOR_SIZE, ObtenerMatriz(), 2);
         AlgoritmoFacil(TypeBattleShips.SUBMARINO, TypeBattleShips.SUBMARINO_SIZE, ObtenerMatriz(), 3);
         AlgoritmoFacil(TypeBattleShips.ESPIA, TypeBattleShips.ESPIA_SIZE, ObtenerMatriz(), 4);
+        r = null;
    }
     
     private void AlgoritmoFacil(int ship, int size, Grid[][] map, int posicion){        
@@ -185,6 +186,41 @@ public class EnemyBoard
     
     public void rightButtonPressed(){
         Listener(TypeBattleShips.STATE_MENU);
+    }
+    
+    public void PlayerShoot(int x, int y)
+    {
+        if(board[x][y].getEstado()==TypeBattleShips.AGUA)
+        {
+            if(board[x][y].getBarco()==-1)
+            {
+                board[x][y].setEstado(TypeBattleShips.SHOT);
+            }
+            else
+            {
+                board[x][y].setEstado(TypeBattleShips.ACERTADO);
+                acertarBaraco(board[x][y].getBarco(), board[x][y].getSeccion_barco());
+            }
+        }
+             
+    }
+    
+    public void acertarBaraco(int barco, int seccion)
+    {
+        super.ships[barco].Hit();
+        if(super.ships[barco].isSunked())
+        {
+              for(int i = 0; i < 10; i++)
+              {
+                   for (int j = 0; j < 10; j++)
+                    {
+                            if(super.board[i][j].getBarco()==barco)
+                                    {
+                                        super.board[i][j].setEstado(TypeBattleShips.HUNDIDO); 
+                                    }
+                    }
+               } 
+        } 
     }
     
 //    private boolean ComprobarOcupacion(int exis, int i, int direccion, int size, Grid[][] map){
