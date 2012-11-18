@@ -100,7 +100,7 @@ public class DeployShips
             for(int j = 0; j < getWidth(); j++)
             {
                 setGrid(i, j, new Grid(TypeBattleShips.AGUA, TypeBattleShips.EMPTY, 
-                                        loadSprite(r.water, 2, scaling), 
+                                        loadSprite(r.water, 3, scaling), 
                                         loadSprite(r.mira, 2, scaling),
                                         TypeBattleShips.EMPTY));
             }

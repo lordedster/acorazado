@@ -90,7 +90,7 @@ public class FriendlyBoard extends Map implements Slideable {
 
     public boolean slideOut() {
         int distance = x - OUT_CX;
-        distance *= 1.6;
+        distance *= 0.5;
         x = OUT_CX + distance;
         positionGrid();
         return distance != 0;
@@ -98,7 +98,7 @@ public class FriendlyBoard extends Map implements Slideable {
 
     public boolean slideIn() {
         int distance = x - IN_CX;
-        distance *= 1.6;
+        distance *= 0.5;
         x = IN_CX + distance;
         positionGrid();
         return distance != 0;
@@ -134,7 +134,7 @@ public class FriendlyBoard extends Map implements Slideable {
             for(int j = 0; j < getWidth(); j++)
             {
                 setGrid(i, j, new Grid(TypeBattleShips.AGUA, TypeBattleShips.EMPTY, 
-                                        loadSprite(r.water, 2, scaling), 
+                                        loadSprite(r.water, 3, scaling), 
                                         loadSprite(r.mira, 2, scaling),TypeBattleShips.EMPTY));
             }
         }
