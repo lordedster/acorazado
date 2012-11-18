@@ -556,7 +556,7 @@ public class BattleshipCanvas
         }
         if (misionScreen == null){
             createMisionScreen();            
-            showMisionScreen();
+            //showMisionScreen();
         }
         if (tableroEnemigo == null){
             createTableroEnemigo();
@@ -855,7 +855,7 @@ public class BattleshipCanvas
            DATA.getNombreUsuario(UserData.PERFIL_A), 
            DATA.getNombreUsuario(UserData.PERFIL_B), 
            DATA.getNombreUsuario(UserData.PERFIL_C), r);
-        //showMenu();
+        showMenu();
     }
     
     private void createOptionScreen() {
