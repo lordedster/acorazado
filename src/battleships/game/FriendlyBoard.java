@@ -247,7 +247,7 @@ public class FriendlyBoard extends Map implements Slideable {
             }
             case 3:
             {
-                s.setX(s.getX()-1);
+                s.setX(s.getX()+1);
                 break;
             }
         }
@@ -394,10 +394,6 @@ public class FriendlyBoard extends Map implements Slideable {
         direccionopuesta();
         while(direccionDisparo == -1)
         {
-            if(lastdirection != -1)
-            {
-                
-            }
             a = rnd.nextInt(4);
             switch (a)
             {
