@@ -452,9 +452,11 @@ public class BattleshipCanvas
                 
                 if (tableroAmigo.hasShot()){                    
                     tableroAmigo.setHasShot(false);
-                     if(!tableroEnemigo.animarAtaque()){
-                       tableroEnemigo.Atacar(false);
-                       tableroEnemigo.Listener(TypeBattleShips.SP_TURNO);                        
+                }
+                 if(tableroAmigo.isAtaqueEnCurso()){
+                     if(!tableroAmigo.animarAtaque()){
+                       tableroAmigo.Atacar(false);
+                       tableroAmigo.Listener(TypeBattleShips.SP_TURNO);                        
                     }
                 }
                 break;
