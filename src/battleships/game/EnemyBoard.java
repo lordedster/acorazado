@@ -35,6 +35,16 @@ public class EnemyBoard
     private Random rnd;
     private int dificultad;
     
+    private Sprite misil;
+    private boolean ataqueEnCurso;
+    
+    private int misil_x;
+    private int misil_y;
+    private int target_x;
+    private int target_y;
+    private int map_x;
+    private int map_y;
+    
     public EnemyBoard(int cornerX, int cornerY, int width, int height, Resources r, Listener l, double scaling, int dificultad) {
         super(10,10,5,l);
         this.displayWidth = width;
@@ -43,7 +53,9 @@ public class EnemyBoard
         this.scaling = scaling;
         this.dificultad = dificultad;
         rnd = new Random();
-        
+        this.misil = loadSprite(r.misil,1,scaling);
+        setearMisil();
+        ataqueEnCurso = false;
 //        buttonGirar = new Sprite(r.girar);
 //        buttonBarcos = new Sprite(r.buttonBarcos);
         IN_X = cornerX;
@@ -105,6 +117,7 @@ public class EnemyBoard
     
     public void paint(Graphics g){
         super.paint(g);
+        misil.paint(g);
     }
     
     private void createMap(boolean visibilidad){
@@ -122,12 +135,7 @@ public class EnemyBoard
     
 
     
-    private void CargarBarcosFacil(boolean v){    
-//        AlgoritmoFacil(TypeBattleShips.ESPIA, TypeBattleShips.ESPIA_SIZE, ObtenerMatriz(), 0);
-//        AlgoritmoFacil(TypeBattleShips.SUBMARINO, TypeBattleShips.SUBMARINO_SIZE, ObtenerMatriz(), 1);
-//        AlgoritmoFacil(TypeBattleShips.DESTRUCTOR, TypeBattleShips.DESTRUCTOR_SIZE, ObtenerMatriz(), 2);
-//        AlgoritmoFacil(TypeBattleShips.ACORAZADO, TypeBattleShips.ACORAZADO_SIZE, ObtenerMatriz(), 3);
-//        AlgoritmoFacil(TypeBattleShips.PORTAAVIONES, TypeBattleShips.PORTAAVIONES_SIZE, ObtenerMatriz(), 4);        
+    private void CargarBarcosFacil(boolean v){           
         AlgoritmoFacil(TypeBattleShips.PORTAAVIONES, TypeBattleShips.PORTAAVIONES_SIZE, ObtenerMatriz(), 0,v);        
         AlgoritmoFacil(TypeBattleShips.ACORAZADO, TypeBattleShips.ACORAZADO_SIZE, ObtenerMatriz(), 1, v);        
         AlgoritmoFacil(TypeBattleShips.DESTRUCTOR, TypeBattleShips.DESTRUCTOR_SIZE, ObtenerMatriz(), 2, v );
@@ -180,20 +188,20 @@ public class EnemyBoard
     
     public void PlayerShoot(int x, int y)
     {
-        if(board[x][y].getEstado()==TypeBattleShips.AGUA || board[x][y].getEstado()==TypeBattleShips.INTACTO)
+        if(!isAtaqueEnCurso())
         {
-            if(board[x][y].getBarco()==TypeBattleShips.EMPTY)
+            if(board[x][y].getEstado()== TypeBattleShips.AGUA ||board[x][y].getEstado()== TypeBattleShips.INTACTO)
             {
-                board[x][y].setEstado(TypeBattleShips.SHOT);
-                board[x][y].setFrameBarco(2);
-                Listener(TypeBattleShips.SP_TURNO_IA);
-            }
-            else
-            {
-                board[x][y].setEstado(TypeBattleShips.ACERTADO);
-                board[x][y].setFrameBarco(1);
-                acertarBaraco(board[x][y].getBarco(), board[x][y].getSeccion_barco());
-                Listener(TypeBattleShips.SP_TURNO_IA);
+                posicionMisil(x,y,board[x][y].getX(),board[x][y].getY());
+                if(board[x][y].getBarco()==TypeBattleShips.EMPTY)
+                {
+                    board[x][y].setEstado(TypeBattleShips.SHOT);
+                }
+                else
+                {
+                    board[x][y].setEstado(TypeBattleShips.ACERTADO);
+                    acertarBaraco(board[x][y].getBarco(), board[x][y].getSeccion_barco());
+                }
             }
         }
              
@@ -204,17 +212,65 @@ public class EnemyBoard
         super.ships[barco].Hit();
         if(super.ships[barco].isSunked())
         {
-              for(int i = 0; i < 10; i++)
-              {
-                   for (int j = 0; j < 10; j++)
-                    {
-                        if(super.board[i][j].getBarco()==barco)
-                        {
-                            super.board[i][j].setEstado(TypeBattleShips.HUNDIDO); 
-                            //super.board[i][j]
-                        }
-                    }
-               } 
+            for(int i = 0; i < 10; i++)
+            {
+                 for (int j = 0; j < 10; j++)
+                  {
+                      if(super.board[i][j].getBarco()==barco)
+                      {
+                          super.board[i][j].setEstado(TypeBattleShips.HUNDIDO); 
+                          //super.board[i][j]
+                      }
+                  }
+             } 
         } 
     }    
+    
+    public boolean animarAtaque(){
+        misil_y += 72;
+        if(target_y <= misil_y){
+            return false;
+        }else{
+            posicionarMisil();
+            return true;
+        }
+    }
+    
+    private void posicionMisil(int x, int y, int target_x, int target_y ){
+        ataqueEnCurso = true;
+        this.target_x = target_x;
+        this.target_y = target_y;
+        this.map_x = x;
+        this.map_y = y;
+        misil_y = cornerY - 24;
+        misil_x = target_x;
+        posicionarMisil();
+        
+    }
+    
+    private void posicionarMisil(){
+        misil.setPosition(misil_x, misil_y);
+    }
+    
+    public void setearMisil(){
+        misil.setPosition(-24, -24);
+    }
+    
+    public void Atacar(boolean b){
+        this.ataqueEnCurso = b;        
+        pintar();
+        setearMisil();
+    }
+    
+    public boolean isAtaqueEnCurso(){
+        return ataqueEnCurso;
+    }
+    
+    public void pintar(){          
+        if(board[map_x][map_y].getBarco() == TypeBattleShips.EMPTY){
+            board[map_x][map_y].setFrameBarco(2);                
+        }else{
+            board[map_x][map_y].setFrameBarco(1);
+        }            
+    }
 }

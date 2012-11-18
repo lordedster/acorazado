@@ -13,6 +13,7 @@ import battleships.game.ships.TypeBattleShips;
 import battleships.records.UserData;
 import java.util.Random;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.game.Sprite;
 
 /**
  *
@@ -45,6 +46,16 @@ public class FriendlyBoard extends Map implements Slideable {
     private Resources r;
     //private Font font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL);   
     private double scaling;
+    
+    private Sprite misil;
+    private boolean ataqueEnCurso;
+    
+    private int misil_x;
+    private int misil_y;
+    private int target_x;
+    private int target_y;
+    private int map_x;
+    private int map_y;
 
 
     public FriendlyBoard(int cornerX, int cornerY, int width, int height, Resources r, Listener l, double scaling, int dificultad) {
@@ -55,6 +66,9 @@ public class FriendlyBoard extends Map implements Slideable {
         this.scaling = scaling;
         this.dificultad = dificultad;
         rnd = new Random();
+        this.misil = loadSprite(r.misil,1,scaling);
+        setearMisil();
+        ataqueEnCurso = false;
         
         IN_CX = cornerX;
         OUT_CX = IN_CX - width;    
@@ -501,10 +515,10 @@ public class FriendlyBoard extends Map implements Slideable {
     
     public boolean disparar(Shoot s)
     { 
+        posicionMisil(s.getX(),s.getY(),board[s.getX()][s.getY()].getX(),board[s.getX()][s.getY()].getY());
         if(super.board[s.getX()][s.getY()].getEstado()== TypeBattleShips.INTACTO)
         {
            super.board[s.getX()][s.getY()].setEstado(TypeBattleShips.ACERTADO);
-           super.board[s.getX()][s.getY()].setFrameBarco(1);
            if(!tocado)
            {
                tocado = true;
@@ -516,7 +530,6 @@ public class FriendlyBoard extends Map implements Slideable {
         else
         {
            super.board[s.getX()][s.getY()].setEstado(TypeBattleShips.SHOT);
-           super.board[s.getX()][s.getY()].setFrameBarco(2);
         }
         return true;
     }
@@ -589,4 +602,54 @@ public class FriendlyBoard extends Map implements Slideable {
      public void setHasShot(boolean d){
          disparado = d;
      }
+     
+     
+        public boolean animarAtaque(){
+        misil_y += 72;
+        if(target_y <= misil_y){
+            return false;
+        }else{
+            posicionarMisil();
+            return true;
+        }
+    }
+    
+    private void posicionMisil(int x, int y, int target_x, int target_y ){
+        ataqueEnCurso = true;
+        this.target_x = target_x;
+        this.target_y = target_y;
+        this.map_x = x;
+        this.map_y = y;
+        misil_y = cornerY - 24;
+        misil_x = target_x;
+        posicionarMisil();
+        
+    }
+    
+    private void posicionarMisil(){
+        misil.setPosition(misil_x, misil_y);
+    }
+    
+    public void setearMisil(){
+        misil.setPosition(-24, -24);
+    }
+    
+    public void Atacar(boolean b){
+        this.ataqueEnCurso = b;        
+        pintar();
+        setearMisil();
+    }
+    
+    public boolean isAtaqueEnCurso(){
+        return ataqueEnCurso;
+    }
+    
+    public void pintar(){          
+        if(board[map_x][map_y].getBarco() == TypeBattleShips.EMPTY){
+            board[map_x][map_y].setFrameBarco(2);                
+        }else{
+            board[map_x][map_y].setFrameBarco(1);
+        }            
+    }
+
 }
