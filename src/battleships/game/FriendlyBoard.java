@@ -30,8 +30,8 @@ public class FriendlyBoard extends Map implements Slideable {
     boolean ld;
     boolean rd;
     private Random rnd;
-        private final int IN_X;
-    private final int OUT_X;    
+        private final int IN_CX;
+    private final int OUT_CX;    
     private int x;
     private int y;
     private int cornerX;
@@ -52,15 +52,13 @@ public class FriendlyBoard extends Map implements Slideable {
         this.dificultad = dificultad;
         rnd = new Random();
         
-//        buttonGirar = new Sprite(r.girar);
-//        buttonBarcos = new Sprite(r.buttonBarcos);
-        IN_X = cornerX;
-        OUT_X = cornerX + displayWidth;    
+        IN_CX = cornerX + width / 2;
+        OUT_CX = IN_CX + width;
         
-        x = OUT_X;
+        x = OUT_CX;
         y = cornerY + (int) (height * 0.8);
 
-        this.cornerX = OUT_X;
+        this.cornerX = OUT_CX;
         this.cornerX = cornerY;
          
     }
@@ -87,17 +85,17 @@ public class FriendlyBoard extends Map implements Slideable {
     } 
 
     public boolean slideOut() {
-        int distance = x - OUT_X;
+        int distance = x - OUT_CX;
         distance *= 0.8;
-        x = OUT_X + distance;
+        x = OUT_CX + distance;
         positionGrid();
         return distance != 0;
     }
 
     public boolean slideIn() {
-        int distance = x - IN_X;
+        int distance = x - IN_CX;
         distance *= 0.8;
-        x = IN_X + distance;
+        x = IN_CX + distance;
         positionGrid();
         return distance != 0;
     }

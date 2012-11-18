@@ -25,7 +25,6 @@ public class Resources {
     public Image mira;
     public Image fondo;
     public Image girar;
-    public Image buttonBarcos;
     public Image fondo_letra_izq;
     public Image fondo_letra_der;
     public Image fondo_letra_cent;
@@ -81,7 +80,6 @@ public class Resources {
         mira = null;
         fondo = null;
         girar = null;
-        buttonBarcos = null;
         fondo_letra_izq = null;
         fondo_letra_der = null;
         fondo_letra_cent = null;
@@ -125,7 +123,6 @@ public class Resources {
             espia = ih.loadImage("/Espia.png", scaling);
             mira = ih.loadImage("/mira.png", scaling);
             girar = ih.loadImage("/girar.png",scaling);
-            buttonBarcos = ih.loadImage("/barcos.png",scaling);
             fondo_letra_izq = ih.loadImage("/fondo_letra_izq.png",scaling);
             fondo_letra_der = ih.loadImage("/fondo_letra_der.png",scaling);
             fondo_letra_cent = ih.loadImage("/fondo_letra_cent.png",scaling);
