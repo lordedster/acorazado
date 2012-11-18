@@ -939,7 +939,8 @@ public class BattleshipCanvas
                     case TypeBattleShips.SP_TURNO:
                         if(tableroAmigo.sinBarcos())
                             {
-                                    //ganaste
+                                    //perdiste
+                                
                             }
                             else
                             {
