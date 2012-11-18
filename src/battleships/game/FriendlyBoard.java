@@ -519,7 +519,7 @@ public class FriendlyBoard extends Map implements Slideable {
     
     public boolean disparar(Shoot s)
     { 
-        posicionMisil(s.getX(),s.getY(),board[s.getX()][s.getY()].getX(),board[s.getX()][s.getY()].getY());
+        posicionMisil(s.getX(),s.getY(), board[s.getX()][s.getY()].getX(), board[s.getX()][s.getY()].getY());
         if(super.board[s.getX()][s.getY()].getEstado()== TypeBattleShips.INTACTO)
         {
            super.board[s.getX()][s.getY()].setEstado(TypeBattleShips.ACERTADO);
@@ -609,7 +609,7 @@ public class FriendlyBoard extends Map implements Slideable {
      
      
         public boolean animarAtaque(){
-        misil_y += 72;
+        misil_y += 48;
         if(target_y <= misil_y){
             return false;
         }else{
