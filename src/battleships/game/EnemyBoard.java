@@ -57,7 +57,7 @@ public class EnemyBoard
     }
     
     public void generarMapa(){
-        createMap(dificultad);        
+        createMap(false);        
         positionGrid();
     }
     
@@ -107,7 +107,7 @@ public class EnemyBoard
         super.paint(g);
     }
     
-    private void createMap(int dificultad){
+    private void createMap(boolean visibilidad){
         for(int i = 0; i < getHeight(); i++ )
         {
             for(int j = 0; j < getWidth(); j++)
@@ -117,36 +117,26 @@ public class EnemyBoard
                                         loadSprite(r.mira, 2, scaling),TypeBattleShips.EMPTY));
             }
         }
-        cargarBarcos(dificultad);
+        CargarBarcosFacil(visibilidad);
     }    
     
-    private void cargarBarcos(int dificultad){
-        switch(dificultad){
-            case TypeBattleShips.FACIL:
-                CargarBarcosFacil();
-                break;
-            case TypeBattleShips.MODERADO:
-                break;
-            case TypeBattleShips.DIFICIL:
-                break;
-        }        
-    }
+
     
-    private void CargarBarcosFacil(){    
+    private void CargarBarcosFacil(boolean v){    
 //        AlgoritmoFacil(TypeBattleShips.ESPIA, TypeBattleShips.ESPIA_SIZE, ObtenerMatriz(), 0);
 //        AlgoritmoFacil(TypeBattleShips.SUBMARINO, TypeBattleShips.SUBMARINO_SIZE, ObtenerMatriz(), 1);
 //        AlgoritmoFacil(TypeBattleShips.DESTRUCTOR, TypeBattleShips.DESTRUCTOR_SIZE, ObtenerMatriz(), 2);
 //        AlgoritmoFacil(TypeBattleShips.ACORAZADO, TypeBattleShips.ACORAZADO_SIZE, ObtenerMatriz(), 3);
 //        AlgoritmoFacil(TypeBattleShips.PORTAAVIONES, TypeBattleShips.PORTAAVIONES_SIZE, ObtenerMatriz(), 4);        
-        AlgoritmoFacil(TypeBattleShips.PORTAAVIONES, TypeBattleShips.PORTAAVIONES_SIZE, ObtenerMatriz(), 0);        
-        AlgoritmoFacil(TypeBattleShips.ACORAZADO, TypeBattleShips.ACORAZADO_SIZE, ObtenerMatriz(), 1);        
-        AlgoritmoFacil(TypeBattleShips.DESTRUCTOR, TypeBattleShips.DESTRUCTOR_SIZE, ObtenerMatriz(), 2);
-        AlgoritmoFacil(TypeBattleShips.SUBMARINO, TypeBattleShips.SUBMARINO_SIZE, ObtenerMatriz(), 3);
-        AlgoritmoFacil(TypeBattleShips.ESPIA, TypeBattleShips.ESPIA_SIZE, ObtenerMatriz(), 4);
+        AlgoritmoFacil(TypeBattleShips.PORTAAVIONES, TypeBattleShips.PORTAAVIONES_SIZE, ObtenerMatriz(), 0,v);        
+        AlgoritmoFacil(TypeBattleShips.ACORAZADO, TypeBattleShips.ACORAZADO_SIZE, ObtenerMatriz(), 1, v);        
+        AlgoritmoFacil(TypeBattleShips.DESTRUCTOR, TypeBattleShips.DESTRUCTOR_SIZE, ObtenerMatriz(), 2, v );
+        AlgoritmoFacil(TypeBattleShips.SUBMARINO, TypeBattleShips.SUBMARINO_SIZE, ObtenerMatriz(), 3, v);
+        AlgoritmoFacil(TypeBattleShips.ESPIA, TypeBattleShips.ESPIA_SIZE, ObtenerMatriz(), 4, v);
         r = null;
    }
     
-    private void AlgoritmoFacil(int ship, int size, Grid[][] map, int posicion){        
+    private void AlgoritmoFacil(int ship, int size, Grid[][] map, int posicion, boolean v){        
         int direccion = rnd.nextInt(2); 
         int x_primero = 0; 
         int y_primero = 0;
@@ -173,10 +163,10 @@ public class EnemyBoard
                 
         }
         if(estaOcupado(direccion, x_primero, y_primero, size)){
-            AlgoritmoFacil(ship, size, map, posicion);
+            AlgoritmoFacil(ship, size, map, posicion, v);
         } else {
             BattleShip b = new BattleShip(TypeBattleShips.SHIPS[ship], ship, size, direccion, calcMatrizX(x_primero), calcMatrizY(y_primero), r);
-            super.AddShip(b, scaling, true, r, posicion);
+            super.AddShip(b, scaling, v, r, posicion);
         }
     }
     
@@ -192,9 +182,10 @@ public class EnemyBoard
     {
         if(board[x][y].getEstado()==TypeBattleShips.AGUA)
         {
-            if(board[x][y].getBarco()==-1)
+            if(board[x][y].getBarco()==TypeBattleShips.EMPTY)
             {
                 board[x][y].setEstado(TypeBattleShips.SHOT);
+                Listener(TypeBattleShips.SP_TURNO);
             }
             else
             {
