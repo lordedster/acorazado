@@ -180,7 +180,7 @@ public class EnemyBoard
     
     public void PlayerShoot(int x, int y)
     {
-        if(board[x][y].getEstado()==TypeBattleShips.AGUA)
+        if(board[x][y].getEstado()==TypeBattleShips.AGUA || board[x][y].getEstado()==TypeBattleShips.INTACTO)
         {
             if(board[x][y].getBarco()==TypeBattleShips.EMPTY)
             {

@@ -21,14 +21,16 @@ import javax.microedition.lcdui.Graphics;
 public class FriendlyBoard extends Map implements Slideable {
     
     int dificultad;
-    int direccionDisparo;//0 up, 1, down, 2 left, 3 rigth
+    int direccionDisparo = -1;//0 up, 1, down, 2 left, 3 rigth
     int XTocado;
     int YTocado;
-    boolean tocado;
-    boolean ud;
-    boolean dd;
-    boolean ld;
-    boolean rd;
+    boolean tocado = false;
+    boolean ud = true;
+    boolean dd = true;
+    boolean ld = true;
+    boolean rd = true;
+    int lastdirection = -1;
+    
     boolean ready;
     boolean disparado;
     private Random rnd;
@@ -208,7 +210,10 @@ public class FriendlyBoard extends Map implements Slideable {
     
     public Shoot nextAcertadoShoot(Shoot s)
     {
-        
+        if(direccionDisparo == -1)
+        {
+            getNewDireccion();
+        }
         switch (direccionDisparo)
         {
             case 0:
@@ -235,12 +240,18 @@ public class FriendlyBoard extends Map implements Slideable {
         if(s.getX() > 9 || s.getY() > 9 || s.getX()<0 || s.getY()<0) //el siguiente disparo esta en los limites del tablero?
         {
             getNewDireccion(); // buscamos otra direccion
+            s.setX(XTocado);
+            s.setY(YTocado);
+            s = nextAcertadoShoot(s);
         }
         else
         {
             if( super.board[s.getX()][s.getY()].getEstado()== TypeBattleShips.SHOT || super.board[s.getX()][s.getY()].getEstado()== TypeBattleShips.HUNDIDO)
             {
                 getNewDireccion(); // buscamos otra direccion
+                 s.setX(XTocado);
+                s.setY(YTocado);
+                s = nextAcertadoShoot(s);
             }
             else
             {
@@ -260,24 +271,24 @@ public class FriendlyBoard extends Map implements Slideable {
     public Shoot nextShot()
     {
         Shoot s = new Shoot();
-        int x;
-        int y;
-        switch(dificultad){
+        int xn;
+        int yn;
+        switch(TypeBattleShips.DIFICIL){
     
             case TypeBattleShips.FACIL:
             {
                 while(true)
                 {
-                    x = rnd.nextInt(9);
-                    y = rnd.nextInt(9);
+                    xn = rnd.nextInt(10);
+                    yn = rnd.nextInt(10);
                     
-                    if( super.board[x][y].getEstado()== TypeBattleShips.INTACTO || super.board[x][y].getEstado()== TypeBattleShips.AGUA )
+                    if( super.board[xn][yn].getEstado()== TypeBattleShips.INTACTO || super.board[xn][yn].getEstado()== TypeBattleShips.AGUA )
                     {   
                         break;
                     }
                 }
-                s.setX(x);
-                s.setY(y);
+                s.setX(xn);
+                s.setY(yn);
             break;
             }
             case TypeBattleShips.MODERADO:
@@ -290,15 +301,15 @@ public class FriendlyBoard extends Map implements Slideable {
                 {
                     while(true)
                      {
-                        x = rnd.nextInt(9);
-                        y = rnd.nextInt(9);
+                        xn = rnd.nextInt(10);
+                        yn = rnd.nextInt(10);
                     
-                        if( super.board[x][y].getEstado()== TypeBattleShips.INTACTO || super.board[x][y].getEstado()== TypeBattleShips.AGUA  )
+                        if( super.board[xn][yn].getEstado()== TypeBattleShips.INTACTO || super.board[xn][yn].getEstado()== TypeBattleShips.AGUA  )
                         {   
                             break;
                         }
-                        s.setX(x);
-                        s.setY(y);
+                        s.setX(xn);
+                        s.setY(yn);
                 }
                 
                }
@@ -308,29 +319,32 @@ public class FriendlyBoard extends Map implements Slideable {
             {
                  if(tocado)
                 {
+                    s.setX(XTocado);
+                    s.setY(YTocado);
                     s = nextAcertadoShoot(s);
                 }
                 else
                 {
                  while(true)
                 {
-                    x = rnd.nextInt(9);
-                    y = rnd.nextInt(4);
-                    if(x%2 == 0)
+                    
+                    xn = rnd.nextInt(10);
+                    yn = rnd.nextInt(5);
+                    if(xn%2 == 0)
                     {
-                        y = y + y;
+                        yn = yn + yn;
                     }
                     else
                     {
-                        y = y + y + 1;
+                        yn = yn + yn + 1;
                     }    
-                    if( super.board[x][y].getEstado()== TypeBattleShips.INTACTO || super.board[x][y].getEstado()== TypeBattleShips.AGUA )
+                    if( super.board[xn][yn].getEstado()== TypeBattleShips.INTACTO || super.board[xn][yn].getEstado()== TypeBattleShips.AGUA )
                     {   
                         break;
                     }
                 }
-                s.setX(x);
-                s.setY(y);
+                s.setX(xn);
+                s.setY(yn);
                 }
             break;
             }
@@ -363,8 +377,13 @@ public class FriendlyBoard extends Map implements Slideable {
     public void newDirection()
     {
         int a = -1;
-        while(a == -1)
+        direccionopuesta();
+        while(direccionDisparo == -1)
         {
+            if(lastdirection != -1)
+            {
+                
+            }
             a = rnd.nextInt(4);
             switch (a)
             {
@@ -373,6 +392,7 @@ public class FriendlyBoard extends Map implements Slideable {
                     if (ud == true)
                     {
                         direccionDisparo = 0;
+                        lastdirection = 0;
                     }
                     break;
                 }
@@ -381,6 +401,7 @@ public class FriendlyBoard extends Map implements Slideable {
                     if (dd == true)
                     {
                         direccionDisparo = 1;
+                        lastdirection = 1;
                     }
                     break;
                 }
@@ -389,6 +410,7 @@ public class FriendlyBoard extends Map implements Slideable {
                     if (ld == true)
                     {
                         direccionDisparo = 2;
+                        lastdirection = 2;
                     }
                     break;
                 }
@@ -397,6 +419,7 @@ public class FriendlyBoard extends Map implements Slideable {
                     if (rd == true)
                     {
                         direccionDisparo = 3;
+                        lastdirection = 3;
                     }
                     break;
                 }
@@ -404,10 +427,56 @@ public class FriendlyBoard extends Map implements Slideable {
         }
     }
     
+    public void direccionopuesta()
+    {
+
+        switch(lastdirection)
+        {
+                case 0:
+                    if(dd)
+                    {
+                        direccionDisparo = 1;
+                        lastdirection = 1;
+                        
+                    }
+                    break;
+                    
+                case 1:
+                    if(ud)
+                    {
+                        direccionDisparo = 0;
+                        lastdirection = 0;
+                        
+                    }
+                    break;
+                    
+                case 2:
+                    if(ld)
+                    {
+                        direccionDisparo = 3;
+                        lastdirection = 3;
+                       
+                    }
+                    break;
+                    
+                case 3:
+                    if(rd)
+                    {
+                        direccionDisparo = 2;
+                        lastdirection = 2;
+                     
+                    }
+                    break;
+        }           
+    }
+    
     public void getNewDireccion()
     {
         switch (direccionDisparo)
         {
+            case -1:
+                break;
+                
              case 0:
             {
                 ud=false;
@@ -480,10 +549,11 @@ public class FriendlyBoard extends Map implements Slideable {
     public void reset()
     {
         direccionDisparo = -1;
-        ud = false;
-        dd = false;
-        ld = false;
-        rd = false;
+        lastdirection = -1;
+        ud = true;
+        dd = true;
+        ld = true;
+        rd = true;
         tocado = false;
         buscarAcertado();
     }
