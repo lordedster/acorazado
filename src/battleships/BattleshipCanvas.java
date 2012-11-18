@@ -347,7 +347,7 @@ public class BattleshipCanvas
                 }
                 break;
             }
-            case TypeBattleShips.STATE_MISION_LEVEL:
+            case TypeBattleShips.SP_TURNO:
                  switch (key) {
                     case LEFT_SOFTKEY:
                         tableroEnemigo.leftButtonPressed();
@@ -450,14 +450,22 @@ public class BattleshipCanvas
                     tableroAmigo.pcshoot();
                 }
                 
-                if (tableroAmigo.hasShot()  /*aqui va la animacion*/){
+                if (tableroAmigo.hasShot()){                    
                     tableroAmigo.setHasShot(false);
-                    tableroAmigo.Listener(TypeBattleShips.SP_TURNO);
+                     if(!tableroEnemigo.animarAtaque()){
+                       tableroEnemigo.Atacar(false);
+                       tableroEnemigo.Listener(TypeBattleShips.SP_TURNO);                        
+                    }
                 }
                 break;
-//            case TypeBattleShips.STATE_LEVEL:
-//                game.update();
-//                break;
+            case TypeBattleShips.SP_TURNO:
+                if(tableroEnemigo.isAtaqueEnCurso()){
+                    if(!tableroEnemigo.animarAtaque()){
+                       tableroEnemigo.Atacar(false);
+                       tableroEnemigo.Listener(TypeBattleShips.SP_TURNO_IA);                        
+                    }
+                }
+                break;
         }
     }
 
@@ -480,7 +488,7 @@ public class BattleshipCanvas
         g.fillRect(0, 0, displayWidth, displayHeight);
         
         g.drawImage(r.background, cornerX, cornerY, anchor);
-        if (gameState == TypeBattleShips.STATE_DEPLOYSHIPS || gameState == TypeBattleShips.STATE_MISION_LEVEL){
+        if (gameState == TypeBattleShips.STATE_DEPLOYSHIPS || gameState == TypeBattleShips.SP_TURNO || gameState == TypeBattleShips.SP_TURNO_IA){
             int c = cornerX;
             for(int i = 0; i < 240; i++){
                 g.drawImage(r.fondo, c, cornerY, anchor);
@@ -548,7 +556,7 @@ public class BattleshipCanvas
         }
         if (misionScreen == null){
             createMisionScreen();            
-            //showMisionScreen();
+            showMisionScreen();
         }
         if (tableroEnemigo == null){
             createTableroEnemigo();
@@ -705,7 +713,7 @@ public class BattleshipCanvas
                 selectorNombre.pointerEvent(SelectorNombre.POINTER_PRESSED, x, y);
                 audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
-//            case TypeBattleShips.STATE_MISION_LEVEL:
+//            case TypeBattleShips.SP_TURNO:
 //                misionScreen.pointerEvent(Menu.POINTER_PRESSED, x, y);
 //                audioManager.playSample(r.SAMPLE_BUTTON);
 //                break;
@@ -752,7 +760,7 @@ public class BattleshipCanvas
             case TypeBattleShips.STATE_CREATE_NOMBRE:
                 selectorNombre.pointerEvent(SelectorNombre.POINTER_RELEASED, x, y);
                 break;
-            case TypeBattleShips.STATE_MISION_LEVEL:
+            case TypeBattleShips.SP_TURNO:
                 tableroEnemigo.pointerEvent(Map.POINTER_RELEASED, x, y);
                 break;
                 
@@ -797,7 +805,7 @@ public class BattleshipCanvas
             case TypeBattleShips.STATE_CREATE_NOMBRE:
                 selectorNombre.pointerEvent(SelectorNombre.POINTER_DRAGGED, x, y);
                 break;
-            case TypeBattleShips.STATE_MISION_LEVEL:
+            case TypeBattleShips.SP_TURNO:
                 tableroEnemigo.pointerEvent(Map.POINTER_DRAGGED, x, y);
                 break;
         }
@@ -847,7 +855,7 @@ public class BattleshipCanvas
            DATA.getNombreUsuario(UserData.PERFIL_A), 
            DATA.getNombreUsuario(UserData.PERFIL_B), 
            DATA.getNombreUsuario(UserData.PERFIL_C), r);
-        showMenu();
+        //showMenu();
     }
     
     private void createOptionScreen() {
@@ -1239,7 +1247,7 @@ public class BattleshipCanvas
     }
     
     private void showTableroEnemigo(){
-        nextState = TypeBattleShips.STATE_MISION_LEVEL;
+        nextState = TypeBattleShips.SP_TURNO;
         changeView(tableroEnemigo);
     }
     

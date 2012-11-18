@@ -25,6 +25,7 @@ public class Resources {
     public Image mira;
     public Image fondo;
     public Image girar;
+    public Image misil;
     public Image fondo_letra_izq;
     public Image fondo_letra_der;
     public Image fondo_letra_cent;
@@ -78,6 +79,7 @@ public class Resources {
         submarino = null;
         espia = null;
         mira = null;
+        misil = null;
         fondo = null;
         girar = null;
         fondo_letra_izq = null;
@@ -126,6 +128,7 @@ public class Resources {
             fondo_letra_izq = ih.loadImage("/fondo_letra_izq.png",scaling);
             fondo_letra_der = ih.loadImage("/fondo_letra_der.png",scaling);
             fondo_letra_cent = ih.loadImage("/fondo_letra_cent.png",scaling);
+            misil = ih.loadImage("/misil.png",scaling);
             
             
             s_portaaviones_0 = ih.loadImage("/barco_part/port0.png",scaling);
