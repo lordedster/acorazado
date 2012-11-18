@@ -943,10 +943,11 @@ public class BattleshipCanvas
                             }
                             else
                             {
-                                showTableroEnemigo();
-                                
+                                showTableroAmigo();
+                                 tableroAmigo.pcshoot();  
                             }
                         break;
+                  
                 }
             }
         }, scaling, TypeBattleShips.FACIL);
@@ -982,8 +983,7 @@ public class BattleshipCanvas
                             }
                             else
                             {
-                                showTableroAmigo();
-                                tableroAmigo.pcshoot();
+                                showTableroEnemigo();                                
                             }
                         break;
     
