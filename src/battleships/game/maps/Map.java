@@ -212,29 +212,6 @@ public class Map {
         protected Sprite loadSprite(Image file, int lines, double scaling) {
             return new Sprite(file, file.getWidth(), file.getHeight() / lines);
         }
-//    protected Sprite loadSprite(String fileName, int lines, double scaling, int orientation) {
-//        switch(orientation){
-//            case TypeBattleShips.HORIZONTAL:
-//                Image i = loadImage(fileName, lines, scaling);
-//                return new Sprite(i, i.getWidth(), i.getHeight() / lines);
-//            case TypeBattleShips.VERTICAL:                
-//                Image x = loadImage(fileName, lines, scaling);
-//                return new Sprite(x, x.getWidth()/2, x.getHeight() / lines);
-//                
-//       }
-//        return null;
-//    }
-//    
-//       protected Sprite loadSprite(Image file, int lines, double scaling, int orientation) {
-//                switch(orientation){
-//            case TypeBattleShips.HORIZONTAL:
-//                return new Sprite(file, file.getWidth(), file.getHeight() / lines);
-//            case TypeBattleShips.VERTICAL:                
-//                return new Sprite(file, file.getWidth(), file.getHeight()/2 / lines);
-//                
-//       }
-//        return null;        
-//    }
 
     /**
      * Load and scale image
@@ -279,14 +256,14 @@ public class Map {
         {
             if (visibility){
                 
-                agua = loadSprite(SeccionBarco(i, ship.getType(), r),1, scaling);
+                agua = loadSprite(SeccionBarco(i, ship.getType(), r),2, scaling);
                 if (ship.getOrientacion() == TypeBattleShips.VERTICAL)
                 {
                     agua.setTransform(Sprite.TRANS_MIRROR_ROT270);
                 }      
                
             } else {
-                agua = loadSprite(r.water, 1, scaling);
+                agua = loadSprite(r.water, 2, scaling);
             }
             board[y][x] = new Grid(TypeBattleShips.INTACTO, ship.getType(), agua, loadSprite(r.mira, 2, scaling), i);
             switch(ship.getOrientacion())
@@ -390,7 +367,7 @@ public class Map {
         return y;
     }
     
-    private Image SeccionBarco(int seccion, int Type, Resources r){
+    protected Image SeccionBarco(int seccion, int Type, Resources r){
         switch(Type){
             case TypeBattleShips.PORTAAVIONES:
                 switch(seccion){

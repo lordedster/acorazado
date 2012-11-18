@@ -444,6 +444,17 @@ public class BattleshipCanvas
                     }
                 }
                 break;
+            case TypeBattleShips.STATE_SINGLEPLAYER:
+                if(tableroAmigo.isReady()){          
+                    tableroAmigo.readyToShoot(false);
+                    tableroAmigo.pcshoot();
+                }
+                
+                if (tableroAmigo.hasShot()  /*aqui va la animacion*/){
+                    tableroAmigo.setHasShot(false);
+                    tableroAmigo.Listener(TypeBattleShips.SP_TURNO);
+                }
+                break;
 //            case TypeBattleShips.STATE_LEVEL:
 //                game.update();
 //                break;
@@ -536,7 +547,8 @@ public class BattleshipCanvas
             createBarcosScreen();
         }
         if (misionScreen == null){
-            createMisionScreen();
+            createMisionScreen();            
+            //showMisionScreen();
         }
         if (tableroEnemigo == null){
             createTableroEnemigo();
@@ -665,6 +677,10 @@ public class BattleshipCanvas
                 userScreen.pointerEvent(Menu.POINTER_PRESSED, x, y);
                 audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
+            case TypeBattleShips.STATE_DEPLOYSHIPS:
+                deployShips.pointerEvent(Map.POINTER_PRESSED, x, y);
+                audioManager.playSample(r.SAMPLE_BUTTON);
+                break;
             case TypeBattleShips.STATE_INFO:
                 info.pointerEvent(Menu.POINTER_PRESSED, x, y);
                 audioManager.playSample(r.SAMPLE_BUTTON);
@@ -727,6 +743,9 @@ public class BattleshipCanvas
             case TypeBattleShips.STATE_BARCOS:
                 barcos.pointerEvent(Menu.POINTER_RELEASED, x, y);
                 break;
+            case TypeBattleShips.STATE_DEPLOYSHIPS:
+                deployShips.pointerEvent(Map.POINTER_RELEASED, x, y);
+                break;
             case TypeBattleShips.STATE_MISION:
                 misionScreen.pointerEvent(Menu.POINTER_RELEASED, x, y);
                 break;
@@ -777,6 +796,7 @@ public class BattleshipCanvas
                 break;
             case TypeBattleShips.STATE_CREATE_NOMBRE:
                 selectorNombre.pointerEvent(SelectorNombre.POINTER_DRAGGED, x, y);
+                break;
             case TypeBattleShips.STATE_MISION_LEVEL:
                 tableroEnemigo.pointerEvent(Map.POINTER_DRAGGED, x, y);
                 break;
@@ -900,11 +920,10 @@ public class BattleshipCanvas
                     case TypeBattleShips.GIRAR:
                         deployShips.girarBarco();
                         break;
-
-                    case TypeBattleShips.STATE_MISION:
-                        
-                        tableroAmigo.setBoard(deployShips.ObtenerMapa());
-                        tableroAmigo.setShips(deployShips.ObtenerBarcos());
+                    case TypeBattleShips.STATE_MISION: 
+                        tableroAmigo.crearMapaManualmente(deployShips.ObtenerMapa());
+                        tableroAmigo.crearBarcosManualmente(deployShips.ObtenerBarcos());
+                        tableroAmigo.positionGrid();                        
                         tableroEnemigo.generarMapa();
                         showTableroEnemigo();
                         break;
@@ -945,7 +964,8 @@ public class BattleshipCanvas
                             else
                             {
                                 showTableroAmigo();
-                                 tableroAmigo.pcshoot();  
+                                //tableroAmigo.pcshoot();  
+                                tableroAmigo.readyToShoot(true);
                             }
                         break;
                   
@@ -1114,9 +1134,11 @@ public class BattleshipCanvas
                         tableroEnemigo.generarMapa();
                         showTableroEnemigo();
                         break;
-                    case SelectorScreen.BUTTON_CANCEL:
+                    case SelectorScreen.BUTTON_CANCEL:  
+                        deployShips.seteoMemoria();
                         deployShips.generarMapa(r);
                         barcos.verItems();
+                        
                         showBarcos();
                         break;                        
                 }

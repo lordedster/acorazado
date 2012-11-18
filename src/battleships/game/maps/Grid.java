@@ -40,6 +40,14 @@ public class Grid {
         return selected ? 1 : 0;
     }
     
+    public void setFrameBarco(int frame){
+        sprite.setFrame(frame);
+    }
+    
+    public int getFrameBarco(){
+        return sprite.getFrame();
+    }
+    
     
 
     public boolean isSelected() {

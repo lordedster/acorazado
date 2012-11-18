@@ -113,7 +113,7 @@ public class EnemyBoard
             for(int j = 0; j < getWidth(); j++)
             {
                 setGrid(i, j, new Grid(TypeBattleShips.AGUA, TypeBattleShips.EMPTY, 
-                                        loadSprite(r.water, 1, scaling), 
+                                        loadSprite(r.water, 2, scaling), 
                                         loadSprite(r.mira, 2, scaling),TypeBattleShips.EMPTY));
             }
         }
@@ -206,66 +206,12 @@ public class EnemyBoard
               {
                    for (int j = 0; j < 10; j++)
                     {
-                            if(super.board[i][j].getBarco()==barco)
-                                    {
-                                        super.board[i][j].setEstado(TypeBattleShips.HUNDIDO); 
-                                    }
+                        if(super.board[i][j].getBarco()==barco)
+                        {
+                            super.board[i][j].setEstado(TypeBattleShips.HUNDIDO); 
+                        }
                     }
                } 
         } 
-    }
-    
-//    private boolean ComprobarOcupacion(int exis, int i, int direccion, int size, Grid[][] map){
-//        boolean done = false;
-//        switch(direccion){
-//            case TypeBattleShips.VERTICAL:
-//                for(int z = 0; z < size; z++){
-//                    if (map[exis][i].getBarco() != TypeBattleShips.EMPTY){
-//                        return true;
-//                    }
-//                    exis = CalcularDireccionX(direccion, exis);
-//                }
-//                break;
-//            case TypeBattleShips.HORIZONTAL:
-//                for(int z = 0; z < size; z++){
-//                    if (map[exis][i].getBarco() != TypeBattleShips.EMPTY){
-//                        return true;
-//                    }
-//                    i = CalcularDireccionY(direccion, i);
-//                }
-//                break;
-//        }        
-//        return done;
-//    }
-    
-//    private boolean DentroLimite(int numero, int maximo, int minimo){
-//        if (numero <= maximo && numero >= minimo){
-//            return true;
-//        }else {
-//            return false;
-//        }
-//    }
-//    
-//    private int CalcularDireccionX(int direccion, int exis){        
-//        switch(direccion){
-//            case TypeBattleShips.VERTICAL:
-//                exis += 1;
-//                break;
-//            case TypeBattleShips.HORIZONTAL:
-//                break;
-//        }
-//        return exis;
-//    }
-//    
-//    private int CalcularDireccionY(int direccion, int i) {
-//        switch(direccion){
-//            case TypeBattleShips.VERTICAL:                
-//                break;
-//            case TypeBattleShips.HORIZONTAL:
-//                i += 1;
-//                break;
-//        }
-//        return i;
-//    }
-    
+    }    
 }

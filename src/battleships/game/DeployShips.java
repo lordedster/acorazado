@@ -100,7 +100,7 @@ public class DeployShips
             for(int j = 0; j < getWidth(); j++)
             {
                 setGrid(i, j, new Grid(TypeBattleShips.AGUA, TypeBattleShips.EMPTY, 
-                                        loadSprite(r.water, 1, scaling), 
+                                        loadSprite(r.water, 2, scaling), 
                                         loadSprite(r.mira, 2, scaling),
                                         TypeBattleShips.EMPTY));
             }
@@ -144,18 +144,19 @@ public class DeployShips
     }
     
     public Grid[][] ObtenerMapa(){
-        Grid[][] f = ObtenerMatriz();
-        ReemplazarMapa(new Grid[f.length][f[0].length]);
-        r = null;
-        return f;
+        return ObtenerMatriz();
     }
     
     public BattleShip[] ObtenerBarcos(){
-        BattleShip[] x = obtenerBarcos();
-        ReemplazarBarcos(new BattleShip[x.length]);
-        return x;
+        return obtenerBarcos();
     }
     
+    public void seteoMemoria()
+    {        
+        ReemplazarMapa(new Grid[10][10]);        
+        ReemplazarBarcos(new BattleShip[5]);
+        r = null;
+    }
     
     public void agregarBarco(BattleShip ship){
         this.ship = ship;
@@ -299,42 +300,7 @@ public class DeployShips
             }
             posicionBarco();
         }
-    }
-    
-    
-//    private Image obtenerImagenC(int Type, int orientacion){
-//        switch(orientacion){
-//            case TypeBattleShips.VERTICAL:
-//                switch(Type){
-//                case TypeBattleShips.ACORAZADO:
-//                    return r.rotate90(r.acorazado);
-//                case TypeBattleShips.PORTAAVIONES:
-//                    return r.rotate90(r.portaaviones);
-//                case TypeBattleShips.SUBMARINO:
-//                    return r.rotate90(r.submarino);
-//                case TypeBattleShips.DESTRUCTOR:
-//                    return r.rotate90(r.destructor);
-//                case TypeBattleShips.ESPIA:
-//                    return r.rotate90(r.espia);
-//                }
-//                break;
-//            case TypeBattleShips.HORIZONTAL:
-//                switch(Type){
-//                case TypeBattleShips.ACORAZADO:
-//                    return r.acorazado;
-//                case TypeBattleShips.PORTAAVIONES:
-//                    return r.portaaviones;
-//                case TypeBattleShips.SUBMARINO:
-//                    return r.submarino;
-//                case TypeBattleShips.DESTRUCTOR:
-//                    return r.destructor;
-//                case TypeBattleShips.ESPIA:
-//                    return r.espia;
-//                }
-//                break;
-//        }
-//        return null;
-//    }
+    }    
      private Image obtenerImagen(int Type){
                 switch(Type){
                 case TypeBattleShips.ACORAZADO:
@@ -350,5 +316,14 @@ public class DeployShips
                 }       
         return null;
     }
-    
+     
+     public void pointerEvent(int type, int x, int y) {
+         buttonBarcos.hits(x,y);
+        if ( buttonBarcos.hits(x,y)) {
+            if (type == POINTER_RELEASED) {
+                leftButtonPressed();
+            }
+            return;
+        }
+    }    
 }

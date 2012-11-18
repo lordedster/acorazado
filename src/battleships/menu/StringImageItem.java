@@ -138,5 +138,14 @@ public class StringImageItem {
         this.y = y;
     }
     
+    public boolean hits(int x, int y) {
+        int left, right,top,bottom = 0;
+            left = getX();
+            right = left + getWidth();
+            top = getY();
+            bottom = top + getHeight();
+        return x > left && x < right && y > top && y < bottom;
+    }
+    
     
 }

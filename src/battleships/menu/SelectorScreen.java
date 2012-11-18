@@ -65,8 +65,7 @@ public class SelectorScreen
         for (int i = 0; i < ITEM_COUNT; i++) {
             MenuItem item = getItem(i);
             item.setCenter(item.getX(), newY);
-        }
-        
+        }        
     }
     /**
      * Move view inwards

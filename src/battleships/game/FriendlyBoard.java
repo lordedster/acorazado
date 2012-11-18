@@ -29,6 +29,8 @@ public class FriendlyBoard extends Map implements Slideable {
     boolean dd;
     boolean ld;
     boolean rd;
+    boolean ready;
+    boolean disparado;
     private Random rnd;
         private final int IN_CX;
     private final int OUT_CX;    
@@ -44,7 +46,7 @@ public class FriendlyBoard extends Map implements Slideable {
 
 
     public FriendlyBoard(int cornerX, int cornerY, int width, int height, Resources r, Listener l, double scaling, int dificultad) {
-                super(10,10,5,l);
+        super(10,10,5,l);
         this.displayWidth = width;
         this.displayHeight = height;        
         this.r = r;
@@ -52,14 +54,16 @@ public class FriendlyBoard extends Map implements Slideable {
         this.dificultad = dificultad;
         rnd = new Random();
         
-        IN_CX = cornerX + width / 2;
-        OUT_CX = IN_CX + width;
-        
+        IN_CX = cornerX;
+        OUT_CX = IN_CX - width;    
+
         x = OUT_CX;
-        y = cornerY + (int) (height * 0.8);
+        y = cornerY + height / 2;
 
         this.cornerX = OUT_CX;
-        this.cornerX = cornerY;
+        this.cornerY = cornerY;
+        ready = false;
+        disparado = false;
          
     }
     
@@ -74,14 +78,14 @@ public class FriendlyBoard extends Map implements Slideable {
     }
 
     public void generarMapa(){
-        createMap(dificultad);        
+        createMap(true);        
         positionGrid();
     }
-    
+        
     public void vaciarMapa(){
-        Grid[][] x = ObtenerMatriz();
+        Grid[][] e = ObtenerMatriz();
         ReemplazarBarcos(new BattleShip[obtenerBarcos().length]);
-        ReemplazarMapa(new Grid[x.length][x[0].length]);
+        ReemplazarMapa(new Grid[e.length][e[0].length]);
     } 
 
     public boolean slideOut() {
@@ -124,46 +128,31 @@ public class FriendlyBoard extends Map implements Slideable {
         super.paint(g);
     }
     
-    private void createMap(int dificultad){
+     private void createMap(boolean visibilidad){
         for(int i = 0; i < getHeight(); i++ )
         {
             for(int j = 0; j < getWidth(); j++)
             {
                 setGrid(i, j, new Grid(TypeBattleShips.AGUA, TypeBattleShips.EMPTY, 
-                                        loadSprite(r.water, 1, scaling), 
+                                        loadSprite(r.water, 2, scaling), 
                                         loadSprite(r.mira, 2, scaling),TypeBattleShips.EMPTY));
             }
         }
-        cargarBarcos(dificultad);
+        CargarBarcosFacil(visibilidad);
     }    
     
-    private void cargarBarcos(int dificultad){
-        switch(dificultad){
-            case TypeBattleShips.FACIL:
-                CargarBarcosFacil();
-                break;
-            case TypeBattleShips.MODERADO:
-                break;
-            case TypeBattleShips.DIFICIL:
-                break;
-        }        
-    }
+
     
-    private void CargarBarcosFacil(){    
-//        AlgoritmoFacil(TypeBattleShips.ESPIA, TypeBattleShips.ESPIA_SIZE, ObtenerMatriz(), 0);
-//        AlgoritmoFacil(TypeBattleShips.SUBMARINO, TypeBattleShips.SUBMARINO_SIZE, ObtenerMatriz(), 1);
-//        AlgoritmoFacil(TypeBattleShips.DESTRUCTOR, TypeBattleShips.DESTRUCTOR_SIZE, ObtenerMatriz(), 2);
-//        AlgoritmoFacil(TypeBattleShips.ACORAZADO, TypeBattleShips.ACORAZADO_SIZE, ObtenerMatriz(), 3);
-//        AlgoritmoFacil(TypeBattleShips.PORTAAVIONES, TypeBattleShips.PORTAAVIONES_SIZE, ObtenerMatriz(), 4);        
-        AlgoritmoFacil(TypeBattleShips.PORTAAVIONES, TypeBattleShips.PORTAAVIONES_SIZE, ObtenerMatriz(), 0);        
-        AlgoritmoFacil(TypeBattleShips.ACORAZADO, TypeBattleShips.ACORAZADO_SIZE, ObtenerMatriz(), 1);        
-        AlgoritmoFacil(TypeBattleShips.DESTRUCTOR, TypeBattleShips.DESTRUCTOR_SIZE, ObtenerMatriz(), 2);
-        AlgoritmoFacil(TypeBattleShips.SUBMARINO, TypeBattleShips.SUBMARINO_SIZE, ObtenerMatriz(), 3);
-        AlgoritmoFacil(TypeBattleShips.ESPIA, TypeBattleShips.ESPIA_SIZE, ObtenerMatriz(), 4);
+    private void CargarBarcosFacil(boolean v){       
+        AlgoritmoFacil(TypeBattleShips.PORTAAVIONES, TypeBattleShips.PORTAAVIONES_SIZE, ObtenerMatriz(), 0,v);        
+        AlgoritmoFacil(TypeBattleShips.ACORAZADO, TypeBattleShips.ACORAZADO_SIZE, ObtenerMatriz(), 1, v);        
+        AlgoritmoFacil(TypeBattleShips.DESTRUCTOR, TypeBattleShips.DESTRUCTOR_SIZE, ObtenerMatriz(), 2, v );
+        AlgoritmoFacil(TypeBattleShips.SUBMARINO, TypeBattleShips.SUBMARINO_SIZE, ObtenerMatriz(), 3, v);
+        AlgoritmoFacil(TypeBattleShips.ESPIA, TypeBattleShips.ESPIA_SIZE, ObtenerMatriz(), 4, v);
         r = null;
    }
     
-    private void AlgoritmoFacil(int ship, int size, Grid[][] map, int posicion){        
+    private void AlgoritmoFacil(int ship, int size, Grid[][] map, int posicion, boolean v){        
         int direccion = rnd.nextInt(2); 
         int x_primero = 0; 
         int y_primero = 0;
@@ -190,10 +179,10 @@ public class FriendlyBoard extends Map implements Slideable {
                 
         }
         if(estaOcupado(direccion, x_primero, y_primero, size)){
-            AlgoritmoFacil(ship, size, map, posicion);
+            AlgoritmoFacil(ship, size, map, posicion, v);
         } else {
             BattleShip b = new BattleShip(TypeBattleShips.SHIPS[ship], ship, size, direccion, calcMatrizX(x_primero), calcMatrizY(y_primero), r);
-            super.AddShip(b, scaling, true, r, posicion);
+            super.AddShip(b, scaling, v, r, posicion);
         }
     }
     
@@ -213,8 +202,8 @@ public class FriendlyBoard extends Map implements Slideable {
     
     public void pcshoot()
     {
-        disparar(nextShot());
-        Listener(TypeBattleShips.SP_TURNO);
+        disparado = disparar(nextShot());
+        //Listener(TypeBattleShips.SP_TURNO);
     }
     
     public Shoot nextAcertadoShoot(Shoot s)
@@ -445,7 +434,7 @@ public class FriendlyBoard extends Map implements Slideable {
     }
        
     
-    public void disparar(Shoot s)
+    public boolean disparar(Shoot s)
     { 
         if(super.board[s.getX()][s.getY()].getEstado()== TypeBattleShips.INTACTO)
         {
@@ -462,6 +451,7 @@ public class FriendlyBoard extends Map implements Slideable {
         {
            super.board[s.getX()][s.getY()].setEstado(TypeBattleShips.SHOT);
         }
+        return true;
     }
     
     
@@ -494,8 +484,40 @@ public class FriendlyBoard extends Map implements Slideable {
         tocado = false;
         buscarAcertado();
     }
+    
+    public void crearMapaManualmente(Grid[][] g){
+        for (int i = 0; i < g.length; i++){
+            for (int f = 0; f < g[0].length; f++){
+                if (g[i][f].getBarco() == TypeBattleShips.EMPTY){
+                    board[i][f] = new Grid(g[i][f].getEstado(),g[i][f].getBarco(), loadSprite(r.water, 2, scaling), loadSprite(r.mira, 2, scaling), g[i][f].getSeccion_barco());
+                }else{
+                    board[i][f] = new Grid(g[i][f].getEstado(),g[i][f].getBarco(), loadSprite(SeccionBarco(g[i][f].getSeccion_barco(), g[i][f].getBarco(), r), 2, scaling), loadSprite(r.mira, 2, scaling), g[i][f].getSeccion_barco());
+                }
+            }
+        }
+    }
+     public void crearBarcosManualmente(BattleShip[] g){
+        for (int i = 0; i < g.length; i++){
+            ships[i] = new BattleShip(g[i].Name(), g[i].getType(), g[i].getLargo(), g[i].getOrientacion(), g[i].getX(), g[i].getY(), r);
+        }
+    }
     /*
      *******************************INTELIGENCIA ARTIFICIAL*******************************************
      * Disparar con disparar(nextShot());
      */
+     
+     public void readyToShoot(boolean ready){
+         this.ready = ready;
+     }
+     
+     public boolean isReady(){
+         return ready;
+     }
+     
+     public boolean hasShot(){
+         return disparado;
+     }
+     public void setHasShot(boolean d){
+         disparado = d;
+     }
 }
