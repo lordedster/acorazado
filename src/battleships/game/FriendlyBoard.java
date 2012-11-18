@@ -271,7 +271,7 @@ public class FriendlyBoard extends Map implements Slideable {
                     x = rnd.nextInt(9);
                     y = rnd.nextInt(9);
                     
-                    if( super.board[x][y].getEstado()== TypeBattleShips.INTACTO || super.board[x][y].getEstado()== TypeBattleShips.EMPTY )
+                    if( super.board[x][y].getEstado()== TypeBattleShips.INTACTO || super.board[x][y].getEstado()== TypeBattleShips.AGUA )
                     {   
                         break;
                     }
@@ -293,7 +293,7 @@ public class FriendlyBoard extends Map implements Slideable {
                         x = rnd.nextInt(9);
                         y = rnd.nextInt(9);
                     
-                        if( super.board[x][y].getEstado()== TypeBattleShips.INTACTO || super.board[x][y].getEstado()== TypeBattleShips.EMPTY  )
+                        if( super.board[x][y].getEstado()== TypeBattleShips.INTACTO || super.board[x][y].getEstado()== TypeBattleShips.AGUA  )
                         {   
                             break;
                         }
@@ -324,7 +324,7 @@ public class FriendlyBoard extends Map implements Slideable {
                     {
                         y = y + y + 1;
                     }    
-                    if( super.board[x][y].getEstado()== TypeBattleShips.INTACTO || super.board[x][y].getEstado()== TypeBattleShips.EMPTY )
+                    if( super.board[x][y].getEstado()== TypeBattleShips.INTACTO || super.board[x][y].getEstado()== TypeBattleShips.AGUA )
                     {   
                         break;
                     }
