@@ -444,7 +444,7 @@ public class BattleshipCanvas
                     }
                 }
                 break;
-            case TypeBattleShips.STATE_SINGLEPLAYER:
+            case TypeBattleShips.SP_TURNO_IA:
                 if(tableroAmigo.isReady()){          
                     tableroAmigo.readyToShoot(false);
                     tableroAmigo.pcshoot();
@@ -955,7 +955,7 @@ public class BattleshipCanvas
                     case TypeBattleShips.STATE_MENU:
                         showUserScreen();
                         break;
-                    case TypeBattleShips.SP_TURNO:
+                    case TypeBattleShips.SP_TURNO_IA:
                         if(tableroAmigo.sinBarcos())
                             {
                                     //perdiste
@@ -963,9 +963,10 @@ public class BattleshipCanvas
                             }
                             else
                             {
+                                
+                                tableroAmigo.readyToShoot(true);
                                 showTableroAmigo();
                                 //tableroAmigo.pcshoot();  
-                                tableroAmigo.readyToShoot(true);
                             }
                         break;
                   
@@ -1243,7 +1244,7 @@ public class BattleshipCanvas
     }
     
      private void showTableroAmigo(){
-        nextState = TypeBattleShips.STATE_MISION_LEVEL;
+        nextState = TypeBattleShips.SP_TURNO_IA;
         changeView(tableroAmigo);
     }
     

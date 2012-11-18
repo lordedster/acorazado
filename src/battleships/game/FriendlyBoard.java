@@ -90,7 +90,7 @@ public class FriendlyBoard extends Map implements Slideable {
 
     public boolean slideOut() {
         int distance = x - OUT_CX;
-        distance *= 0.8;
+        distance *= 1.6;
         x = OUT_CX + distance;
         positionGrid();
         return distance != 0;
@@ -98,7 +98,7 @@ public class FriendlyBoard extends Map implements Slideable {
 
     public boolean slideIn() {
         int distance = x - IN_CX;
-        distance *= 0.8;
+        distance *= 1.6;
         x = IN_CX + distance;
         positionGrid();
         return distance != 0;
@@ -439,6 +439,7 @@ public class FriendlyBoard extends Map implements Slideable {
         if(super.board[s.getX()][s.getY()].getEstado()== TypeBattleShips.INTACTO)
         {
            super.board[s.getX()][s.getY()].setEstado(TypeBattleShips.ACERTADO);
+           super.board[s.getX()][s.getY()].setFrameBarco(1);
            if(!tocado)
            {
                tocado = true;
@@ -450,6 +451,7 @@ public class FriendlyBoard extends Map implements Slideable {
         else
         {
            super.board[s.getX()][s.getY()].setEstado(TypeBattleShips.SHOT);
+           super.board[s.getX()][s.getY()].setFrameBarco(2);
         }
         return true;
     }
@@ -467,6 +469,7 @@ public class FriendlyBoard extends Map implements Slideable {
                             if(super.board[i][j].getBarco()==barco)
                                     {
                                         super.board[i][j].setEstado(TypeBattleShips.HUNDIDO); 
+                                        super.board[i][j].setFrameBarco(1);
                                     }
                     }
                }

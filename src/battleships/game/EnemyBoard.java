@@ -69,7 +69,7 @@ public class EnemyBoard
 
     public boolean slideOut() {
         int distance = x - OUT_X;
-        distance *= 0.8;
+        distance *= 1.6;
         x = OUT_X + distance;
         positionGrid();
         return distance != 0;
@@ -77,7 +77,7 @@ public class EnemyBoard
 
     public boolean slideIn() {
         int distance = x - IN_X;
-        distance *= 0.8;
+        distance *= 1.6;
         x = IN_X + distance;
         positionGrid();
         return distance != 0;
@@ -185,13 +185,15 @@ public class EnemyBoard
             if(board[x][y].getBarco()==TypeBattleShips.EMPTY)
             {
                 board[x][y].setEstado(TypeBattleShips.SHOT);
-                Listener(TypeBattleShips.SP_TURNO);
+                board[x][y].setFrameBarco(2);
+                Listener(TypeBattleShips.SP_TURNO_IA);
             }
             else
             {
                 board[x][y].setEstado(TypeBattleShips.ACERTADO);
+                board[x][y].setFrameBarco(1);
                 acertarBaraco(board[x][y].getBarco(), board[x][y].getSeccion_barco());
-                Listener(TypeBattleShips.SP_TURNO);
+                Listener(TypeBattleShips.SP_TURNO_IA);
             }
         }
              
@@ -209,6 +211,7 @@ public class EnemyBoard
                         if(super.board[i][j].getBarco()==barco)
                         {
                             super.board[i][j].setEstado(TypeBattleShips.HUNDIDO); 
+                            //super.board[i][j]
                         }
                     }
                } 

@@ -78,6 +78,7 @@ public class TypeBattleShips {
     public static final int GIRAR = 16;
     public static final int STATE_SINGLEPLAYER = 17;
     public static final int SP_TURNO = 18;
+    public static final int SP_TURNO_IA = 21;
     public static final int TABLERO_AMIGO = 19;
     public static final int TABLERO_ENEMIGO = 20;
     
