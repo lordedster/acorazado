@@ -32,17 +32,17 @@ public class MainMenu
         super(ITEM_COUNT,l);
         leyenda = new MenuItem(new StringMenuItem("Elija su perfil:", r));
         eliminar = new MenuItem(new StringMenuItem("Eliminar", r));
-        if (user1.equals("_____")){
+        if (user1.equals("")){
             setItem(SLOT1, new MenuItem(new StringMenuItem("Vacío",r)));
         }else{
             setItem(SLOT1, new MenuItem(new StringMenuItem(user1,r)));
         }
-        if (user2.equals("_____")){
+        if (user2.equals("")){
             setItem(SLOT2, new MenuItem(new StringMenuItem("Vacío",r)));
         }else{
             setItem(SLOT2, new MenuItem(new StringMenuItem(user2,r)));
         }
-        if (user3.equals("_____")){
+        if (user3.equals("")){
             setItem(SLOT3, new MenuItem(new StringMenuItem("Vacío",r)));
         }else{
             setItem(SLOT3, new MenuItem(new StringMenuItem(user3,r)));

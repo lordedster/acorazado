@@ -40,11 +40,13 @@ public class StringMenuItem {
     }
     
     
-    public void paint(Graphics g){        
-        paintBackground(g);
-        g.setFont (FONT); 
-        g.setColor (R, G, B); 
-        g.drawString(texto, X, Y, anchor);
+    public void paint(Graphics g){  
+        if(visible){
+            paintBackground(g);
+            g.setFont (FONT); 
+            g.setColor (R, G, B); 
+            g.drawString(texto, X, Y, anchor);
+        }
     }
     
     private void paintBackground(Graphics g){

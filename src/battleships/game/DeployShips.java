@@ -4,13 +4,12 @@
  */
 package battleships.game;
 
-import battleships.ImageHelper;
 import battleships.effects.Slideable;
+import battleships.menu.StringImageItem;
 import battleships.game.maps.Map;
 import battleships.game.maps.Grid;
 import battleships.game.ships.BattleShip;
 import battleships.game.ships.TypeBattleShips;
-import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 //import javax.microedition.lcdui.Image;
@@ -35,22 +34,23 @@ public class DeployShips
     private Resources r;
     //private Font font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL);
     private Sprite buttonGirar;
-    private Sprite buttonBarcos;
+    private StringImageItem buttonBarcos;
     private Sprite imageShip;
     private BattleShip ship;
     private double scaling;
     private int barcosPuestos;
     
-    public DeployShips(int cornerX, int cornerY, int width, int height, Resources r, Listener l, double scaling) {
+    public DeployShips(int cornerX, int cornerY, int width, int height, Listener l, double scaling, Image girar) {
         super(10,10,5,l);
         this.displayWidth = width;
         this.displayHeight = height;        
-        this.r = r;
+        this.r = null;
         this.scaling = scaling;
         this.barcosPuestos = 0;
         ship = null;
-        buttonGirar = new Sprite(r.girar);
-        buttonBarcos = new Sprite(r.buttonBarcos);
+        buttonGirar = new Sprite(girar);
+        buttonBarcos = new StringImageItem("Barcos");
+        buttonBarcos.setRGB(255, 255, 255);
         imageShip = null;
         IN_X = cornerX;
         OUT_X = cornerX + displayWidth;    
@@ -62,7 +62,8 @@ public class DeployShips
         this.cornerX = cornerY;    
     }
     
-    public void generarMapa(){
+    public void generarMapa(Resources r){        
+        this.r = r;
         createMap();        
         positionGrid();
     }
@@ -70,9 +71,8 @@ public class DeployShips
     public void paint(Graphics g) {     
         super.paint(g);
         buttonGirar.paint(g);
-        buttonBarcos.paint(g);
         pintarBarco(g);       
-        
+        buttonBarcos.paint(g);        
     }
 
      public boolean slideIn() {
@@ -146,6 +146,7 @@ public class DeployShips
     public Grid[][] ObtenerMapa(){
         Grid[][] f = ObtenerMatriz();
         ReemplazarMapa(new Grid[f.length][f[0].length]);
+        r = null;
         return f;
     }
     

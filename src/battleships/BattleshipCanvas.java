@@ -489,7 +489,6 @@ public class BattleshipCanvas
         }
         catch (NullPointerException npe) {
             // just no painting then
-            g.drawString("JOJOJO", x, y, anchor);
         }
         if ((gameState == TypeBattleShips.STATE_MENU || gameState == TypeBattleShips.STATE_INFO) && pressed) {
             ElectricArc arc = new ElectricArc();
@@ -878,7 +877,7 @@ public class BattleshipCanvas
     }
     
     private void createDeployShips(){
-        deployShips = new DeployShips(cornerX, cornerY, gameWidth, gameHeight, r, new Map.Listener() {
+        deployShips = new DeployShips(cornerX, cornerY, gameWidth, gameHeight, new Map.Listener() {
 
             public void itemClicked(int x, int y) {
                 deployShips.colocarBarco();
@@ -900,7 +899,7 @@ public class BattleshipCanvas
                         break;
                 }
             }
-        }, scaling);
+        }, scaling, r.girar);
     }
     
     private void createTableroEnemigo(){
@@ -986,6 +985,7 @@ public class BattleshipCanvas
                                                                 0,0,
                                                                 r));
                         barcos.hideItem(BarcosScreen.PORTAAVIONES);
+                        barcos.selectNext();
                         showDeployShips();
                         break;  
                     case BarcosScreen.ACORAZADO:
@@ -996,6 +996,7 @@ public class BattleshipCanvas
                                                                 0,0,
                                                                 r));                        
                         barcos.hideItem(BarcosScreen.ACORAZADO);
+                        barcos.selectNext();
                         showDeployShips();
                         break;                
                     case BarcosScreen.SUBMARINO:
@@ -1006,6 +1007,7 @@ public class BattleshipCanvas
                                                                 0,0,
                                                                 r));
                         barcos.hideItem(BarcosScreen.SUBMARINO);
+                        barcos.selectNext();
                         showDeployShips();
                         break;
                     case BarcosScreen.DESTRUCTOR:
@@ -1016,6 +1018,7 @@ public class BattleshipCanvas
                                                                 0,0,
                                                                 r));
                         barcos.hideItem(BarcosScreen.DESTRUCTOR);
+                        barcos.selectNext();
                         showDeployShips();
                         break;
                     case BarcosScreen.ESPIA:
@@ -1026,6 +1029,7 @@ public class BattleshipCanvas
                                                                 0,0,
                                                                 r));
                         barcos.hideItem(BarcosScreen.ESPIA);
+                        barcos.selectNext();
                         showDeployShips();
                         break;
                     case BarcosScreen.BACK:
@@ -1046,7 +1050,7 @@ public class BattleshipCanvas
                         showTableroEnemigo();
                         break;
                     case SelectorScreen.BUTTON_CANCEL:
-                        deployShips.generarMapa();
+                        deployShips.generarMapa(r);
                         barcos.verItems();
                         showBarcos();
                         break;                        
