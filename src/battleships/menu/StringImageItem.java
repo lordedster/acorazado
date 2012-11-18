@@ -57,12 +57,16 @@ public class StringImageItem {
         
         if (start > 1){
             start = 0;
+            int contador = 0;
             for (int i = 0; i < array.length - 1; i++) {
                 if (array[i] == '/' && array[i + 1] == 'n'){
-                    this.texto[i] = texto.substring(start, i - 1);
+                    this.texto[contador] = texto.substring(start, i - 1);
                     start = i + 2;
+                    contador++;
                 } 
             }
+            this.texto[contador] = texto.substring(start, texto.length());
+            
         }else{
             this.texto[0] = texto;
         }

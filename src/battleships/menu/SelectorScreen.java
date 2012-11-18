@@ -25,7 +25,7 @@ public class SelectorScreen
     private int width;
     private int height;
     private int cornerY;
-    private Image mensaje;
+    private StringImageItem mensaje;
     
     public SelectorScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling, Resources r) {
         super(ITEM_COUNT, l);
@@ -35,7 +35,8 @@ public class SelectorScreen
         setItem(BUTTON_OK, new MenuItem(new StringMenuItem("Si", r)));
         setItem(BUTTON_CANCEL,new MenuItem(new StringMenuItem("No", r)));
         
-        mensaje = loadImage("/automatico.png", 1, scaling);
+        mensaje = new StringImageItem("¿Desea desplegar los /n barcos automáticamente?");
+        mensaje.setRGB(255, 255, 255);
         
         IN_CX = cornerX + width / 2;
         OUT_CX = IN_CX - width;
@@ -47,6 +48,7 @@ public class SelectorScreen
     }
      public final void positionItemsHorizontally() {
         MenuItem item;
+        mensaje.setPosition(x, y);
         item = getItem(ITEM_COUNT - 1);
         item.setPosition(x - (width / 2) + (width / 8), item.getY());
         item = getItem(ITEM_COUNT - 2);
@@ -57,6 +59,8 @@ public class SelectorScreen
      * Lay out menu items vertically
      */
     public final void positionItemsVertically() {
+        
+        mensaje.setPosition(x, y);
         int newY = (int)(y + mensaje.getHeight()  / 1.2);
         for (int i = 0; i < ITEM_COUNT; i++) {
             MenuItem item = getItem(i);
@@ -88,7 +92,7 @@ public class SelectorScreen
     
     public void paint(Graphics g) {
         super.paint(g);
-         g.drawImage(mensaje, x, cornerY + height / 2, Graphics.VCENTER | Graphics.HCENTER);
+        mensaje.paint(g);
     }
     
 }
