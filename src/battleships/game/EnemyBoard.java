@@ -37,6 +37,7 @@ public class EnemyBoard
     
     private Sprite misil;
     private boolean ataqueEnCurso;
+    private boolean hasShoot;
     
     private int misil_x;
     private int misil_y;
@@ -56,6 +57,7 @@ public class EnemyBoard
         this.misil = loadSprite(r.misil,1,scaling);
         setearMisil();
         ataqueEnCurso = false;
+        hasShoot = false;
 //        buttonGirar = new Sprite(r.girar);
 //        buttonBarcos = new Sprite(r.buttonBarcos);
         IN_X = cornerX;
@@ -71,6 +73,7 @@ public class EnemyBoard
     public void generarMapa(){
         createMap(false);        
         positionGrid();
+        selectGrid(0,0);
     }
     
     public void vaciarMapa(){
@@ -188,7 +191,7 @@ public class EnemyBoard
     
     public void PlayerShoot(int x, int y)
     {
-        if(!isAtaqueEnCurso())
+        if(!isAtaqueEnCurso() && !hasShoot())
         {
             if(board[x][y].getEstado()== TypeBattleShips.AGUA ||board[x][y].getEstado()== TypeBattleShips.INTACTO)
             {
@@ -202,6 +205,7 @@ public class EnemyBoard
                     board[x][y].setEstado(TypeBattleShips.ACERTADO);
                     acertarBaraco(board[x][y].getBarco(), board[x][y].getSeccion_barco());
                 }
+                hasShoot = true;
             }
         }
              
@@ -272,5 +276,13 @@ public class EnemyBoard
         }else{
             board[map_x][map_y].setFrameBarco(1);
         }            
+    }
+    
+    public boolean hasShoot(){
+        return hasShoot;
+    }
+    
+    public void setHasShoot(boolean n){
+        hasShoot = n;
     }
 }

@@ -87,10 +87,9 @@ public class FriendlyBoard extends Map implements Slideable {
     {
         rnd = new Random();
       // dificultad =  ;
-        
-    
-    
-
+    }
+    public void setDificultad(int dificultad){
+        this.dificultad = dificultad;
     }
 
     public void generarMapa(){
@@ -142,6 +141,7 @@ public class FriendlyBoard extends Map implements Slideable {
     
     public void paint(Graphics g){
         super.paint(g);
+        misil.paint(g);
     }
     
      private void createMap(boolean visibilidad){
@@ -287,7 +287,7 @@ public class FriendlyBoard extends Map implements Slideable {
         Shoot s = new Shoot();
         int xn;
         int yn;
-        switch(TypeBattleShips.DIFICIL){
+        switch(dificultad){
     
             case TypeBattleShips.FACIL:
             {
@@ -571,7 +571,7 @@ public class FriendlyBoard extends Map implements Slideable {
         for (int i = 0; i < g.length; i++){
             for (int f = 0; f < g[0].length; f++){
                 if (g[i][f].getBarco() == TypeBattleShips.EMPTY){
-                    board[i][f] = new Grid(g[i][f].getEstado(),g[i][f].getBarco(), loadSprite(r.water, 2, scaling), loadSprite(r.mira, 2, scaling), g[i][f].getSeccion_barco());
+                    board[i][f] = new Grid(g[i][f].getEstado(),g[i][f].getBarco(), loadSprite(r.water, 3, scaling), loadSprite(r.mira, 2, scaling), g[i][f].getSeccion_barco());
                 }else{
                     board[i][f] = new Grid(g[i][f].getEstado(),g[i][f].getBarco(), loadSprite(SeccionBarco(g[i][f].getSeccion_barco(), g[i][f].getBarco(), r), 2, scaling), loadSprite(r.mira, 2, scaling), g[i][f].getSeccion_barco());
                 }
@@ -605,7 +605,7 @@ public class FriendlyBoard extends Map implements Slideable {
      
      
         public boolean animarAtaque(){
-        misil_y += 48;
+        misil_y += 72;
         if(target_y <= misil_y){
             return false;
         }else{

@@ -86,7 +86,8 @@ public class BattleshipCanvas
     
     // estructura para el guardado de memoria
     private UserData DATA;
-    private int modeSelected;
+    //private int modeSelected;
+    private int intervalo = 0;
     
     
     /**
@@ -449,23 +450,31 @@ public class BattleshipCanvas
                     tableroAmigo.readyToShoot(false);
                     tableroAmigo.pcshoot();
                 }
-                
-                if (tableroAmigo.hasShot()){                    
-                    tableroAmigo.setHasShot(false);
-                }
                  if(tableroAmigo.isAtaqueEnCurso()){
                      if(!tableroAmigo.animarAtaque()){
                        tableroAmigo.Atacar(false);
-                       tableroAmigo.Listener(TypeBattleShips.SP_TURNO);                        
+                       resetIntervalo();                       
                     }
+                }
+                sumarIntervalo(1);
+                if(getIntervalo()>= 7 && !tableroAmigo.isAtaqueEnCurso() && tableroAmigo.hasShot()){
+                    tableroAmigo.setHasShot(false);
+                    resetIntervalo();
+                    tableroAmigo.Listener(TypeBattleShips.SP_TURNO);   
                 }
                 break;
             case TypeBattleShips.SP_TURNO:
                 if(tableroEnemigo.isAtaqueEnCurso()){
                     if(!tableroEnemigo.animarAtaque()){
-                       tableroEnemigo.Atacar(false);
-                       tableroEnemigo.Listener(TypeBattleShips.SP_TURNO_IA);                        
+                        tableroEnemigo.Atacar(false);
+                        resetIntervalo();                       
                     }
+                }                
+                sumarIntervalo(1);
+                if(getIntervalo()>= 7 && !tableroEnemigo.isAtaqueEnCurso() && tableroEnemigo.hasShoot()){
+                    resetIntervalo();
+                    tableroEnemigo.setHasShoot(false);
+                    tableroEnemigo.Listener(TypeBattleShips.SP_TURNO_IA);    
                 }
                 break;
         }
@@ -826,6 +835,7 @@ public class BattleshipCanvas
                          if (!DATA.existeNameUser1()){
                              showSelectorNombre();
                          }else{
+                             tableroAmigo.setDificultad(DATA.getDificultadUsuarioActual());
                              showUserScreen();
                          }
                          break;
@@ -833,7 +843,8 @@ public class BattleshipCanvas
                          DATA.setUsuarioActual(UserData.PERFIL_B);
                          if (!DATA.existeNameUser2()){
                              showSelectorNombre();
-                         }else{
+                         }else{                             
+                             tableroAmigo.setDificultad(DATA.getDificultadUsuarioActual());
                              showUserScreen();
                          }
                          break;
@@ -842,6 +853,7 @@ public class BattleshipCanvas
                          if (!DATA.existeNameUser3()){
                              showSelectorNombre();
                          }else{
+                             tableroAmigo.setDificultad(DATA.getDificultadUsuarioActual());
                              showUserScreen();
                          }
                          break;
@@ -874,6 +886,11 @@ public class BattleshipCanvas
                         audioEnabled = enabled;
                         audioManager.playSample(r.SAMPLE_BONUS);
                         break;
+                    case OptionScreen.DIFICULTAD:
+                        DATA.setDificultadUsuarioActual(options.toogleDificultad());
+                        tableroAmigo.setDificultad(DATA.getDificultadUsuarioActual());
+                        saveGame();
+                        break;                        
                     case OptionScreen.USUARIO:
                         showMenu();
                         break;
@@ -953,33 +970,17 @@ public class BattleshipCanvas
             public void changeState(int state){
                 switch(state)
                 {
-//                    case TypeBattleShips.STATE_BARCOS:
-//                        showBarcos();
-//                        break;
-//                    case TypeBattleShips.GIRAR:
-////                        deployShips.ObtenerBarcos();
-////                        deployShips.ObtenerMapa();
-////                        showUserScreen();
-//                        deployShips.girarBarco();
-//                        break;
                     case TypeBattleShips.STATE_MENU:
                         showUserScreen();
                         break;
                     case TypeBattleShips.SP_TURNO_IA:
-                        if(tableroAmigo.sinBarcos())
-                            {
-                                    //perdiste
-                                
-                            }
-                            else
-                            {
-                                
-                                tableroAmigo.readyToShoot(true);
-                                showTableroAmigo();
-                                //tableroAmigo.pcshoot();  
-                            }
-                        break;
-                  
+                        if(tableroAmigo.sinBarcos()){
+                                //perdiste
+                        }else{                                
+                            tableroAmigo.readyToShoot(true);
+                            showTableroAmigo();
+                        }
+                        break;                  
                 }
             }
         }, scaling, TypeBattleShips.FACIL);
@@ -989,36 +990,22 @@ public class BattleshipCanvas
         tableroAmigo = new FriendlyBoard(cornerX, cornerY, gameWidth, gameHeight, r, new Map.Listener() {
 
             public void itemClicked(int x, int y) {
-//                deployShips.colocarBarco();
+                
             }
             
             public void changeState(int state){
                 switch(state)
                 {
-//                    case TypeBattleShips.STATE_BARCOS:
-//                        showBarcos();
-//                        break;
-//                    case TypeBattleShips.GIRAR:
-////                        deployShips.ObtenerBarcos();
-////                        deployShips.ObtenerMapa();
-////                        showUserScreen();
-//                        deployShips.girarBarco();
-//                        break;
                     case TypeBattleShips.STATE_MENU:
                         showUserScreen();
-                        break;
-                        
+                        break;                        
                     case TypeBattleShips.SP_TURNO:
-                        if(tableroEnemigo.sinBarcos())
-                            {
+                        if(tableroEnemigo.sinBarcos()){
                                     //ganaste
-                            }
-                            else
-                            {
-                                showTableroEnemigo();                                
-                            }
-                        break;
-    
+                        }else{
+                            showTableroEnemigo();                                
+                        }
+                        break;    
                 }
             }
         }, scaling, TypeBattleShips.FACIL);
@@ -1261,29 +1248,17 @@ public class BattleshipCanvas
     private void showSelectorNombre(){
         nextState = TypeBattleShips.STATE_CREATE_NOMBRE;
         changeView(selectorNombre);
+    } 
+    
+    private void sumarIntervalo(int suma){
+        this.intervalo += suma; 
     }
-
     
-    
- 
-    
-    public void singlePlayer_playerDispara()
-    {
-    if(tableroAmigo.sinBarcos())
-        {
-            //perdiste
-        }
-        else
-        {}
+    private int getIntervalo(){
+        return this.intervalo;
     }
-
-       
     
-    /**
-     * Change level
-     */
-//    public void nextLevel() {
-//        nextState = TypeBattleShips.STATE_LEVEL;
-//        changeView(game);
-//    }
+    private void resetIntervalo(){
+        this.intervalo = 0;
+    }   
 }
