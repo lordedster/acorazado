@@ -86,7 +86,11 @@ public class UserData {
             }
             for(int i = 0; i < userName_3.length; i++){       
                 userName_3[i] = din.readInt();
-            }          
+            } 
+            dif_user_1 = din.readInt();
+            dif_user_2 = din.readInt();
+            dif_user_3 = din.readInt();
+            
 ////          initDashboard(din.readInt());
 ////            plate.setPosition(din.readInt(), din.readInt());
 ////            ball.setPosition(din.readInt(), din.readInt());
@@ -113,7 +117,10 @@ public class UserData {
             }
             for(int i = 0; i < userName_3.length; i++){
                  dout.writeInt(userName_3[i]);     
-            }       
+            }  
+            dout.writeInt(dif_user_1);     
+            dout.writeInt(dif_user_2);     
+            dout.writeInt(dif_user_3);     
             return bout.toByteArray();
         }
         catch (IOException e) {
@@ -191,16 +198,18 @@ public class UserData {
         this.usuarioActual = usuarioActual;
     }
     
-    public int[] getNombreUsuarioActual(){
+  
+    
+    public int getDificultadUsuarioActual(){
         switch(usuarioActual){
             case PERFIL_A:
-                return userName_1;
+                return dif_user_1;
             case PERFIL_B:
-                return userName_2;
+                return dif_user_2;
             case PERFIL_C:
-                return userName_3;
+                return dif_user_3;
         }
-        return null;
+        return 0;
     }
     
     public String getNombreUsuario(int usuario){
@@ -234,6 +243,20 @@ public class UserData {
                 break;  
             case PERFIL_C:
                 userName_3 = nombre;
+                break;    
+        }
+    }  
+    
+    public void setDificultadUsuarioActual(int dif){
+        switch(usuarioActual){
+            case PERFIL_A:
+                dif_user_1 = dif;
+                break;
+            case PERFIL_B:
+                dif_user_2 = dif;
+                break;  
+            case PERFIL_C:
+                dif_user_3 = dif;
                 break;    
         }
     }  

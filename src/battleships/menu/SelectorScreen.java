@@ -35,7 +35,7 @@ public class SelectorScreen
         setItem(BUTTON_OK, new MenuItem(new StringMenuItem("Si", r)));
         setItem(BUTTON_CANCEL,new MenuItem(new StringMenuItem("No", r)));
         
-        mensaje = new StringImageItem("¿Desea desplegar los /n barcos automáticamente?");
+        mensaje = new StringImageItem("¿Desea desplegar /n los barcos /n automáticamente?");
         mensaje.setRGB(255, 255, 255);
         
         IN_CX = cornerX + width / 2;
@@ -48,7 +48,7 @@ public class SelectorScreen
     }
      public final void positionItemsHorizontally() {
         MenuItem item;
-        mensaje.setPosition(x, y);
+        mensaje.setPosition(x - (width / 2)+5, mensaje.getY());
         item = getItem(ITEM_COUNT - 1);
         item.setPosition(x - (width / 2) + (width / 8), item.getY());
         item = getItem(ITEM_COUNT - 2);
@@ -60,8 +60,8 @@ public class SelectorScreen
      */
     public final void positionItemsVertically() {
         
-        mensaje.setPosition(x, y);
-        int newY = (int)(y + mensaje.getHeight()  / 1.2);
+        mensaje.setPosition(x - (width / 2)+5, y);
+        int newY = (int)(y + mensaje.getHeight()+ 10);
         for (int i = 0; i < ITEM_COUNT; i++) {
             MenuItem item = getItem(i);
             item.setCenter(item.getX(), newY);

@@ -75,10 +75,10 @@ public class StringImageItem {
     public void paint(Graphics g){
         g.setFont (font); 
         g.setColor (R, G, B); 
-        int newx = x;
+        int newy = y;
         for(int i = 0; i < texto.length; i++){
-            g.drawString(texto[i], newx, y, anchor);
-            newx  += font.getHeight();
+            g.drawString(texto[i], x, newy, anchor);
+            newy  += font.getHeight();
         }
     }
     

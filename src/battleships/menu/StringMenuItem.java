@@ -5,7 +5,6 @@
 package battleships.menu;
 
 import battleships.game.Resources;
-import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
@@ -75,14 +74,12 @@ public class StringMenuItem {
             case 1:
                 R = 255;
                 G = 255;
-                B = 255;
-                //this.FONT = Font.getFont (Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL);   
+                B = 255;  
                 break;
             default:
                 R = 0;
                 G = 0;
-                B = 0;
-                //this.FONT = Font.getFont (Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL);   
+                B = 0;  
                 break;
         }
     }
