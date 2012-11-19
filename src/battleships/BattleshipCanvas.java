@@ -16,10 +16,14 @@ import battleships.effects.ElectricArc;
 import battleships.effects.VibratorManager;
 import battleships.audio.AudioManager;
 import battleships.effects.LightManager;
+//import battleships.game.BTCliente;
+import battleships.game.BtCommunication;
 import battleships.game.EnemyBoard;
 import battleships.game.FriendlyBoard;
+import battleships.game.Shoot;
 import battleships.game.maps.Grid;
 import battleships.game.maps.Map;
+import battleships.game.mpComunication;
 import battleships.game.ships.BattleShip;
 import battleships.menu.BarcosScreen;
 import battleships.menu.SelectorScreen;
@@ -75,6 +79,7 @@ public class BattleshipCanvas
     private SelectorNombre selectorNombre;
     private EnemyBoard tableroEnemigo;
     private FriendlyBoard tableroAmigo;
+    private mpComunication mpc;
     private Slideable currentView;
     private Slideable targetView;
     private Player electricity;
@@ -87,6 +92,11 @@ public class BattleshipCanvas
     // estructura para el guardado de memoria
     private UserData DATA;
     private int modeSelected;
+    
+    private BtCommunication btc;
+    private  boolean isServer;
+    private boolean mpg = false;
+   
     
     
     /**
@@ -122,6 +132,8 @@ public class BattleshipCanvas
 
         audioManager = AudioManager.getInstance();
         vibratorManager = VibratorManager.getInstance();
+        
+        btc = new BtCommunication();
         
     }
 
@@ -649,6 +661,7 @@ public class BattleshipCanvas
                         time = System.currentTimeMillis();
                         checkKeys();
                         update();
+                        mpgameon();
                         render();
 
                         // Sleep the rest of the time
@@ -662,6 +675,33 @@ public class BattleshipCanvas
         }
     }
 
+    public void mpgameon()
+    {
+    if (mpg)
+                        {
+                            if(mpc.isDatosListos())
+                            {
+                                switch(mpc.getInt0())
+                                {
+                                        case 1:
+                                        {
+                                            String response = "";
+                                            response = tableroAmigo.mp_disparo(mpc.recuperarDatosDisparo());
+                                            mpc.setDatosListos(false);
+                                            mpc.responderDatos(response);
+                                            break;
+                                        }
+                                        case 2:
+                                        {
+                                            //EnemyBoard.updateTableroEnemigo();
+                                            break;
+                                        }
+                                }
+                            }
+                        
+                        }
+    
+    }
     /**
      * Handle pointer pressed
      */
@@ -966,17 +1006,49 @@ public class BattleshipCanvas
                     case TypeBattleShips.SP_TURNO_IA:
                         if(tableroAmigo.sinBarcos())
                             {
-                                    //perdiste
-                                
+                                    //perdiste 
                             }
                             else
                             {
-                                
                                 tableroAmigo.readyToShoot(true);
                                 showTableroAmigo();
                                 //tableroAmigo.pcshoot();  
                             }
                         break;
+                    case TypeBattleShips.BT_CLIENTE:
+                    {
+                        btc.connectToServer();
+                        isServer = false;
+                        break;
+                    }
+                    case TypeBattleShips.BT_SERVIDOR:
+                    {
+                        btc.waitForClient();
+                        isServer = true;
+                        break;
+                    }
+                    case TypeBattleShips.STATE_MULTI:
+                    {
+                        
+                        break;
+                    }
+                    case TypeBattleShips.MP_SYNC:
+                    {
+                        while(btc.connectionAlive())
+                        {
+
+                        }
+                        break;
+                    }
+                    case TypeBattleShips.MP_DISPARAR:
+                            {
+                                if(tableroEnemigo.getMP_shoot() != null)
+                                {
+                                    mpc.enviarDatosDisparo(tableroEnemigo.getMP_shoot());
+                                }
+                            break;
+                            }
+                        
                   
                 }
             }
@@ -1016,11 +1088,43 @@ public class BattleshipCanvas
                                 showTableroEnemigo();                                
                             }
                         break;
-    
+                    case TypeBattleShips.BT_CLIENTE:
+                    {
+                        mpc = new mpComunication();
+                        mpc.startClient();
+                        mpc.run();
+                        mpg = true;
+                        break;
+                    }
+                    case TypeBattleShips.BT_SERVIDOR:
+                    {
+                        mpc = new mpComunication();
+                        mpc.startServer();
+                        mpc.run();
+                        mpg = true;
+                        break;
+                    }    
+                        
                 }
             }
         }, scaling, TypeBattleShips.FACIL);
     }
+        
+        
+//    public void createBTCliente(){
+//        clienteBluetooth = new BTCliente(cornerX, cornerY, gameWidth, gameHeight, new Menu.Listener() {
+//             public void itemClicked(int item){
+//                 switch(item){
+//                     case BTCliente.OK:
+//                         showUserScreen();
+//                         break;
+//                     case BTCliente.CANCEL:
+//                         showSelector();
+//                         break;
+//                 }
+//             }
+//         }, scaling, r);
+//    }
     
     private void createMisionScreen() {
          misionScreen = new MisionScreen(cornerX, cornerY, gameWidth, gameHeight, new Menu.Listener() {
@@ -1240,6 +1344,8 @@ public class BattleshipCanvas
         nextState = TypeBattleShips.STATE_BARCOS;
         changeView(barcos);
     }
+     
+    
     
     private void showMisionScreen(){
         nextState = TypeBattleShips.STATE_MISION;
@@ -1260,6 +1366,8 @@ public class BattleshipCanvas
         nextState = TypeBattleShips.STATE_CREATE_NOMBRE;
         changeView(selectorNombre);
     }
+    
+    
 
     
     

@@ -12,8 +12,10 @@ import battleships.game.ships.BattleShip;
 import battleships.game.ships.TypeBattleShips;
 import battleships.records.UserData;
 import java.util.Random;
+import javax.microedition.io.StreamConnection;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.Sprite;
+
 
 /**
  *
@@ -31,6 +33,8 @@ public class FriendlyBoard extends Map implements Slideable {
     boolean ld = true;
     boolean rd = true;
     int lastdirection = -1;
+
+    
     
     boolean ready;
     boolean disparado;
@@ -80,6 +84,10 @@ public class FriendlyBoard extends Map implements Slideable {
         this.cornerY = cornerY;
         ready = false;
         disparado = false;
+        
+        
+     
+        
          
     }
     
@@ -651,5 +659,56 @@ public class FriendlyBoard extends Map implements Slideable {
             board[map_x][map_y].setFrameBarco(1);
         }            
     }
+    
+    public String mp_disparo(Shoot s)
+    {
+        String ss ="";
+       disparar(s);
+       
+        ss = ss + "1"; // 0
+        ss = ss + "0";//sync  // 1
+        if(board[s.getX()][s.getY()].getBarco() == TypeBattleShips.EMPTY)
+        {
+            ss = ss + "" + s.getX();  //2
+            ss = ss + "" + s.getY(); //3
+             ss = ss + "0"; // 4
+        }
+        else
+        {
+            if(  ships[board[s.getX()][s.getY()].getBarco()].isSunked())
+            {
+                ss = ss + "" + obtMatrizX(ships[board[s.getX()][s.getY()].getBarco()].getX());  //2
+                ss = ss +  "" + obtMatrizY(ships[board[s.getX()][s.getY()].getBarco()].getY());  //3
+                ss = ss + "2";  //4
+                ss = ss + "" + board[s.getX()][s.getY()].getBarco();
+                ss = ss + "" + ships[board[s.getX()][s.getY()].getBarco()].getOrientacion();
+                
+            }
+            else
+            {
+                ss = ss + "" + s.getX();
+                ss = ss + "" + s.getY();
+                ss = ss + "1";
+                ss = ss + "0";
+                ss = ss + "0";
+            }
+            
+        }
+        
+        
+        
+        
+             /*
+        * char 0 = 1 ataque, 2 respuesta ataque
+        * char 1 = sycn del 0 al 9, ventana
+        * char 2 = x
+        * char 3 = y 
+        * char 4 = resultado, tocado undido / arma especial
+        * char 5 = barco
+        * char 6 = orientacion
+        */
+        return ss;
+    }
+    
 
 }

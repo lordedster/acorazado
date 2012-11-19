@@ -81,6 +81,12 @@ public class TypeBattleShips {
     public static final int SP_TURNO_IA = 21;
     public static final int TABLERO_AMIGO = 19;
     public static final int TABLERO_ENEMIGO = 20;
+    public static final int BT_SERVIDOR = 22;
+    public static final int BT_CLIENTE = 23;
+    public static final int MP_SYNC = 24;
+    public static final int MP_DISPARAR = 25;
+    
+    
     
     //Dificultades
     public static final int FACIL = 0;

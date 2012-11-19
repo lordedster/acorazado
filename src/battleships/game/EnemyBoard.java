@@ -38,6 +38,9 @@ public class EnemyBoard
     private Sprite misil;
     private boolean ataqueEnCurso;
     
+    
+    private Shoot mpshoot;
+    
     private int misil_x;
     private int misil_y;
     private int target_x;
@@ -186,6 +189,39 @@ public class EnemyBoard
         Listener(TypeBattleShips.STATE_MENU);
     }
     
+    public Shoot getMP_shoot()
+    {
+        return mpshoot;
+    
+    }
+    
+    public void playerShootMP(int x, int y)
+    {
+        if(!isAtaqueEnCurso())
+        {
+            if(board[x][y].getEstado()== TypeBattleShips.AGUA)
+            {
+                mpshoot = new Shoot();
+                mpshoot.setArma(1);
+                mpshoot.setX(x);
+                mpshoot.setY(y);
+                Listener(TypeBattleShips.MP_DISPARAR);
+                posicionMisil(x,y,board[x][y].getX(),board[x][y].getY());
+                if(board[x][y].getBarco()==TypeBattleShips.EMPTY)
+                {
+                    board[x][y].setEstado(TypeBattleShips.SHOT);
+                }
+                else
+                {
+                    board[x][y].setEstado(TypeBattleShips.ACERTADO);
+                    acertarBaraco(board[x][y].getBarco(), board[x][y].getSeccion_barco());
+                }
+            }
+        }
+             
+    }
+            
+            
     public void PlayerShoot(int x, int y)
     {
         if(!isAtaqueEnCurso())
