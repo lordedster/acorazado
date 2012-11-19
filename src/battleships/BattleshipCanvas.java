@@ -188,7 +188,7 @@ public class BattleshipCanvas
     /**
      * Check the state of keys
      */
-    private void checkKeys() {
+//    private void checkKeys() {
 //        int keyState = getKeyStates();
 //        if (gameState == TypeBattleShips.STATE_LEVEL) {
 //            if ((keyState & LEFT_PRESSED) != 0) {
@@ -198,8 +198,8 @@ public class BattleshipCanvas
 //                game.movePlateRight();
 //            }
 //        }
-    }
-
+//    }
+    
     /**
      * Handles the key pressed events
      * @param key
@@ -237,19 +237,6 @@ public class BattleshipCanvas
                         info.clickSelected();
                 }
                 break;
-//            case TypeBattleShips.STATE_LEVEL:
-//                switch (key) {
-//                    case LEFT_SOFTKEY:
-//                        game.leftButtonPressed();
-//                        break;
-//                    case RIGHT_SOFTKEY:
-//                        game.rightButtonPressed();
-//                        break;
-//                }
-//                if (getGameAction(key) == FIRE) {
-//                    game.fire();
-//                }
-//                break;
             case TypeBattleShips.STATE_OPTIONS:
                 switch (getGameAction(key)) {
                     case UP:
@@ -567,7 +554,7 @@ public class BattleshipCanvas
         }
         if (misionScreen == null){
             createMisionScreen();            
-            //showMisionScreen();
+            showMisionScreen();
         }
         if (tableroEnemigo == null){
             createTableroEnemigo();
@@ -658,7 +645,7 @@ public class BattleshipCanvas
                     }
                     else {
                         time = System.currentTimeMillis();
-                        checkKeys();
+                        //checkKeys();
                         update();
                         render();
 
@@ -685,9 +672,6 @@ public class BattleshipCanvas
         }
 
         switch (gameState) {
-//            case TypeBattleShips.STATE_LEVEL:
-//                game.pointerPressed(x - cornerX, y - cornerY);
-//                break;
             case TypeBattleShips.STATE_MENU:
                 menu.pointerEvent(Menu.POINTER_PRESSED, x, y);
                 audioManager.playSample(r.SAMPLE_BUTTON);
@@ -741,9 +725,6 @@ public class BattleshipCanvas
         }
         // STOP loop
         switch (gameState) {
-//            case TypeBattleShips.STATE_LEVEL:
-//                game.pointerReleased(x - cornerX, y - cornerY);
-//                break;
             case TypeBattleShips.STATE_MENU:
                 menu.pointerEvent(Menu.POINTER_RELEASED, x, y);
                 break;
@@ -786,9 +767,6 @@ public class BattleshipCanvas
         this.y = y;
 
         switch (gameState) {
-//            case TypeBattleShips.STATE_LEVEL:
-//                game.pointerDragged(x - cornerX, y - cornerY);
-//                break;
             case TypeBattleShips.STATE_MENU:
                 menu.pointerEvent(Menu.POINTER_DRAGGED, x, y);
                 break;
@@ -869,7 +847,7 @@ public class BattleshipCanvas
            DATA.getNombreUsuario(UserData.PERFIL_A), 
            DATA.getNombreUsuario(UserData.PERFIL_B), 
            DATA.getNombreUsuario(UserData.PERFIL_C), r);
-        showMenu();
+        //showMenu();
     }
     
     private void createOptionScreen() {
@@ -951,7 +929,7 @@ public class BattleshipCanvas
                         tableroAmigo.crearMapaManualmente(deployShips.ObtenerMapa());
                         tableroAmigo.crearBarcosManualmente(deployShips.ObtenerBarcos());
                         tableroAmigo.positionGrid();                        
-                        tableroEnemigo.generarMapa();
+                        tableroEnemigo.generarMapa(r);
                         showTableroEnemigo();
                         break;
                 }
@@ -986,7 +964,7 @@ public class BattleshipCanvas
         }, scaling, TypeBattleShips.FACIL);
     }
     
-        private void createTableroAmigo(){
+    private void createTableroAmigo(){
         tableroAmigo = new FriendlyBoard(cornerX, cornerY, gameWidth, gameHeight, r, new Map.Listener() {
 
             public void itemClicked(int x, int y) {
@@ -1125,11 +1103,11 @@ public class BattleshipCanvas
     private void  createSelectorScreen() {
        selector = new SelectorScreen(cornerX, cornerY, gameWidth, gameHeight, new Menu.Listener() {
 
-   public void itemClicked(int item) {
+            public void itemClicked(int item) {
                 switch (item) {
                     case SelectorScreen.BUTTON_OK:
-                        tableroAmigo.generarMapa();
-                        tableroEnemigo.generarMapa();
+                        tableroAmigo.generarMapa(r);
+                        tableroEnemigo.generarMapa(r);
                         showTableroEnemigo();
                         break;
                     case SelectorScreen.BUTTON_CANCEL:  

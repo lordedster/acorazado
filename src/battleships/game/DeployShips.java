@@ -155,7 +155,6 @@ public class DeployShips
     {        
         ReemplazarMapa(new Grid[10][10]);        
         ReemplazarBarcos(new BattleShip[5]);
-        r = null;
     }
     
     public void agregarBarco(BattleShip ship){
@@ -318,7 +317,6 @@ public class DeployShips
     }
      
      public void pointerEvent(int type, int x, int y) {
-         buttonBarcos.hits(x,y);
         if ( buttonBarcos.hits(x,y)) {
             if (type == POINTER_RELEASED) {
                 leftButtonPressed();

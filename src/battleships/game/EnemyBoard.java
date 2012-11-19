@@ -9,6 +9,7 @@ import battleships.game.maps.Grid;
 import battleships.game.maps.Map;
 import battleships.game.ships.BattleShip;
 import battleships.game.ships.TypeBattleShips;
+import battleships.menu.StringImageItem;
 import java.util.Random;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.Sprite;
@@ -30,6 +31,7 @@ public class EnemyBoard
     private int displayWidth;
     private int displayHeight;
     private Resources r;
+    private StringImageItem menu;
     //private Font font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL);   
     private double scaling;
     private Random rnd;
@@ -55,7 +57,11 @@ public class EnemyBoard
         this.dificultad = dificultad;
         rnd = new Random();
         this.misil = loadSprite(r.misil,1,scaling);
-        setearMisil();
+        setearMisil();        
+        menu = new StringImageItem("Menu");
+        menu.setRGB(255, 255, 255);
+        //setPositionMenu();
+        
         ataqueEnCurso = false;
         hasShoot = false;
 //        buttonGirar = new Sprite(r.girar);
@@ -68,9 +74,12 @@ public class EnemyBoard
 
         this.cornerX = OUT_X;
         this.cornerX = cornerY;
+        
+        menu.setPosition(OUT_X, cornerY + displayHeight);
     }
     
-    public void generarMapa(){
+    public void generarMapa(Resources r){     
+        this.r = r;
         createMap(false);        
         positionGrid();
         selectGrid(0,0);
@@ -78,8 +87,8 @@ public class EnemyBoard
     
     public void vaciarMapa(){
         Grid[][] x = ObtenerMatriz();
-        ReemplazarBarcos(new BattleShip[obtenerBarcos().length]);
         ReemplazarMapa(new Grid[x.length][x[0].length]);
+        ReemplazarBarcos(new BattleShip[obtenerBarcos().length]);
     } 
 
     public boolean slideOut() {
@@ -87,6 +96,7 @@ public class EnemyBoard
         distance *= 0.5;
         x = OUT_X + distance;
         positionGrid();
+        setPositionMenu();
         return distance != 0;
     }
 
@@ -95,6 +105,7 @@ public class EnemyBoard
         distance *= 0.5;
         x = IN_X + distance;
         positionGrid();
+        setPositionMenu();
         return distance != 0;
     }
     
@@ -121,6 +132,7 @@ public class EnemyBoard
     public void paint(Graphics g){
         super.paint(g);
         misil.paint(g);
+        menu.paint(g);
     }
     
     private void createMap(boolean visibilidad){
@@ -285,4 +297,22 @@ public class EnemyBoard
     public void setHasShoot(boolean n){
         hasShoot = n;
     }
+    
+    
+
+    private void setPositionMenu() {       
+       menu.setPosition(x + displayWidth - menu.getWidth(), cornerY + displayHeight - menu.getHeight());
+    }
+
+    
+    
+     
+     public void pointerEvent(int type, int x, int y) {
+        if ( menu.hits(x,y)) {
+            if (type == POINTER_RELEASED) {
+                rightButtonPressed();
+            }
+            return;
+        }
+    }    
 }

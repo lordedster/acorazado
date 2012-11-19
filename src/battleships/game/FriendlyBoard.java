@@ -10,7 +10,7 @@ import battleships.game.maps.Grid;
 import battleships.game.maps.Map;
 import battleships.game.ships.BattleShip;
 import battleships.game.ships.TypeBattleShips;
-import battleships.records.UserData;
+//import battleships.records.UserData;
 import java.util.Random;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.Sprite;
@@ -35,7 +35,7 @@ public class FriendlyBoard extends Map implements Slideable {
     boolean ready;
     boolean disparado;
     private Random rnd;
-        private final int IN_CX;
+    private final int IN_CX;
     private final int OUT_CX;    
     private int x;
     private int y;
@@ -92,15 +92,16 @@ public class FriendlyBoard extends Map implements Slideable {
         this.dificultad = dificultad;
     }
 
-    public void generarMapa(){
+    public void generarMapa(Resources r){        
+        this.r = r;
         createMap(true);        
         positionGrid();
     }
         
     public void vaciarMapa(){
         Grid[][] e = ObtenerMatriz();
-        ReemplazarBarcos(new BattleShip[obtenerBarcos().length]);
         ReemplazarMapa(new Grid[e.length][e[0].length]);
+        ReemplazarBarcos(new BattleShip[obtenerBarcos().length]);
     } 
 
     public boolean slideOut() {
@@ -307,26 +308,29 @@ public class FriendlyBoard extends Map implements Slideable {
             }
             case TypeBattleShips.MODERADO:
             {
-                if(tocado)
+                 
+                 if(tocado)
                 {
+                    s.setX(XTocado);
+                    s.setY(YTocado);
                     s = nextAcertadoShoot(s);
                 }
                 else
                 {
-                    while(true)
-                     {
-                        xn = rnd.nextInt(10);
-                        yn = rnd.nextInt(10);
+                 while(true)
+                {
                     
-                        if( super.board[xn][yn].getEstado()== TypeBattleShips.INTACTO || super.board[xn][yn].getEstado()== TypeBattleShips.AGUA  )
-                        {   
-                            break;
-                        }
-                        s.setX(xn);
-                        s.setY(yn);
-                }
+                    xn = rnd.nextInt(10);
+                    yn = rnd.nextInt(10);
                 
-               }
+                    if( super.board[xn][yn].getEstado()== TypeBattleShips.INTACTO || super.board[xn][yn].getEstado()== TypeBattleShips.AGUA )
+                    {   
+                        break;
+                    }
+                }
+                s.setX(xn);
+                s.setY(yn);
+                }
             break;
             }
             case TypeBattleShips.DIFICIL:
@@ -651,5 +655,4 @@ public class FriendlyBoard extends Map implements Slideable {
             board[map_x][map_y].setFrameBarco(1);
         }            
     }
-
 }
