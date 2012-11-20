@@ -126,6 +126,8 @@ public class BattleshipCanvas
         displayWidth = g.getClipWidth();
         displayHeight = g.getClipHeight();
 
+        mpc = new mpComunication();
+        
         if ((float) displayWidth / displayHeight < DEFAULT_WIDTH / DEFAULT_HEIGHT) {
             scaling = (float) (displayWidth / DEFAULT_WIDTH);
         }
@@ -142,7 +144,7 @@ public class BattleshipCanvas
         audioManager = AudioManager.getInstance();
         vibratorManager = VibratorManager.getInstance();
         
-        //btc = new BtCommunication();
+        
         
     }
 
@@ -553,6 +555,9 @@ public class BattleshipCanvas
             }
         }
         catch (NullPointerException npe) {
+            g.drawString("Lo que sea", 0, 0, anchor);
+                    System.err.println("******************sdfsdf CONSTRUCTOR");
+
             // just no painting then
         }
         if ((gameState == TypeBattleShips.STATE_MENU || gameState == TypeBattleShips.STATE_INFO) && pressed) {
@@ -610,7 +615,7 @@ public class BattleshipCanvas
 
         if (multiMenu == null){
             createMultiMenu();
-            showMultiplayer();
+            //showMultiplayer();
         }
 
         if (victoryLosser == null){
@@ -703,8 +708,8 @@ public class BattleshipCanvas
                         time = System.currentTimeMillis();
                         //checkKeys();
                         update();
-                        mpgameon();
                         render();
+                      //  mpgameon();
 
                         // Sleep the rest of the time
                         time = INTERVAL - (System.currentTimeMillis() - time);
@@ -721,10 +726,11 @@ public class BattleshipCanvas
     {
     if (mpg)
         {
-            if( mpc.isAlive())
+            if( mpc.isLive())
                  {
 
                         {
+                            mpc.leer();
                             if(mpc.isDatosListos())
                             {
                                 mpc.setDatosListos(false);
@@ -1021,7 +1027,7 @@ public class BattleshipCanvas
                         showMisionScreen();                        
                         break;
                     case UserScreen.MULTIJUGADOR:
-                        createMultiMenu();                      
+                        showMultiplayer();                     
                         break;
                     case UserScreen.OPTIONS:
                         showOptions();
@@ -1101,7 +1107,8 @@ public class BattleshipCanvas
                         break;
                     case TypeBattleShips.BT_CLIENTE:
                     {
-                        
+                                System.err.println("c");
+
                         mpc.startClient();
                         connected = true;
                         isServer = false;
@@ -1110,6 +1117,8 @@ public class BattleshipCanvas
                     }
                     case TypeBattleShips.BT_SERVIDOR:
                     {
+                                System.err.println("s");
+
                         mpc.startServer();
                         connected = true;
                         isServer = true;
@@ -1160,7 +1169,7 @@ public class BattleshipCanvas
                         break;   
                     case TypeBattleShips.BT_CLIENTE:
                     {
-                        mpc = new mpComunication();
+                        //mpc = new mpComunication();
                         mpc.startClient();
                         mpg = true;
                         showSelector();
@@ -1168,7 +1177,7 @@ public class BattleshipCanvas
                     }
                     case TypeBattleShips.BT_SERVIDOR:
                     {
-                        mpc = new mpComunication();
+                        //mpc = new mpComunication();
                         mpc.startServer();
                         mpg = true;
                         showSelector();
@@ -1199,16 +1208,20 @@ public class BattleshipCanvas
         multiMenu = new multiPlayerScreen(cornerX, cornerY, gameWidth, gameHeight, new Menu.Listener() {
 
             public void itemClicked(int x) {
-             
+
                 if(x != 1)
                 {
                  
+                            System.err.println("**********************BTCOMM CONSTRUCTOR");
+
                     isServer = false;
                     tableroAmigo.startAsCliente();
                     
                 }
                 else
                 {
+                            System.err.println("**********************BTCOMM asdasda");
+
                     isServer = true;
                     tableroAmigo.startAsServer();
                     
