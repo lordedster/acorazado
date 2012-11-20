@@ -178,7 +178,6 @@ public class FriendlyBoard extends Map implements Slideable {
         AlgoritmoFacil(TypeBattleShips.DESTRUCTOR, TypeBattleShips.DESTRUCTOR_SIZE, ObtenerMatriz(), 2, v );
         AlgoritmoFacil(TypeBattleShips.SUBMARINO, TypeBattleShips.SUBMARINO_SIZE, ObtenerMatriz(), 3, v);
         AlgoritmoFacil(TypeBattleShips.ESPIA, TypeBattleShips.ESPIA_SIZE, ObtenerMatriz(), 4, v);
-        r = null;
    }
     
     private void AlgoritmoFacil(int ship, int size, Grid[][] map, int posicion, boolean v){        
@@ -623,6 +622,7 @@ public class FriendlyBoard extends Map implements Slideable {
         public boolean animarAtaque(){
         misil_y += 72;
         if(target_y <= misil_y){
+            Listener(TypeBattleShips.SACUDIR);
             return false;
         }else{
             posicionarMisil();

@@ -155,4 +155,10 @@ public class MenuItem {
             texto.paint(g);
         }
     }
+    
+    public void setString(String string){
+        if (!tipo){
+            texto.setString(string);
+        }
+    }
 }

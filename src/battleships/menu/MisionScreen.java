@@ -27,8 +27,8 @@ public class MisionScreen
     public MisionScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling, Resources r){
         super(ITEM_COUNT,l);
         
-        setItem(RESUME, new MenuItem(loadSprite("/continuar.png", 2, scaling)));
-        setItem(NEWGAME, new MenuItem(loadSprite("/nuevo_juego.png",2,scaling)));
+        setItem(RESUME, new MenuItem(new StringMenuItem("Continuar",r)));
+        setItem(NEWGAME, new MenuItem(new StringMenuItem("Nuevo Juego",r)));
         setItem(BACK, new MenuItem(new StringMenuItem("Atrás", r)));
         
         IN_CX = cornerX + width / 2;
@@ -79,6 +79,20 @@ public class MisionScreen
             item.setCenter(item.getX(), newY);
             newY += item.getHeight();
         }
+    }
+    
+     public void hideResume() {
+        getItem(RESUME).setVisibile(false);
+        positionItemsVertically();
+    }
+
+    /**
+     * Show resume option
+     */
+    public void showResume() {
+        getItem(RESUME).setVisibile(true);
+        selectItem(RESUME);
+        positionItemsVertically();
     }
     
 }
