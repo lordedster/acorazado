@@ -12,7 +12,7 @@ package battleships.game;
 
 
 
-public class mpComunication extends Thread {
+public class mpComunication {
     
     private BtCommunication btc;
     private boolean datosListos;
@@ -124,15 +124,10 @@ public mpComunication()
     btc = new BtCommunication();
 }
     
-public void run() 
-    {
-        leer();
-    }
 
    public void leer()
 {
-    while(btc.connectionAlive())
-        {
+
                    String datos = btc.readData();   
        if(!datos.equals("") && !datosListos)
        {
@@ -179,7 +174,6 @@ public void run()
            datosString = datosString + int7;
            }
            datosListos = true;
-         }
  
         }    
 }

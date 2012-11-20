@@ -736,7 +736,7 @@ public class BattleshipCanvas
                         //checkKeys();
                         update();
                         render();
-                      //  mpgameon();
+                        mpgameon();
 
                         // Sleep the rest of the time
                         time = INTERVAL - (System.currentTimeMillis() - time);

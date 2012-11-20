@@ -41,8 +41,6 @@ public class multiPlayerScreen
        
         IN_CX = cornerX + width / 2;
         OUT_CX = IN_CX - width;
-        int exis = 1245;
-        exis = OUT_CX;
         x = OUT_CX;
         y = cornerY + height / 2;
         positionItemsHorizontally();
@@ -82,12 +80,11 @@ public class multiPlayerScreen
      */
     public final void positionItemsHorizontally() {
         MenuItem item;
-        for (int i = 0; i < ITEM_COUNT - 1; i++) {
+        for (int i = 0; i < ITEM_COUNT; i++) {
             item = getItem(i);
             item.setHorizontalCenter(x);
         }
-        item = getItem(ITEM_COUNT - 1);
-        item.setPosition(x - width / 2, cornerY);
+  
     }
 
     /**
@@ -99,7 +96,7 @@ public class multiPlayerScreen
 //        if(!resume.isVisible()) {
 //            newY -= resume.getHeight() / 2;
 //        }
-        for (int i = 0; i < ITEM_COUNT - 1; i++) {
+        for (int i = 0; i < ITEM_COUNT; i++) {
             MenuItem item = getItem(i);
             item.setCenter(item.getX(), newY);
             newY += item.getHeight();
