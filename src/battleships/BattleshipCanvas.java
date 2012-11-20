@@ -976,7 +976,7 @@ public class BattleshipCanvas
                         break;
                 }
             }
-        },scaling);
+        },scaling, r);
     }
     
     private void createDeployShips(){

@@ -34,9 +34,10 @@ public class OptionScreen
         super(ITEM_COUNT, l);
 //        this.width = width;       
 //        this.cornerY = cornerY;
-        vibrator = new ToggleMenuItem(loadSprite("/sensors.png", 4, scaling));
+        String[] s = {"Off","On"};
+        vibrator = new ToggleMenuItem(r,"Vibración:", s);
         setItem(VIBRATOR, vibrator);
-        sounds = new ToggleMenuItem(loadSprite("/sounds.png", 4, scaling));
+        sounds = new ToggleMenuItem(r,"Sonido:", s);
         setItem(SOUNDS, sounds);        
         dificul = new ToggleStringItem(r, 0);
         setItem(DIFICULTAD, dificul);
