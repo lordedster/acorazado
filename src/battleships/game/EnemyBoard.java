@@ -41,6 +41,7 @@ public class EnemyBoard
     private Sprite misil;
     private boolean ataqueEnCurso;
     private boolean hasShoot;
+    private boolean acertoBarco;
     
     private boolean mpg;
     
@@ -66,6 +67,7 @@ public class EnemyBoard
         setearMisil();        
         menu = new StringImageItem("Menu");
         menu.setRGB(255, 255, 255);
+        acertoBarco = false;
         //setPositionMenu();
         
         
@@ -207,7 +209,7 @@ public class EnemyBoard
     }
     
     public void rightButtonPressed(){
-        Listener(TypeBattleShips.STATE_MENU);
+        Listener(TypeBattleShips.STATE_MENU_EN_JUEGO);
     }
     
     public Shoot getMP_shoot()
@@ -258,6 +260,7 @@ public class EnemyBoard
                 {
                     board[x][y].setEstado(TypeBattleShips.ACERTADO);
                     acertarBaraco(board[x][y].getBarco());
+                    acertoBarco = true;
                 }
                 hasShoot = true;                
             }
@@ -289,11 +292,18 @@ public class EnemyBoard
             } 
         } 
     }     
+    public void setAcertarBarcoFalse(){
+        this.acertoBarco = false;
+    }
+    
+    public boolean getAcertarBarco(){
+       return this.acertoBarco;
+    }
+        
         
     public boolean animarAtaque(){
-        misil_y += 72;
+        misil_y += 60;
         if(target_y <= misil_y){            
-            Listener(TypeBattleShips.SACUDIR);
             return false;
         }else{
             posicionarMisil();
