@@ -25,6 +25,7 @@ import battleships.menu.BarcosScreen;
 import battleships.menu.SelectorScreen;
 import battleships.menu.OptionScreen;
 import battleships.menu.InfoScreen;
+import battleships.menu.VictoryLoserScreen;
 import battleships.menu.MainMenu;
 import battleships.menu.Menu;
 import battleships.game.ships.TypeBattleShips;
@@ -75,6 +76,7 @@ public class BattleshipCanvas
     private SelectorNombre selectorNombre;
     private EnemyBoard tableroEnemigo;
     private FriendlyBoard tableroAmigo;
+    private VictoryLoserScreen victoryLosser;
     private Slideable currentView;
     private Slideable targetView;
     private Player electricity;
@@ -206,6 +208,15 @@ public class BattleshipCanvas
      */
     protected void keyPressed(int key) {
         switch (gameState) {
+            case TypeBattleShips.STATE_WIN_OR_LOSSER:
+                switch (key) {
+                    case RIGHT_SOFTKEY:
+                        victoryLosser.rightButtonPressed();
+                        break;
+                    default: 
+                        break;
+                }
+                break;
             case TypeBattleShips.STATE_MENU:
                 switch (key) {
                     case RIGHT_SOFTKEY:
@@ -554,13 +565,18 @@ public class BattleshipCanvas
         }
         if (misionScreen == null){
             createMisionScreen();            
-            showMisionScreen();
+            //showMisionScreen();
         }
         if (tableroEnemigo == null){
             createTableroEnemigo();
         }
         if (userScreen == null){
             createUserScreen();
+        }
+        if (victoryLosser == null){
+            createWinOrLosserScreen();
+            victoryLosser.setGanadoPerdido(false);
+            showWinOrLosser();
         }
         startApp();
     }
@@ -952,8 +968,9 @@ public class BattleshipCanvas
                         showUserScreen();
                         break;
                     case TypeBattleShips.SP_TURNO_IA:
-                        if(tableroAmigo.sinBarcos()){
-                                //perdiste
+                        if(tableroEnemigo.sinBarcos()){
+                            victoryLosser.setGanadoPerdido(true);
+                            showWinOrLosser();
                         }else{                                
                             tableroAmigo.readyToShoot(true);
                             showTableroAmigo();
@@ -978,8 +995,9 @@ public class BattleshipCanvas
                         showUserScreen();
                         break;                        
                     case TypeBattleShips.SP_TURNO:
-                        if(tableroEnemigo.sinBarcos()){
-                                    //ganaste
+                        if(tableroAmigo.sinBarcos()){
+                            victoryLosser.setGanadoPerdido(false);
+                            showWinOrLosser();
                         }else{
                             showTableroEnemigo();                                
                         }
@@ -1138,6 +1156,18 @@ public class BattleshipCanvas
             }
        }, scaling, r);
     }
+     private void createWinOrLosserScreen(){
+        victoryLosser = new VictoryLoserScreen(cornerX, cornerY, gameWidth, gameHeight, new Menu.Listener() {
+
+            public void itemClicked(int x) {
+                switch (x){
+                    case TypeBattleShips.STATE_USER:
+                        showUserScreen();
+                    break;
+                }
+            }  
+       }, scaling, r);
+    }
 
     /**
      * Change view
@@ -1227,6 +1257,11 @@ public class BattleshipCanvas
         nextState = TypeBattleShips.STATE_CREATE_NOMBRE;
         changeView(selectorNombre);
     } 
+    
+    private void showWinOrLosser(){
+        nextState = TypeBattleShips.STATE_WIN_OR_LOSSER;
+        changeView(victoryLosser);
+    }
     
     private void sumarIntervalo(int suma){
         this.intervalo += suma; 

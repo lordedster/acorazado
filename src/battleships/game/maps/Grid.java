@@ -15,7 +15,7 @@ public class Grid {
     private int estado;
     private int barco;
     private int seccion_barco;
-    protected final Sprite sprite;
+    protected Sprite sprite;
     protected final Sprite mira;
     private volatile boolean selected = false;
     
@@ -123,6 +123,10 @@ public class Grid {
 
     public void setSeccion_barco(int seccion_barco) {
         this.seccion_barco = seccion_barco;
+    }
+    
+    public void setSprite(Sprite sprite){
+        this.sprite = sprite;
     }
     
 }
