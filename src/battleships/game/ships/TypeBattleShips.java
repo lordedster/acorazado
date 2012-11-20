@@ -82,6 +82,7 @@ public class TypeBattleShips {
     public static final int TABLERO_AMIGO = 19;
     public static final int TABLERO_ENEMIGO = 20;
     public static final int STATE_WIN_OR_LOSSER = 22;
+    public static final int SACUDIR = 24;
     
     //Dificultades
     public static final int FACIL = 0;

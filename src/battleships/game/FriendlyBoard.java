@@ -610,6 +610,7 @@ public class FriendlyBoard extends Map implements Slideable {
         public boolean animarAtaque(){
         misil_y += 72;
         if(target_y <= misil_y){
+            Listener(TypeBattleShips.SACUDIR);
             return false;
         }else{
             posicionarMisil();

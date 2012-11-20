@@ -79,7 +79,6 @@ public class BattleshipCanvas
     private VictoryLoserScreen victoryLosser;
     private Slideable currentView;
     private Slideable targetView;
-    private Player electricity;
     private Resources r;
     private Random rnd = new Random();
     private AudioManager audioManager;
@@ -685,7 +684,7 @@ public class BattleshipCanvas
         this.y = y;
         pressed = true;
         if (gameState == TypeBattleShips.STATE_MENU) {
-            electricity = audioManager.loopSample(r.SAMPLE_ELECTRICITY);
+            //electricity = audioManager.loopSample(r.SAMPLE_ELECTRICITY);
         }
 
         switch (gameState) {
@@ -736,10 +735,10 @@ public class BattleshipCanvas
      */
     public void pointerReleased(int x, int y) {
         pressed = false;
-        if (electricity != null) {
-            audioManager.stopPlayer(electricity);
-            electricity = null;
-        }
+//        if (electricity != null) {
+//            audioManager.stopPlayer(electricity);
+//            electricity = null;
+//        }
         // STOP loop
         switch (gameState) {
             case TypeBattleShips.STATE_MENU:
@@ -994,12 +993,19 @@ public class BattleshipCanvas
                             tableroAmigo.readyToShoot(true);
                             showTableroAmigo();
                         }
-                        break;                  
+                        break;   
+                    case TypeBattleShips.SACUDIR:
+                        animacionSacudidaSonido();
+                        break;
                 }
             }
         }, scaling, TypeBattleShips.FACIL);
     }
     
+    private void animacionSacudidaSonido(){        
+        vibratorManager.vibrate(500);
+        audioManager.playSample(r.SAMPLE_EXPLOSION);
+    }
     private void createTableroAmigo(){
         tableroAmigo = new FriendlyBoard(cornerX, cornerY, gameWidth, gameHeight, r, new Map.Listener() {
 
@@ -1020,7 +1026,10 @@ public class BattleshipCanvas
                         }else{
                             showTableroEnemigo();                                
                         }
-                        break;    
+                        break; 
+                    case TypeBattleShips.SACUDIR:
+                        animacionSacudidaSonido();
+                        break;   
                 }
             }
         }, scaling, TypeBattleShips.FACIL);

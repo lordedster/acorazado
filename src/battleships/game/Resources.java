@@ -54,7 +54,7 @@ public class Resources {
      */
     
     public final String SAMPLE_BUTTON = "/button.mp3";    
-    public final String SAMPLE_ELECTRICITY = "/electricity.mp3";
+    public final String SAMPLE_EXPLOSION = "/explosion.mp3";
     public final String SAMPLE_TRANSITION = "/transition.mp3";
     public final String SAMPLE_BONUS = "/bonus.mp3";
     

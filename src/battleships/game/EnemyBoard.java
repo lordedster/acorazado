@@ -217,7 +217,7 @@ public class EnemyBoard
                     board[x][y].setEstado(TypeBattleShips.ACERTADO);
                     acertarBaraco(board[x][y].getBarco());
                 }
-                hasShoot = true;
+                hasShoot = true;                
             }
         }
              
@@ -250,7 +250,8 @@ public class EnemyBoard
         
     public boolean animarAtaque(){
         misil_y += 72;
-        if(target_y <= misil_y){
+        if(target_y <= misil_y){            
+            Listener(TypeBattleShips.SACUDIR);
             return false;
         }else{
             posicionarMisil();
