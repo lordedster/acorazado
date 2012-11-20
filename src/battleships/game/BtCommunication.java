@@ -23,8 +23,8 @@ public class BtCommunication {
     private InputStream inputStream=null;
     private OutputStream outputStream=null;
     private UUID MYSERVICEUUID_UUID;
-    private static final String myServiceName = "BlueChess";// Bluetooth Service name
-    private static final String myServiceUUID = "8a02dc796f3141f1b83096cc0ac738cf";// Bluetooth Service UUID, anything
+    private static final String myServiceName = "ESbattleship";// Bluetooth Service name
+    private static final String myServiceUUID = "8a02dc796f3141f1b83096cc0ac738cc";// Bluetooth Service UUID, anything
     private LocalDevice localDevice=null;
     private String connURL;
     private boolean connectionExists=false;
@@ -50,7 +50,7 @@ public class BtCommunication {
             // Accept a connection from the client
             conn = (StreamConnection) scn.acceptAndOpen();
 
-            scn.close();
+            //scn.close();
             //open the streams
             inputStream = conn.openInputStream();
             outputStream = conn.openOutputStream();

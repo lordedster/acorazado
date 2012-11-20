@@ -24,6 +24,8 @@ public class mpComunication extends Thread {
     private int int5;
     private int int6;
     private int int7;
+    
+    private String datosString;
 
     public boolean isDatosListos() {
         return datosListos;
@@ -51,6 +53,14 @@ public class mpComunication extends Thread {
 
     public int getInt2() {
         return int2;
+    }
+
+    public String getDatosString() {
+        return datosString;
+    }
+
+    public void setDatosString(String datosString) {
+        this.datosString = datosString;
     }
 
     public void setInt2(int int2) {
@@ -126,38 +136,47 @@ public void run()
                    String datos = btc.readData();   
        if(!datos.equals("") && !datosListos)
        {
+           datosString = "";
            char[] datosa = datos.toCharArray();
            if(datosa[0]!='\0')
            {
                int0 = Integer.parseInt(""+datosa[0]);
+               datosString = datosString + int0;
            }
            if(datosa[1]!='\0')
            {
            int1 = Integer.parseInt(""+datosa[1]);
+           datosString = datosString + int1;
            }
            if(datosa[2]!='\0')
            {
            int2 = Integer.parseInt(""+datosa[2]);
+           datosString = datosString + int2;
            }
            if(datosa[3]!='\0')
            {
            int3 = Integer.parseInt(""+datosa[3]);
+           datosString = datosString + int3;
            }
            if(datosa[4]!='\0')
            {
            int4 = Integer.parseInt(""+datosa[4]);
+           datosString = datosString + int4;
            }
            if(datosa[5]!='\0')
            {
            int5 = Integer.parseInt(""+datosa[5]);
+           datosString = datosString + int5;
            }
            if(datosa[6]!='\0')
            {
            int6 = Integer.parseInt(""+datosa[6]);
+           datosString = datosString + int6;
            }
            if(datosa[7]!='\0')
            {
            int7 = Integer.parseInt(""+datosa[7]);
+           datosString = datosString + int7;
            }
            datosListos = true;
          }
@@ -204,6 +223,28 @@ public void run()
    public void startClient()
    {
        btc.connectToServer();
+   }
+   
+   public void clear()
+   {
+    
+    datosListos = false;
+    int0 = 0;
+    int1 = 0;
+    int2 = 0;
+    int3 = 0;
+    int4 = 0;
+    int5 = 0;
+    int6 = 0;
+    int7 = 0;
+    
+    datosString = "";
+   
+   }
+   
+   public boolean isLive()
+   {
+       return btc.connectionAlive();
    }
    
 }

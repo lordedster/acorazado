@@ -85,6 +85,7 @@ public class TypeBattleShips {
     public static final int BT_CLIENTE = 23;
     public static final int MP_SYNC = 24;
     public static final int MP_DISPARAR = 25;
+    public static final int STATE_MP = 26;
     
     
     

@@ -117,6 +117,10 @@ public class Grid {
         return barco;
     }   
 
+    public void setBarco(int barco) {
+        this.barco = barco;
+    }
+
     public int getSeccion_barco() {
         return seccion_barco;
     }

@@ -41,6 +41,8 @@ public class EnemyBoard
     private boolean ataqueEnCurso;
     private boolean hasShoot;
     
+    private boolean mpg;
+    
     
     private Shoot mpshoot;
     
@@ -51,7 +53,7 @@ public class EnemyBoard
     private int map_x;
     private int map_y;
     
-    public EnemyBoard(int cornerX, int cornerY, int width, int height, Resources r, Listener l, double scaling, int dificultad) {
+    public EnemyBoard(int cornerX, int cornerY, int width, int height, Resources r, Listener l, double scaling, int dificultad, boolean multiplayer) {
         super(10,10,5,l);
         this.displayWidth = width;
         this.displayHeight = height;        
@@ -64,6 +66,9 @@ public class EnemyBoard
         menu = new StringImageItem("Menu");
         menu.setRGB(255, 255, 255);
         //setPositionMenu();
+        
+        
+        mpg = multiplayer;
         
         ataqueEnCurso = false;
         hasShoot = false;
@@ -162,7 +167,8 @@ public class EnemyBoard
         r = null;
    }
     
-    private void AlgoritmoFacil(int ship, int size, Grid[][] map, int posicion, boolean v){        
+    private void AlgoritmoFacil(int ship, int size, Grid[][] map, int posicion, boolean v){ 
+        
         int direccion = rnd.nextInt(2); 
         int x_primero = 0; 
         int y_primero = 0;
@@ -350,5 +356,64 @@ public class EnemyBoard
             }
             return;
         }
-    }    
+    }
+     
+     public void updateTableroEnemigo(String s)
+     {
+     
+              /*
+        * char 0 = 1 ataque, 2 respuesta ataque
+        * char 1 = sycn del 0 al 9, ventana
+        * char 2 = x
+        * char 3 = y 
+        * char 4 = resultado, tocado undido / arma especial
+        * char 5 = barco
+        * char 6 = orientacion
+        */
+           char[] datosa = s.toCharArray();
+           int resultado = Integer.parseInt(""+datosa[4]);
+           int locX = Integer.parseInt(""+datosa[2]);
+           int locY = Integer.parseInt(""+datosa[3]);
+           int barco = Integer.parseInt(""+datosa[5]);
+           int orienta = Integer.parseInt(""+datosa[6]);
+           switch(resultado)
+           {
+               case 0:
+               {
+                   board[locX][locY].setEstado(TypeBattleShips.SHOT);
+      
+                   break;
+               }
+               case 1:
+               {
+                   board[locX][locY].setEstado(TypeBattleShips.ACERTADO);
+                   break;
+               }
+               case 2:
+               {
+                   ships[barco].setX(calcMatrizX(locX));
+                   ships[barco].setX(calcMatrizY(locY));
+                   ships[barco].setOrientacion(orienta);
+                   ships[barco].hundir();
+                   for (int j = 0; j < ships[barco].getLargo(); j++)
+                   {
+                       if(orienta==0)
+                       {
+                           board[x][y-j].setEstado(TypeBattleShips.HUNDIDO);
+                           board[x][y-j].setFrameBarco(j);
+                           board[x][y-j].setBarco(barco);
+                       }
+                       else
+                       {
+                           board[x+1][y].setEstado(TypeBattleShips.HUNDIDO);
+                           board[x+1][y].setFrameBarco(j);
+                           board[x+1][y].setBarco(barco);
+                       }
+                   }
+                   break;
+               }
+           }
+     
+     }
 }
+

@@ -33,6 +33,8 @@ public class FriendlyBoard extends Map implements Slideable {
     boolean ld = true;
     boolean rd = true;
     int lastdirection = -1;
+    
+    boolean mpg;
 
     
     
@@ -62,7 +64,7 @@ public class FriendlyBoard extends Map implements Slideable {
     private int map_y;
 
 
-    public FriendlyBoard(int cornerX, int cornerY, int width, int height, Resources r, Listener l, double scaling, int dificultad) {
+    public FriendlyBoard(int cornerX, int cornerY, int width, int height, Resources r, Listener l, double scaling, int dificultad, boolean multiplayer) {
         super(10,10,5,l);
         this.displayWidth = width;
         this.displayHeight = height;        
@@ -73,6 +75,8 @@ public class FriendlyBoard extends Map implements Slideable {
         this.misil = loadSprite(r.misil,1,scaling);
         setearMisil();
         ataqueEnCurso = false;
+        
+        mpg = multiplayer;
         
         IN_CX = cornerX;
         OUT_CX = IN_CX - width;    
@@ -713,6 +717,16 @@ public class FriendlyBoard extends Map implements Slideable {
         * char 6 = orientacion
         */
         return ss;
+    }
+    
+    public void startAsServer()
+    {
+        Listener(TypeBattleShips.BT_SERVIDOR);
+    }
+    
+    public void startAsCliente()
+    {
+        Listener(TypeBattleShips.BT_CLIENTE);
     }
     
 }
