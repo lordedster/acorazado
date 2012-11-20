@@ -12,6 +12,7 @@ import battleships.game.ships.TypeBattleShips;
 import battleships.menu.StringImageItem;
 import java.util.Random;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.game.LayerManager;
 import javax.microedition.lcdui.game.Sprite;
 
 /**

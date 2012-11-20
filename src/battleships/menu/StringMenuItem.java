@@ -14,7 +14,7 @@ import javax.microedition.lcdui.Image;
  * @author edster
  */
 public class StringMenuItem {
-    protected final String texto;
+    protected String texto;
     private boolean visible;
     private int X;
     private int Y;
@@ -111,5 +111,9 @@ public class StringMenuItem {
     public void setPosition(int x, int y){
         X = x;
         Y = y;
+    }
+    
+    public void setString(String string){
+        this.texto = string;
     }
 }

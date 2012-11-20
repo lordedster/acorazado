@@ -395,6 +395,7 @@ public class BattleshipCanvas
                     case LEFT_SOFTKEY:                        
                         if (selectorNombre.isNombreListo()){
                             DATA.setNombreUsuarioActual(selectorNombre.obtenerNombre());
+                            menu.setNombre(DATA.getUsuarioActual(),DATA.getNombreUsuarioActual());
                             saveGame();
                             showUserScreen();
                         }
@@ -576,7 +577,7 @@ public class BattleshipCanvas
         if (victoryLosser == null){
             createWinOrLosserScreen();
             victoryLosser.setGanadoPerdido(false);
-            showWinOrLosser();
+            //showWinOrLosser();
         }
         startApp();
     }
@@ -830,6 +831,12 @@ public class BattleshipCanvas
                              showSelectorNombre();
                          }else{
                              tableroAmigo.setDificultad(DATA.getDificultadUsuarioActual());
+                             options.setDificultad(DATA.getDificultadUsuarioActual());
+                             if(DATA.getGuardadoUsuarioActual()){
+                                misionScreen.showResume();
+                             }else{
+                                misionScreen.hideResume();
+                             }
                              showUserScreen();
                          }
                          break;
@@ -839,6 +846,12 @@ public class BattleshipCanvas
                              showSelectorNombre();
                          }else{                             
                              tableroAmigo.setDificultad(DATA.getDificultadUsuarioActual());
+                             options.setDificultad(DATA.getDificultadUsuarioActual());
+                             if(DATA.getGuardadoUsuarioActual()){
+                                misionScreen.showResume();
+                             }else{
+                                misionScreen.hideResume();
+                             }
                              showUserScreen();
                          }
                          break;
@@ -848,6 +861,12 @@ public class BattleshipCanvas
                              showSelectorNombre();
                          }else{
                              tableroAmigo.setDificultad(DATA.getDificultadUsuarioActual());
+                             options.setDificultad(DATA.getDificultadUsuarioActual());
+                             if(DATA.getGuardadoUsuarioActual()){
+                                misionScreen.showResume();
+                             }else{
+                                misionScreen.hideResume();
+                             }
                              showUserScreen();
                          }
                          break;
@@ -863,7 +882,7 @@ public class BattleshipCanvas
            DATA.getNombreUsuario(UserData.PERFIL_A), 
            DATA.getNombreUsuario(UserData.PERFIL_B), 
            DATA.getNombreUsuario(UserData.PERFIL_C), r);
-        //showMenu();
+        showMenu();
     }
     
     private void createOptionScreen() {

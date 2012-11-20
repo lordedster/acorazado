@@ -138,5 +138,11 @@ public class MainMenu
         return codeeliminado;
     }
     
+    public void setNombre(int usuario, String nombre){
+        MenuItem item;
+        item = getItem(usuario);
+        item.setString(nombre);
+    }
+    
     
 }

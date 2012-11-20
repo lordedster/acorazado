@@ -20,12 +20,13 @@ import java.io.IOException;
 public class UserData {
         
     //Estático
-    public static final int PERFIL_A = 1;
-    public static final int PERFIL_B = 2;
-    public static final int PERFIL_C = 3;
+    public static final int PERFIL_A = 0;
+    public static final int PERFIL_B = 1;
+    public static final int PERFIL_C = 2;
     
     //player 1
     private int[] userName_1;
+    private boolean guardado_user_1;
     private Grid[][] mapEnemy_single_1;
     private BattleShip[] shipEnemy_single_1;
     private Grid[][] mapUser_single_1;
@@ -37,6 +38,7 @@ public class UserData {
     private int dif_user_1;
     //player 2
     private int[] userName_2;
+    private boolean guardado_user_2;
     private Grid[][] mapEnemy_single_2;
     private BattleShip[] shipEnemy_single_2;
     private Grid[][] mapUser_single_2;
@@ -47,7 +49,8 @@ public class UserData {
     private BattleShip[] shipUser_campaign_2;
     private int dif_user_2;
     //player 3
-    private int[] userName_3;
+    private int[] userName_3;    
+    private boolean guardado_user_3;
     private Grid[][] mapEnemy_single_3;
     private BattleShip[] shipEnemy_single_3;
     private Grid[][] mapUser_single_3;
@@ -65,6 +68,19 @@ public class UserData {
         userName_1 = new int[5];
         userName_2 = new int[5];
         userName_3 = new int[5];
+        
+        for(int i = 0; i< 5; i++){
+            userName_1[i] = Letra.guion;
+            userName_2[i] = Letra.guion;
+            userName_3[i] = Letra.guion;
+        }
+        
+        dif_user_1 = 0;
+        dif_user_2 = 0;
+        dif_user_3 = 0;
+        guardado_user_1 = false;
+        guardado_user_2 = false;
+        guardado_user_3 = false;
         
     }
     
@@ -90,6 +106,9 @@ public class UserData {
             dif_user_1 = din.readInt();
             dif_user_2 = din.readInt();
             dif_user_3 = din.readInt();
+            guardado_user_1 = din.readBoolean();
+            guardado_user_2 = din.readBoolean();
+            guardado_user_3 = din.readBoolean();
             
 ////          initDashboard(din.readInt());
 ////            plate.setPosition(din.readInt(), din.readInt());
@@ -120,7 +139,10 @@ public class UserData {
             }  
             dout.writeInt(dif_user_1);     
             dout.writeInt(dif_user_2);     
-            dout.writeInt(dif_user_3);     
+            dout.writeInt(dif_user_3);   
+            dout.writeBoolean(guardado_user_1);
+            dout.writeBoolean(guardado_user_2);
+            dout.writeBoolean(guardado_user_1);
             return bout.toByteArray();
         }
         catch (IOException e) {
@@ -188,6 +210,12 @@ public class UserData {
             userName_2[i] = Letra.guion;
             userName_3[i] = Letra.guion;
         }
+        dif_user_1 = 0;
+        dif_user_2 = 0;
+        dif_user_3 = 0;
+        guardado_user_1 = false;
+        guardado_user_2 = false;
+        guardado_user_3 = false;
     }
 
     public int getUsuarioActual() {
@@ -223,6 +251,18 @@ public class UserData {
         }
         return null;
     }
+        public String getNombreUsuarioActual(){
+        switch(usuarioActual){
+            case PERFIL_A:
+                return tranformarNombre(userName_1);
+            case PERFIL_B:
+                return tranformarNombre(userName_2);
+            case PERFIL_C:
+                return tranformarNombre(userName_3);
+        }
+        return null;
+    }
+        
     private String tranformarNombre(int[] nombre){
         String n = "";
         for(int i = 0; i < nombre.length; i++){
@@ -279,5 +319,17 @@ public class UserData {
                 }
                 break;    
         }
+    }
+    
+    public boolean getGuardadoUsuarioActual(){
+        switch(usuarioActual){
+            case PERFIL_A:
+                return guardado_user_1;
+            case PERFIL_B:
+                return guardado_user_2;
+            case PERFIL_C:
+                return guardado_user_3;
+        }
+        return false;
     }
 }

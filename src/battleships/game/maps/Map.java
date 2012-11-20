@@ -37,7 +37,7 @@ public class Map {
     public Map(int width, int height, int MaxShips, Listener listener) {
         ships = new BattleShip[MaxShips];
         board = new Grid[height][width];
-        this.listener = listener;
+        this.listener = listener;        
        
     }
     
@@ -450,7 +450,7 @@ public class Map {
     {
         boolean r = true;
         
-            for (int i = 0; i < ships.length -1; i++)
+            for (int i = 0; i < ships.length; i++)
             {
                 if(!ships[i].isSunked())
                 {
