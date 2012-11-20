@@ -27,9 +27,9 @@ public class UserData {
     //player 1
     private int[] userName_1;
     private boolean guardado_user_1;
-    private Grid[][] mapEnemy_single_1;
+    private int[][] mapEnemy_single_1;
     private BattleShip[] shipEnemy_single_1;
-    private Grid[][] mapUser_single_1;
+    private int[][] mapUser_single_1;
     private BattleShip[] shipUser_single_1;
     private Grid[][] mapEnemy_campaign_1;
     private BattleShip[] shipEnemy_campaign_1;
@@ -39,9 +39,9 @@ public class UserData {
     //player 2
     private int[] userName_2;
     private boolean guardado_user_2;
-    private Grid[][] mapEnemy_single_2;
+    private int[][] mapEnemy_single_2;
     private BattleShip[] shipEnemy_single_2;
-    private Grid[][] mapUser_single_2;
+    private int[][] mapUser_single_2;
     private BattleShip[] shipUser_single_2;
     private Grid[][] mapEnemy_campaign_2;
     private BattleShip[] shipEnemy_campaign_2;
@@ -51,9 +51,9 @@ public class UserData {
     //player 3
     private int[] userName_3;    
     private boolean guardado_user_3;
-    private Grid[][] mapEnemy_single_3;
+    private int[][] mapEnemy_single_3;
     private BattleShip[] shipEnemy_single_3;
-    private Grid[][] mapUser_single_3;
+    private int[][] mapUser_single_3;
     private BattleShip[] shipUser_single_3;
     private Grid[][] mapEnemy_campaign_3;
     private BattleShip[] shipEnemy_campaign_3;
@@ -65,23 +65,7 @@ public class UserData {
     private int usuarioActual;
     
     public UserData(){
-        userName_1 = new int[5];
-        userName_2 = new int[5];
-        userName_3 = new int[5];
-        
-        for(int i = 0; i< 5; i++){
-            userName_1[i] = Letra.guion;
-            userName_2[i] = Letra.guion;
-            userName_3[i] = Letra.guion;
-        }
-        
-        dif_user_1 = 0;
-        dif_user_2 = 0;
-        dif_user_3 = 0;
-        guardado_user_1 = false;
-        guardado_user_2 = false;
-        guardado_user_3 = false;
-        
+        reset();        
     }
     
     public boolean save(){
@@ -216,6 +200,18 @@ public class UserData {
         guardado_user_1 = false;
         guardado_user_2 = false;
         guardado_user_3 = false;
+        
+        mapEnemy_single_1 = new int[10][10];
+        mapEnemy_single_2 = new int[10][10];
+        mapEnemy_single_3 = new int[10][10];
+        
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                mapEnemy_single_1[i][j] = -1;
+                mapEnemy_single_2[i][j] = -1;
+                mapEnemy_single_3[i][j] = -1;
+            }            
+        }
     }
 
     public int getUsuarioActual() {
@@ -332,4 +328,34 @@ public class UserData {
         }
         return false;
     }
+    
+    public void setMapaEnemySigle(int[][] map){
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                mapEnemy_single_1 = map;
+                break;
+            case UserData.PERFIL_B:
+                mapEnemy_single_2 = map;
+                break;
+            case UserData.PERFIL_C:                
+                mapEnemy_single_3 = map;
+                break;
+        }
+    }
+    
+    public void setMapaFriendSigle(int[][] map){
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                mapUser_single_1 = map;
+                break;
+            case UserData.PERFIL_B:
+                mapUser_single_2 = map;
+                break;
+            case UserData.PERFIL_C:                
+                mapUser_single_3 = map;
+                break;
+        }
+    }
+    
+    //public 
 }

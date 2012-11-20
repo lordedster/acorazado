@@ -190,7 +190,7 @@ public class EnemyBoard
         if(estaOcupado(direccion, x_primero, y_primero, size)){
             AlgoritmoFacil(ship, size, map, posicion, v);
         } else {
-            BattleShip b = new BattleShip(TypeBattleShips.SHIPS[ship], ship, size, direccion, calcMatrizX(x_primero), calcMatrizY(y_primero), r);
+            BattleShip b = new BattleShip(TypeBattleShips.SHIPS[ship], ship, size, direccion, calcMatrizX(x_primero), calcMatrizY(y_primero));
             super.AddShip(b, scaling, v, r, posicion);
         }
     }
@@ -331,5 +331,15 @@ public class EnemyBoard
             }
             return;
         }
-    }    
+    } 
+     
+    public int[][] getMapaParaGuardar(){
+        int[][] m = new int[10][10];
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                m[i][j] = super.board[i][j].getEstado();
+            }
+        }
+        return m;
+    } 
 }
