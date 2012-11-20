@@ -89,4 +89,21 @@ public class TypeBattleShips {
     public static final int FACIL = 0;
     public static final int MODERADO = 1;
     public static final int DIFICIL = 2;
+    
+    public static final int getLargoBarco(int type){
+        switch(type){
+            case PORTAAVIONES:
+                return PORTAAVIONES_SIZE;
+            case ACORAZADO:
+                return ACORAZADO_SIZE;
+            case DESTRUCTOR:
+                return DESTRUCTOR_SIZE;
+            case SUBMARINO:
+                return SUBMARINO_SIZE;
+            case ESPIA:
+                return ESPIA_SIZE;
+        }
+        return -1;
+            
+    }
 }

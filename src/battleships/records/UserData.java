@@ -28,9 +28,9 @@ public class UserData {
     private int[] userName_1;
     private boolean guardado_user_1;
     private int[][] mapEnemy_single_1;
-    private BattleShip[] shipEnemy_single_1;
+    private int[][] shipEnemy_single_1;
     private int[][] mapUser_single_1;
-    private BattleShip[] shipUser_single_1;
+    private int[][] shipUser_single_1;
     private Grid[][] mapEnemy_campaign_1;
     private BattleShip[] shipEnemy_campaign_1;
     private Grid[][] mapUser_campaign_1;
@@ -40,9 +40,9 @@ public class UserData {
     private int[] userName_2;
     private boolean guardado_user_2;
     private int[][] mapEnemy_single_2;
-    private BattleShip[] shipEnemy_single_2;
+    private int[][] shipEnemy_single_2;
     private int[][] mapUser_single_2;
-    private BattleShip[] shipUser_single_2;
+    private int[][] shipUser_single_2;
     private Grid[][] mapEnemy_campaign_2;
     private BattleShip[] shipEnemy_campaign_2;
     private Grid[][] mapUser_campaign_2;
@@ -52,9 +52,9 @@ public class UserData {
     private int[] userName_3;    
     private boolean guardado_user_3;
     private int[][] mapEnemy_single_3;
-    private BattleShip[] shipEnemy_single_3;
+    private int[][] shipEnemy_single_3;
     private int[][] mapUser_single_3;
-    private BattleShip[] shipUser_single_3;
+    private int[][] shipUser_single_3;
     private Grid[][] mapEnemy_campaign_3;
     private BattleShip[] shipEnemy_campaign_3;
     private Grid[][] mapUser_campaign_3;
@@ -94,6 +94,76 @@ public class UserData {
             guardado_user_2 = din.readBoolean();
             guardado_user_3 = din.readBoolean();
             
+            /* mapas y barcos enemigos singleplayer */
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    mapEnemy_single_1[i][j] = din.readInt();
+                }
+            }
+            
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    mapEnemy_single_2[i][j] = din.readInt();
+                }
+            }
+            
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    mapEnemy_single_3[i][j] = din.readInt();
+                }
+            }
+            
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    shipEnemy_single_1[i][j] = din.readInt();
+                }
+            }
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    shipEnemy_single_2[i][j] = din.readInt();
+                }
+            }
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    shipEnemy_single_3[i][j] = din.readInt();
+                }
+            } 
+            
+            /* mapas y barcos amigos singleplayer */
+            
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    mapUser_single_1[i][j] = din.readInt();
+                }
+            }
+            
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    mapUser_single_2[i][j] = din.readInt();
+                }
+            }
+            
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    mapUser_single_3[i][j] = din.readInt();
+                }
+            }
+            
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    shipUser_single_1[i][j] = din.readInt();
+                }
+            }
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    shipUser_single_2[i][j] = din.readInt();
+                }
+            }
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    shipUser_single_3[i][j] = din.readInt();
+                }
+            }
 ////          initDashboard(din.readInt());
 ////            plate.setPosition(din.readInt(), din.readInt());
 ////            ball.setPosition(din.readInt(), din.readInt());
@@ -126,7 +196,78 @@ public class UserData {
             dout.writeInt(dif_user_3);   
             dout.writeBoolean(guardado_user_1);
             dout.writeBoolean(guardado_user_2);
-            dout.writeBoolean(guardado_user_1);
+            dout.writeBoolean(guardado_user_3);
+            
+            /* mapas y barcos enemigos single player */
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    dout.writeInt(mapEnemy_single_1[i][j]);
+                }
+            }
+            
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    dout.writeInt(mapEnemy_single_2[i][j]);
+                }
+            }
+            
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    dout.writeInt(mapEnemy_single_3[i][j]);
+                }
+            }
+            
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    dout.writeInt(shipEnemy_single_1[i][j]);
+                }
+            }
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    dout.writeInt(shipEnemy_single_2[i][j]);
+                }
+            }
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    dout.writeInt(shipEnemy_single_3[i][j]);
+                }
+            }
+            
+            /* mapas y barcos amigos singleplayer */
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    dout.writeInt(mapUser_single_1[i][j]);
+                }
+            }
+            
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    dout.writeInt(mapUser_single_2[i][j]);
+                }
+            }
+            
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    dout.writeInt(mapUser_single_3[i][j]);
+                }
+            }
+            
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    dout.writeInt(shipUser_single_1[i][j]);
+                }
+            }
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    dout.writeInt(shipUser_single_2[i][j]);
+                }
+            }
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    dout.writeInt(shipUser_single_3[i][j]);
+                }
+            }
+            
             return bout.toByteArray();
         }
         catch (IOException e) {
@@ -201,6 +342,7 @@ public class UserData {
         guardado_user_2 = false;
         guardado_user_3 = false;
         
+        /*mapas y barcos enemigos singleplayer */
         mapEnemy_single_1 = new int[10][10];
         mapEnemy_single_2 = new int[10][10];
         mapEnemy_single_3 = new int[10][10];
@@ -210,6 +352,42 @@ public class UserData {
                 mapEnemy_single_1[i][j] = -1;
                 mapEnemy_single_2[i][j] = -1;
                 mapEnemy_single_3[i][j] = -1;
+            }            
+        }        
+        shipEnemy_single_1 = new int[5][5];        
+        shipEnemy_single_2 = new int[5][5];        
+        shipEnemy_single_3 = new int[5][5];
+        
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                shipEnemy_single_1[i][j] = -1;
+                shipEnemy_single_2[i][j] = -1;
+                shipEnemy_single_3[i][j] = -1;
+            }            
+        }
+        
+        /* mapas y barcos amigos single player */
+        
+        mapUser_single_1 = new int[10][10];
+        mapUser_single_2 = new int[10][10];
+        mapUser_single_3 = new int[10][10];
+        
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                mapUser_single_1[i][j] = -1;
+                mapUser_single_2[i][j] = -1;
+                mapUser_single_3[i][j] = -1;
+            }            
+        }        
+        shipUser_single_1 = new int[5][5];        
+        shipUser_single_2 = new int[5][5];        
+        shipUser_single_3 = new int[5][5];
+        
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                shipUser_single_1[i][j] = -1;
+                shipUser_single_2[i][j] = -1;
+                shipUser_single_3[i][j] = -1;
             }            
         }
     }
@@ -343,6 +521,7 @@ public class UserData {
         }
     }
     
+    
     public void setMapaFriendSigle(int[][] map){
         switch(usuarioActual){
             case UserData.PERFIL_A:
@@ -357,5 +536,96 @@ public class UserData {
         }
     }
     
+    public void setShipsEnemySigle(int[][] ships){
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                shipEnemy_single_1 = ships;
+                break;
+            case UserData.PERFIL_B:
+                shipEnemy_single_2 = ships;
+                break;
+            case UserData.PERFIL_C:                
+                shipEnemy_single_3 = ships;
+                break;
+        }
+    }
+    
+    
+     public void setShipsFriendSigle(int[][] ships){
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                shipUser_single_1 = ships;
+                break;
+            case UserData.PERFIL_B:
+                shipUser_single_2 = ships;
+                break;
+            case UserData.PERFIL_C:                
+                shipUser_single_3 = ships;
+                break;
+        }
+    }
+     
+     public void setGuardadoSingle(boolean b){
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                guardado_user_1 = b;
+                break;
+            case UserData.PERFIL_B:
+                guardado_user_2 = b;
+                break;
+            case UserData.PERFIL_C:                
+                guardado_user_3 = b;
+                break;
+        }
+     }
+     
+     public int[][] getMapaEnemySingle(){         
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                return mapEnemy_single_1;
+            case UserData.PERFIL_B:
+                return mapEnemy_single_2;
+            case UserData.PERFIL_C:     
+                return mapEnemy_single_3;
+        }
+        return null;
+     }
+     
+     
+     public int[][] getMapaFriendSingle(){         
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                return mapUser_single_1;
+            case UserData.PERFIL_B:
+                return mapUser_single_2;
+            case UserData.PERFIL_C:     
+                return mapUser_single_3;
+        }
+        return null;
+     }
+     
+     public int[][] getBarcosEnemySingle(){                 
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                return shipEnemy_single_1;
+            case UserData.PERFIL_B:
+                return shipEnemy_single_2;
+            case UserData.PERFIL_C:     
+                return shipEnemy_single_3;
+        }
+        return null;
+     }
+     
+     public int[][] getBarcosFriendSingle(){                 
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                return shipUser_single_1;
+            case UserData.PERFIL_B:
+                return shipUser_single_2;
+            case UserData.PERFIL_C:     
+                return shipUser_single_3;
+        }
+        return null;
+     }     
     //public 
 }

@@ -23,6 +23,7 @@ public class SelectorNombre
     public static final int BUTTON_OK = 0;
     public static final int BUTTON_CANCEL = 1;
     public static final int VOLVER = -1;
+    public static final int ACEPTAR = 0;
     private final LetraItem[][] items;
     private LetraItem[] nombre;
     private MenuItem ok;
@@ -332,6 +333,12 @@ public class SelectorNombre
                 }
             }
         }
+        if (ok.hits(x, y)) {
+            if (type == POINTER_RELEASED) {
+                GuardarNombre();
+            }
+            return;
+        }
         selectItem(0,0);
     }
     
@@ -447,6 +454,10 @@ public class SelectorNombre
             done = false;
         }
         return done;
+    }
+    
+    public void GuardarNombre(){
+        listener.changeState(ACEPTAR);
     }
     
 //    public void Confirmar
