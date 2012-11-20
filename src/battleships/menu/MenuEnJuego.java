@@ -1,29 +1,23 @@
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package battleships.menu;
 
-/**
- *
- * @author edster
- */
+
 import battleships.effects.Slideable;
 import battleships.game.Resources;
 import javax.microedition.lcdui.Graphics;
 
-public class UserScreen
+public class MenuEnJuego
         extends Menu
         implements Slideable {
 
-    public static final int ITEM_COUNT = 6;
-    public static final int ACTION = 0;
-    public static final int CAMPAIGN = 1;
-    public static final int MULTIJUGADOR = 2;
-    public static final int OPTIONS = 3;
-    public static final int EXIT = 4;
-    public static final int INFO = 5;
+    public static final int ITEM_COUNT = 4;
+    public static final int GUARDAR = 0;
+    public static final int CONTINUAR = 1;
+    public static final int NUCLEAR = 2;
+    public static final int BOMBARDEO = 3;
     public final int OUT_CX;
     public final int IN_CX;
     private int x;
@@ -31,16 +25,14 @@ public class UserScreen
     private int width;
     private int cornerY;
 
-    public UserScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling) {
+    public MenuEnJuego(int cornerX, int cornerY, int width, int height, Menu.Listener l, double scaling, Resources r) {
         super(ITEM_COUNT, l);
         this.width = width;       
         this.cornerY = cornerY;
-        setItem(ACTION, new MenuItem(loadSprite("/action.png", 2, scaling)));
-        setItem(CAMPAIGN, new MenuItem(loadSprite("/campaign.png", 2, scaling)));
-        setItem(MULTIJUGADOR, new MenuItem(loadSprite("/multijugador.png", 2, scaling)));
-        setItem(OPTIONS, new MenuItem(loadSprite("/opciones.png", 2, scaling)));
-        setItem(EXIT, new MenuItem(loadSprite("/exit.png", 2, scaling)));
-        setItem(INFO, new MenuItem(loadSprite("/info.png", 2, scaling)));
+        setItem(GUARDAR, new MenuItem(new StringMenuItem("Menu Principal", r)));
+        setItem(CONTINUAR, new MenuItem(new StringMenuItem("Continuar", r)));
+        setItem(NUCLEAR, new MenuItem(new StringMenuItem("Misil nuclear", r)));
+        setItem(BOMBARDEO, new MenuItem(new StringMenuItem("Bombardeo", r)));
         IN_CX = cornerX + width / 2;
         OUT_CX = IN_CX - width;
         x = OUT_CX;
@@ -82,12 +74,10 @@ public class UserScreen
      */
     public final void positionItemsHorizontally() {
         MenuItem item;
-        for (int i = 0; i < ITEM_COUNT - 1; i++) {
+        for (int i = 0; i < ITEM_COUNT; i++) {
             item = getItem(i);
             item.setHorizontalCenter(x);
         }
-        item = getItem(ITEM_COUNT - 1);
-        item.setPosition(x - width / 2, cornerY);
     }
 
     /**
@@ -95,7 +85,7 @@ public class UserScreen
      */
     public final void positionItemsVertically() {
         int newY = y;
-        for (int i = 0; i < ITEM_COUNT - 1; i++) {
+        for (int i = 0; i < ITEM_COUNT; i++) {
             MenuItem item = getItem(i);
             item.setCenter(item.getX(), newY);
             newY += item.getHeight();
@@ -119,6 +109,7 @@ public class UserScreen
 //        positionItemsVertically();
 //    }
 }
+
 
 
 

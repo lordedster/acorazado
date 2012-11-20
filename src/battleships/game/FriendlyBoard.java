@@ -49,6 +49,7 @@ public class FriendlyBoard extends Map implements Slideable {
     
     private Sprite misil;
     private boolean ataqueEnCurso;
+    private boolean acertoBarco;
     
     private int misil_x;
     private int misil_y;
@@ -69,6 +70,7 @@ public class FriendlyBoard extends Map implements Slideable {
         this.misil = loadSprite(r.misil,1,scaling);
         setearMisil();
         ataqueEnCurso = false;
+        acertoBarco = false;
         
         IN_CX = cornerX;
         OUT_CX = IN_CX - width;    
@@ -521,14 +523,15 @@ public class FriendlyBoard extends Map implements Slideable {
         posicionMisil(s.getX(),s.getY(), board[s.getX()][s.getY()].getX(), board[s.getX()][s.getY()].getY());
         if(super.board[s.getX()][s.getY()].getEstado()== TypeBattleShips.INTACTO)
         {
-           super.board[s.getX()][s.getY()].setEstado(TypeBattleShips.ACERTADO);
-           if(!tocado)
-           {
-               tocado = true;
-               XTocado = s.getX();
-               YTocado = s.getY();                       
-           }
-           acertarBaraco(super.board[s.getX()][s.getY()].getBarco(), super.board[s.getX()][s.getY()].getSeccion_barco());
+            super.board[s.getX()][s.getY()].setEstado(TypeBattleShips.ACERTADO);
+            if(!tocado)
+            {
+                tocado = true;
+                XTocado = s.getX();
+                YTocado = s.getY();                       
+            }
+            acertarBaraco(super.board[s.getX()][s.getY()].getBarco(), super.board[s.getX()][s.getY()].getSeccion_barco());
+            acertoBarco = true;
         }
         else
         {
@@ -608,9 +611,8 @@ public class FriendlyBoard extends Map implements Slideable {
      
      
         public boolean animarAtaque(){
-        misil_y += 72;
+        misil_y += 60;
         if(target_y <= misil_y){
-            Listener(TypeBattleShips.SACUDIR);
             return false;
         }else{
             posicionarMisil();
@@ -654,5 +656,13 @@ public class FriendlyBoard extends Map implements Slideable {
         }else{
             board[map_x][map_y].setFrameBarco(1);
         }            
+    }
+         
+    public void setAcertarBarcoFalse(){
+        this.acertoBarco = false;
+    }
+    
+    public boolean getAcertarBarco(){
+       return this.acertoBarco;
     }
 }
