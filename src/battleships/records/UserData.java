@@ -719,6 +719,18 @@ public class UserData {
                 break;
         }
     }
+    
+    public int getMision(){        
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                return mision_1;
+            case UserData.PERFIL_B:
+                return mision_2;
+            case UserData.PERFIL_C:           
+                return mision_3;                
+        }
+        return 0;
+    }
 
     public void setRecordSingle(int i){
         switch(usuarioActual){

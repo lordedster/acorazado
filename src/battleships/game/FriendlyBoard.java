@@ -103,6 +103,10 @@ public class FriendlyBoard extends Map implements Slideable {
     public void verMenu(){        
         menu.setVisible(true);
     }
+      
+    public void ocultarMenu(){        
+        menu.setVisible(false);
+    }
     private void setPositionMenu() {       
        menu.setPosition(x + displayWidth - menu.getWidth(), cornerY + displayHeight - menu.getHeight());
     }    
