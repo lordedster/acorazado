@@ -199,7 +199,7 @@ public class EnemyBoard
         if(estaOcupado(direccion, x_primero, y_primero, size)){
             AlgoritmoFacil(ship, size, map, posicion, v);
         } else {
-            BattleShip b = new BattleShip(TypeBattleShips.SHIPS[ship], ship, size, direccion, calcMatrizX(x_primero), calcMatrizY(y_primero), r);
+            BattleShip b = new BattleShip(TypeBattleShips.SHIPS[ship], ship, size, direccion, calcMatrizX(x_primero), calcMatrizY(y_primero));
             super.AddShip(b, scaling, v, r, posicion);
         }
     }
@@ -220,9 +220,9 @@ public class EnemyBoard
     
     public void playerShootMP(int x, int y)
     {
-        if(!isAtaqueEnCurso())
+        if(!isAtaqueEnCurso() && !hasShoot)
         {
-            if(board[x][y].getEstado()== TypeBattleShips.AGUA)
+            if(board[x][y].getEstado()!= TypeBattleShips.SHOT || board[x][y].getEstado()!= TypeBattleShips.ACERTADO)
             {
                 mpshoot = new Shoot();
                 mpshoot.setArma(1);
@@ -230,7 +230,9 @@ public class EnemyBoard
                 mpshoot.setY(y);
                 Listener(TypeBattleShips.MP_DISPARAR);
                 posicionMisil(x,y,board[x][y].getX(),board[x][y].getY());
-                if(board[x][y].getBarco()==TypeBattleShips.EMPTY)
+                hasShoot = true;                
+
+              /*  if(board[x][y].getBarco()==TypeBattleShips.EMPTY)
                 {
                     board[x][y].setEstado(TypeBattleShips.SHOT);
                 }
@@ -238,7 +240,7 @@ public class EnemyBoard
                 {
                     board[x][y].setEstado(TypeBattleShips.ACERTADO);
                     acertarBaraco(board[x][y].getBarco());
-                }
+                }*/
             }
         }
              
@@ -373,6 +375,7 @@ public class EnemyBoard
             }
             return;
         }
+
     }
      
      public void updateTableroEnemigo(String s)
@@ -393,6 +396,7 @@ public class EnemyBoard
            int locY = Integer.parseInt(""+datosa[3]);
            int barco = Integer.parseInt(""+datosa[5]);
            int orienta = Integer.parseInt(""+datosa[6]);
+          
            switch(resultado)
            {
                case 0:
@@ -412,19 +416,22 @@ public class EnemyBoard
                    ships[barco].setX(calcMatrizY(locY));
                    ships[barco].setOrientacion(orienta);
                    ships[barco].hundir();
-                   for (int j = 0; j < ships[barco].getLargo(); j++)
+                   for (int j = 0; j < ships[barco].getLargo()-1; j++)
                    {
                        if(orienta==0)
                        {
                            board[x][y-j].setEstado(TypeBattleShips.HUNDIDO);
-                           board[x][y-j].setFrameBarco(j);
+                           board[x][y-j].setSeccion_barco(j);
                            board[x][y-j].setBarco(barco);
+                           board[x][y-j].setFrameBarco(1);
+                           
                        }
                        else
                        {
-                           board[x+1][y].setEstado(TypeBattleShips.HUNDIDO);
-                           board[x+1][y].setFrameBarco(j);
-                           board[x+1][y].setBarco(barco);
+                           board[x+j][y].setEstado(TypeBattleShips.HUNDIDO);
+                           board[x+j][y].setSeccion_barco(j);
+                           board[x+j][y].setBarco(barco);
+                           board[x+j][y].setFrameBarco(1);
                        }
                    }
                    break;
@@ -432,5 +439,16 @@ public class EnemyBoard
            }
      
      }
+
+         
+    public int[][] getMapaParaGuardar(){
+        int[][] m = new int[10][10];
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                m[i][j] = super.board[i][j].getEstado();
+            }
+        }
+        return m;
+    } 
 }
 

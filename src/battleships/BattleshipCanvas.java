@@ -1341,8 +1341,7 @@ public class BattleshipCanvas
                                                                 TypeBattleShips.PORTAAVIONES,
                                                                 TypeBattleShips.PORTAAVIONES_SIZE,
                                                                 TypeBattleShips.HORIZONTAL,
-                                                                0,0,
-                                                                r));
+                                                                0,0));
                         barcos.hideItem(BarcosScreen.PORTAAVIONES);
                         barcos.selectNext();
                         showDeployShips();
@@ -1352,8 +1351,7 @@ public class BattleshipCanvas
                                                                 TypeBattleShips.ACORAZADO,
                                                                 TypeBattleShips.ACORAZADO_SIZE,
                                                                 TypeBattleShips.HORIZONTAL,
-                                                                0,0,
-                                                                r));                        
+                                                                0,0));                        
                         barcos.hideItem(BarcosScreen.ACORAZADO);
                         barcos.selectNext();
                         showDeployShips();
@@ -1363,8 +1361,7 @@ public class BattleshipCanvas
                                                                 TypeBattleShips.SUBMARINO,
                                                                 TypeBattleShips.SUBMARINO_SIZE,
                                                                 TypeBattleShips.HORIZONTAL,
-                                                                0,0,
-                                                                r));
+                                                                0,0));
                         barcos.hideItem(BarcosScreen.SUBMARINO);
                         barcos.selectNext();
                         showDeployShips();
@@ -1374,8 +1371,7 @@ public class BattleshipCanvas
                                                                 TypeBattleShips.DESTRUCTOR,
                                                                 TypeBattleShips.DESTRUCTOR_SIZE,
                                                                 TypeBattleShips.HORIZONTAL,
-                                                                0,0,
-                                                                r));
+                                                                0,0));
                         barcos.hideItem(BarcosScreen.DESTRUCTOR);
                         barcos.selectNext();
                         showDeployShips();
@@ -1385,8 +1381,7 @@ public class BattleshipCanvas
                                                                 TypeBattleShips.ESPIA,
                                                                 TypeBattleShips.ESPIA_SIZE,
                                                                 TypeBattleShips.HORIZONTAL,
-                                                                0,0,
-                                                                r));
+                                                                0,0));
                         barcos.hideItem(BarcosScreen.ESPIA);
                         barcos.selectNext();
                         showDeployShips();
