@@ -118,6 +118,8 @@ public class BattleshipCanvas
     private boolean connected = false;
     boolean mpturno = false;
     boolean readyToread = false;
+    private boolean quienjuega;
+    private int misionero;
     
 
     private int cpgPoints = 0;
@@ -1196,11 +1198,12 @@ public class BattleshipCanvas
                              }else{
                                 misionScreen.hideResume();
                              }
-                             if(DATA.getGuardadoCampaign()){
+                             if(DATA.getMision()> 0){
                                 campaignScreen.showResume();
                              }else{
                                 campaignScreen.hideResume();
                              }
+                             selectorMisionScreen.visivilityItems(DATA.getMision());
                              showUserScreen();
                          }
                          break;
@@ -1216,11 +1219,12 @@ public class BattleshipCanvas
                              }else{
                                 misionScreen.hideResume();
                              }
-                             if(DATA.getGuardadoCampaign()){
+                             if(DATA.getMision()> 0){
                                 campaignScreen.showResume();
                              }else{
                                 campaignScreen.hideResume();
                              }
+                             selectorMisionScreen.visivilityItems(DATA.getMision());
                              showUserScreen();
                          }
                          break;
@@ -1236,11 +1240,12 @@ public class BattleshipCanvas
                              }else{
                                 misionScreen.hideResume();
                              }
-                             if(DATA.getGuardadoCampaign()){
+                             if(DATA.getMision()> 0){
                                 campaignScreen.showResume();
                              }else{
                                 campaignScreen.hideResume();
                              }
+                             selectorMisionScreen.visivilityItems(DATA.getMision());
                              showUserScreen();
                          }
                          break;
@@ -1338,7 +1343,6 @@ public class BattleshipCanvas
 
             public void itemClicked(int x, int y) {
                 deployShips.colocarBarco();
-                //deployShips.girarBarco();
             }
             
             public void changeState(int state){
@@ -1430,8 +1434,15 @@ public class BattleshipCanvas
                             {
                                 if(cpg)
                                 {
-                                    if(DATA.getMision()< 4){
-                                        DATA.setMision(DATA.getMision() + 1);
+                                    if (quienjuega){
+                                        if (misionero < 4) {
+                                            misionero += 1;
+                                        }
+                                    }else{
+                                        if(DATA.getMision()< 4){
+                                            misionero +=1; 
+                                            DATA.setMision(misionero);
+                                        }
                                     }
                                     cpgPoints = points;
                                     if(points > DATA.getRecordCampaign())
@@ -1646,8 +1657,14 @@ public class BattleshipCanvas
                             showUserScreen();                            
                             break;                        
                     case CampaignScreen.CONTINUAR:
+                            quienjuega = false;
+                            misionero = DATA.getMision();
+                            historia.setHistoria(DATA.getMision());
+                            showHistoriaScreen();
                             break;                        
                     case CampaignScreen.MISION:
+                            quienjuega = true;
+                            showSelectorMisionScreen();
                             break;                        
                     case CampaignScreen.NUEVO:
                             if (DATA.getMision() == 0)
@@ -1674,22 +1691,27 @@ public class BattleshipCanvas
                 switch(x)
                 {
                     case SelectorMisionScreen.CERO:
+                            misionero = 0;
                             historia.setHistoria(0);  
                             showHistoriaScreen();
                             break;                        
                     case SelectorMisionScreen.UNO:
+                            misionero = 1;
                             historia.setHistoria(1);  
                             showHistoriaScreen();
                             break;                        
                     case SelectorMisionScreen.DOS:
+                            misionero = 2;
                             historia.setHistoria(2);  
                             showHistoriaScreen();
                             break;                        
                     case SelectorMisionScreen.TRES:
+                            misionero = 3;
                             historia.setHistoria(3);  
                             showHistoriaScreen();
                             break;
                     case SelectorMisionScreen.CUATRO:
+                            misionero = 4;
                             historia.setHistoria(4);  
                             showHistoriaScreen();
                             break;
@@ -1709,7 +1731,7 @@ public class BattleshipCanvas
                 switch(x){
                 case TypeBattleShips.SP_TURNO:
                     tableroEnemigo.generarMapa(r);
-                    tableroAmigo.generarMapaCampaign(r, DATA.getMision());
+                    tableroAmigo.generarMapaCampaign(r, misionero);
                     break;
                 }                              
             }
