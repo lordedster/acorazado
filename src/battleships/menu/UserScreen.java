@@ -22,8 +22,8 @@ public class UserScreen
     public static final int CAMPAIGN = 1;
     public static final int MULTIJUGADOR = 2;
     public static final int OPTIONS = 3;
-    public static final int EXIT = 4;
-    public static final int INFO = 5;
+    public static final int EXIT = 5;
+    public static final int INFO = 4;
     public final int OUT_CX;
     public final int IN_CX;
     private int x;
@@ -39,10 +39,8 @@ public class UserScreen
         setItem(CAMPAIGN, new MenuItem(new StringMenuItem("Campaña",r)));
         setItem(MULTIJUGADOR, new MenuItem(new StringMenuItem("Multijugador",r)));
         setItem(OPTIONS, new MenuItem(new StringMenuItem("Opciones",r)));
+        setItem(INFO, new MenuItem(new StringMenuItem("Acerca De",r)));
         setItem(EXIT, new MenuItem(new StringMenuItem("Salir",r)));
-        setItem(INFO, new MenuItem(loadSprite("/info.png", 2, scaling)));
-        
-        getItem(CAMPAIGN).setVisibile(false);
         
         IN_CX = cornerX + width / 2;
         OUT_CX = IN_CX - width;
@@ -85,12 +83,10 @@ public class UserScreen
      */
     public final void positionItemsHorizontally() {
         MenuItem item;
-        for (int i = 0; i < ITEM_COUNT - 1; i++) {
+        for (int i = 0; i < ITEM_COUNT; i++) {
             item = getItem(i);
             item.setHorizontalCenter(x);
         }
-        item = getItem(ITEM_COUNT - 1);
-        item.setPosition(x - width / 2, cornerY);
     }
 
     /**
@@ -98,29 +94,12 @@ public class UserScreen
      */
     public final void positionItemsVertically() {
         int newY = y;
-        for (int i = 0; i < ITEM_COUNT - 1; i++) {
+        for (int i = 0; i < ITEM_COUNT; i++) {
             MenuItem item = getItem(i);
             item.setCenter(item.getX(), newY);
             newY += item.getHeight();
         }
     }
-
-    /**
-     * Hide resume option
-     */
-//    public void hideResume() {
-//        getItem(RESUME).setVisibile(false);
-//        positionItemsVertically();
-//    }
-
-    /**
-     * Show resume option
-     */
-//    public void showResume() {
-//        getItem(RESUME).setVisibile(true);
-//        selectItem(RESUME);
-//        positionItemsVertically();
-//    }
 }
 
 

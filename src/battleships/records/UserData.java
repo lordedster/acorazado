@@ -31,10 +31,14 @@ public class UserData {
     private int[][] shipEnemy_single_1;
     private int[][] mapUser_single_1;
     private int[][] shipUser_single_1;
+    private boolean guardado_campaign_user_1;
+    private int mision_1;
     private Grid[][] mapEnemy_campaign_1;
     private BattleShip[] shipEnemy_campaign_1;
     private Grid[][] mapUser_campaign_1;
     private BattleShip[] shipUser_campaign_1;
+    private int record_single_1;
+    private int record_campaign_1;
     private int dif_user_1;
     //player 2
     private int[] userName_2;
@@ -43,10 +47,14 @@ public class UserData {
     private int[][] shipEnemy_single_2;
     private int[][] mapUser_single_2;
     private int[][] shipUser_single_2;
+    private boolean guardado_campaign_user_2;
+    private int mision_2;
     private Grid[][] mapEnemy_campaign_2;
     private BattleShip[] shipEnemy_campaign_2;
     private Grid[][] mapUser_campaign_2;
     private BattleShip[] shipUser_campaign_2;
+    private int record_single_2;
+    private int record_campaign_2;
     private int dif_user_2;
     //player 3
     private int[] userName_3;    
@@ -55,10 +63,14 @@ public class UserData {
     private int[][] shipEnemy_single_3;
     private int[][] mapUser_single_3;
     private int[][] shipUser_single_3;
+    private boolean guardado_campaign_user_3;
+    private int mision_3;
     private Grid[][] mapEnemy_campaign_3;
     private BattleShip[] shipEnemy_campaign_3;
     private Grid[][] mapUser_campaign_3;
     private BattleShip[] shipUser_campaign_3;
+    private int record_single_3;
+    private int record_campaign_3;
     private int dif_user_3;
     
     //general\
@@ -164,6 +176,20 @@ public class UserData {
                     shipUser_single_3[i][j] = din.readInt();
                 }
             }
+            mision_1 = din.readInt();
+            mision_2 = din.readInt();
+            mision_3 = din.readInt();
+            guardado_campaign_user_1 = din.readBoolean();
+            guardado_campaign_user_2 = din.readBoolean();
+            guardado_campaign_user_3 = din.readBoolean();
+            record_campaign_1 = din.readInt();
+            record_campaign_2 = din.readInt();
+            record_campaign_3 = din.readInt();
+            record_single_1 = din.readInt();
+            record_single_2 = din.readInt();
+            record_single_3 = din.readInt();
+            
+            
 ////          initDashboard(din.readInt());
 ////            plate.setPosition(din.readInt(), din.readInt());
 ////            ball.setPosition(din.readInt(), din.readInt());
@@ -267,6 +293,19 @@ public class UserData {
                     dout.writeInt(shipUser_single_3[i][j]);
                 }
             }
+            
+            dout.writeInt(mision_1);
+            dout.writeInt(mision_2);
+            dout.writeInt(mision_3);
+            dout.writeBoolean(guardado_campaign_user_1);
+            dout.writeBoolean(guardado_campaign_user_2);
+            dout.writeBoolean(guardado_campaign_user_3);
+            dout.writeInt(record_campaign_1);
+            dout.writeInt(record_campaign_2);
+            dout.writeInt(record_campaign_3);
+            dout.writeInt(record_single_1);
+            dout.writeInt(record_single_2);
+            dout.writeInt(record_single_3);
             
             return bout.toByteArray();
         }
@@ -390,6 +429,19 @@ public class UserData {
                 shipUser_single_3[i][j] = -1;
             }            
         }
+        mision_1 = 0;
+        mision_2 = 0;
+        mision_3 = 0;
+        guardado_campaign_user_1 = false;
+        guardado_campaign_user_2 = false;
+        guardado_campaign_user_3 = false;
+        record_campaign_1 = 0;
+        record_campaign_2 = 0;
+        record_campaign_3 = 0;
+        record_single_1 = 0;
+        record_single_2 = 0;
+        record_single_3 = 0;
+                
     }
 
     public int getUsuarioActual() {
@@ -627,5 +679,95 @@ public class UserData {
         }
         return null;
      }     
-    //public 
+    
+     public void setGuardadoCampaign(boolean b){
+         switch(usuarioActual){
+            case UserData.PERFIL_A:
+                guardado_campaign_user_1 = b;
+                break;
+            case UserData.PERFIL_B:
+                guardado_campaign_user_2 = b;
+                break;
+            case UserData.PERFIL_C:                
+                guardado_campaign_user_3 = b;
+                break;
+        }
+     }
+     
+    public boolean getGuardadoCampaign(){                 
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                return guardado_campaign_user_1;
+            case UserData.PERFIL_B:
+                return guardado_campaign_user_2;
+            case UserData.PERFIL_C:     
+                return guardado_campaign_user_3;
+        }
+        return false;
+    }
+    
+    public void setMision(int i){
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                mision_1 = i;
+                break;
+            case UserData.PERFIL_B:
+                mision_2 = i;
+                break;
+            case UserData.PERFIL_C:           
+                mision_3 = i;
+                break;
+        }
+    }
+
+    public void setRecordSingle(int i){
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                record_single_1 = i;
+                break;
+            case UserData.PERFIL_B:
+                record_single_2 = i;
+                break;
+            case UserData.PERFIL_C:           
+                record_single_3 = i;
+                break;
+        }
+    }
+    
+    public int getRecordSingle(){
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                return record_single_1;
+            case UserData.PERFIL_B:
+                return record_single_2;
+            case UserData.PERFIL_C:     
+                return record_single_3;
+        }
+        return 0;
+    }
+    
+    public void setRecordCampaign(int i){
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                record_campaign_1 = i;
+                break;
+            case UserData.PERFIL_B:
+                record_campaign_2 = i;
+                break;
+            case UserData.PERFIL_C:           
+                record_campaign_3 = i;
+                break;
+        }
+    }
+    public int getRecordCampaign(){
+        switch(usuarioActual){
+            case UserData.PERFIL_A:
+                return record_campaign_1;
+            case UserData.PERFIL_B:
+                return record_campaign_2;
+            case UserData.PERFIL_C:     
+                return record_campaign_3;
+        }
+        return 0;
+    }
 }
