@@ -92,6 +92,7 @@ public class TypeBattleShips {
     public static final int STATE_HISTORIA = 30;
     public static final int STATE_SELECTOR_CAMPAIGN = 31;
     public static final int PUNTAJES_MENU = 40;
+    public static final int STATE_MISION_SELECTOR = 32;
     
     //Dificultades
     public static final int FACIL = 0;
