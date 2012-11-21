@@ -90,6 +90,8 @@ public class TypeBattleShips {
     public static final int STATE_WIN_OR_LOSSER = 27;
     public static final int SACUDIR = 28;
     public static final int STATE_MENU_EN_JUEGO = 29; 
+    public static final int STATE_HISTORIA = 30;
+    public static final int STATE_SELECTOR_CAMPAIGN = 31;
     
     //Dificultades
     public static final int FACIL = 0;

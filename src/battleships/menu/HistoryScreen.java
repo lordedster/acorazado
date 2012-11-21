@@ -12,6 +12,7 @@ package battleships.menu;
 import battleships.effects.Slideable;
 import battleships.game.Resources;
 import battleships.menu.StringImageItem;
+import battleships.game.ships.TypeBattleShips;
 import battleships.game.CampaignHistory;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
@@ -56,7 +57,8 @@ public class HistoryScreen
      * Render the menu
      */
     public void paint(Graphics g) {
-        //super.paint(g);
+        historia.paint(g);
+        menu.paint(g);
     }
     /**
      * Move view inwards
@@ -87,6 +89,10 @@ public class HistoryScreen
     public final void positionItems() {
         historia.setPosition(x - menu.getWidth()/2, y);
         menu.setPosition(x + width - menu.getWidth(), y + height - menu.getHeight());
+    }
+    
+    public void jugar(){
+        clickSelected(TypeBattleShips.SP_TURNO);
     }
 }
 

@@ -27,16 +27,12 @@ public class CampaignScreen
     public final int IN_CX;
     private int x;
     private int y;
-    private int width;
-    private int cornerY;
 
     public CampaignScreen(int cornerX, int cornerY, int width, int height, Menu.Listener l, double scaling, Resources r) {
         super(ITEM_COUNT, l);
-        this.width = width;       
-        this.cornerY = cornerY;
         setItem(CONTINUAR, new MenuItem(new StringMenuItem("Continuar",r)));
         setItem(NUEVO, new MenuItem(new StringMenuItem("Nueva Campaña",r)));
-        setItem(MISION, new MenuItem(new StringMenuItem("Selecciona Mision",r)));
+        setItem(MISION, new MenuItem(new StringMenuItem("Seleccionar Mision",r)));
         setItem(RECORDS, new MenuItem(new StringMenuItem("Records",r)));
         setItem(ATRAS, new MenuItem(new StringMenuItem("Atrás",r)));
         
@@ -97,6 +93,13 @@ public class CampaignScreen
             item.setCenter(item.getX(), newY);
             newY += item.getHeight();
         }
+    }
+    
+    public void hideResume(){
+        getItem(CONTINUAR).setVisibile(false);
+    }
+    public void showResume(){
+        getItem(CONTINUAR).setVisibile(true);
     }
 }
 
