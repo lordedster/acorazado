@@ -380,7 +380,6 @@ public class BattleshipCanvas
                 switch (key) {
                     case RIGHT_SOFTKEY:
                         killMPsession();
-                        multiThread.requestStop();
                         showUserScreen();
                         break;
                     default: 
@@ -791,7 +790,6 @@ public class BattleshipCanvas
      */
     public void stopApp() {
         gameState = TypeBattleShips.STATE_USER;
-        this.gameThread.requestStop();
         LightManager.allowDimming();
     }
 
@@ -808,6 +806,7 @@ public class BattleshipCanvas
             multiThread = new BattleshipCanvas.MultiThread();
         }
                 
+        multiThread.requestStart();
         LightManager.avoidDimming();
     }
 
@@ -973,7 +972,6 @@ public class BattleshipCanvas
                                 catch (Exception e)
                                 {
                                     killMPsession();
-                                    multiThread.requestStop();
                                     showUserScreen();
                                     
                                 }
@@ -989,7 +987,6 @@ public class BattleshipCanvas
                     if(!connected)
                     {
                      killMPsession();
-                      multiThread.requestStop();
                      showUserScreen();
                     }
                 }
@@ -1331,7 +1328,6 @@ public class BattleshipCanvas
                         showMisionScreen();                        
                         break;
                     case UserScreen.MULTIJUGADOR:
-                        multiThread.requestStart();
                         showMultiplayer();                     
                         break;
                     case UserScreen.OPTIONS:
@@ -1476,7 +1472,6 @@ public class BattleshipCanvas
                             else
                             {
                                 killMPsession();
-                                multiThread.requestStop();
 
                             }     
                             
@@ -1499,7 +1494,6 @@ public class BattleshipCanvas
                                     {
                                        
                                         killMPsession();
-                                        multiThread.requestStop();
 
                                         showUserScreen();
                                     }
@@ -1529,7 +1523,6 @@ public class BattleshipCanvas
                         catch (Exception e)
                         {
                             killMPsession();
-                            multiThread.requestStop();
 
                             showUserScreen();
                         }
@@ -1599,7 +1592,6 @@ public class BattleshipCanvas
                             else
                             {
                                 killMPsession();
-                               multiThread.requestStop();
 
                             } 
                             showWinOrLosser();

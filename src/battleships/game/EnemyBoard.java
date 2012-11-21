@@ -90,6 +90,7 @@ public class EnemyBoard
         this.cornerX = cornerY;
         
         menu.setPosition(OUT_X, cornerY + displayHeight);
+        selectGrid(0, 0);
     }
     
     public void generarMapa(Resources r){     
