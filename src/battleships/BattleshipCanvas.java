@@ -1439,9 +1439,11 @@ public class BattleshipCanvas
                                             misionero += 1;
                                         }
                                     }else{
-                                        if(DATA.getMision()< 4){
+                                        if(DATA.getMision() > 0 && DATA.getMision()< 4){
                                             misionero +=1; 
                                             DATA.setMision(misionero);
+                                            selectorMisionScreen.visivilityItems(misionero);
+                                            campaignScreen.showResume();
                                         }
                                     }
                                     cpgPoints = points;

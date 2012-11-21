@@ -101,6 +101,15 @@ public class CampaignScreen
     public void showResume(){
         getItem(CONTINUAR).setVisibile(true);
     }
+    
+    public void hideMision(){
+        
+        getItem(MISION).setVisibile(false);
+    }
+    public void showMision(){
+        
+        getItem(MISION).setVisibile(true);
+    }
 }
 
 
