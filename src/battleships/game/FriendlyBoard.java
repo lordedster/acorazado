@@ -134,6 +134,12 @@ public class FriendlyBoard extends Map implements Slideable {
         createMap(true);        
         positionGrid();
     }
+    
+    public void generarMapaCampaign(Resources r, int mision){             
+        this.r = r;
+        RellenarMapa(r, scaling);
+        cargarBarcosCampaign(mision, true);
+    }
         
     public void vaciarMapa(){
         Grid[][] e = ObtenerMatriz();
@@ -189,7 +195,25 @@ public class FriendlyBoard extends Map implements Slideable {
         CargarBarcosFacil(visibilidad);
     }    
     
-
+ private void cargarBarcosCampaign(int mision, boolean v){
+     for (int i = 0; i <= mision; i++) {
+         AlgoritmoDificil(i, TypeBattleShips.getLargoBarco(i), i, false);
+     }
+     switch (mision){
+         case 0:
+            AlgoritmoFacil(TypeBattleShips.PORTAAVIONES, TypeBattleShips.PORTAAVIONES_SIZE, ObtenerMatriz(), 0,v);
+         case 1:
+            AlgoritmoFacil(TypeBattleShips.ACORAZADO, TypeBattleShips.ACORAZADO_SIZE, ObtenerMatriz(), 1, v); 
+         case 2:
+            AlgoritmoFacil(TypeBattleShips.DESTRUCTOR, TypeBattleShips.DESTRUCTOR_SIZE, ObtenerMatriz(), 2, v );
+         case 3:
+            AlgoritmoFacil(TypeBattleShips.SUBMARINO, TypeBattleShips.SUBMARINO_SIZE, ObtenerMatriz(), 3, v);
+         case 4:
+            AlgoritmoFacil(TypeBattleShips.ESPIA, TypeBattleShips.ESPIA_SIZE, ObtenerMatriz(), 4, v);
+         
+     }
+     
+   }
     
     private void CargarBarcosFacil(boolean v){       
         AlgoritmoFacil(TypeBattleShips.PORTAAVIONES, TypeBattleShips.PORTAAVIONES_SIZE, ObtenerMatriz(), 0,v);        
@@ -198,6 +222,14 @@ public class FriendlyBoard extends Map implements Slideable {
         AlgoritmoFacil(TypeBattleShips.SUBMARINO, TypeBattleShips.SUBMARINO_SIZE, ObtenerMatriz(), 3, v);
         AlgoritmoFacil(TypeBattleShips.ESPIA, TypeBattleShips.ESPIA_SIZE, ObtenerMatriz(), 4, v);
    }
+    
+    
+    private void AlgoritmoDificil(int ship, int size, int posicion, boolean v){     
+            BattleShip b = new BattleShip(ship, size, 0, 0, 0);
+            b.hundir();
+            super.AddShipVolador(b, scaling, v, posicion);
+     
+    }
     
     private void AlgoritmoFacil(int ship, int size, Grid[][] map, int posicion, boolean v){        
         int direccion = rnd.nextInt(2); 

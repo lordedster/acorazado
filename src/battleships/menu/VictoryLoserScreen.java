@@ -31,6 +31,7 @@ public class VictoryLoserScreen
     private StringImageItem ganado;
     private StringImageItem perdido;
     private StringImageItem puntaje;
+    private StringImageItem continuar;
     private int puntos;
     
 
@@ -48,7 +49,10 @@ public class VictoryLoserScreen
         perdido = new StringImageItem("Perdiste");        
         perdido.setRGB(205, 0, 0);
         puntaje = new StringImageItem("Puntaje: " + puntos);
-        ganado.setRGB(255, 255, 255);
+        puntaje.setRGB(255, 255, 255);
+        continuar = new StringImageItem("Continuar Campaña");
+        continuar.setRGB(255, 255, 255);
+        hideContinuar();
         
         IN_CX = cornerX + width/2;
         OUT_CX = IN_CX - width;
@@ -68,6 +72,7 @@ public class VictoryLoserScreen
             perdido.paint(g);
         }
         puntaje.paint(g);
+        continuar.paint(g);
     }
     /**
      * Move view inwards
@@ -107,6 +112,7 @@ public class VictoryLoserScreen
         menu.setPosition(x + width / 2 - menu.getWidth(),cornerY + height - menu.getHeight());
         perdido.setPosition(x - perdido.getWidth() / 2, y);
         ganado.setPosition(x - ganado.getWidth() / 2, y);
+        continuar.setPosition(x, cornerY + height - menu.getHeight());
     }
     
     public void setGanadoPerdido(boolean resultado){
@@ -115,6 +121,14 @@ public class VictoryLoserScreen
     
     public void rightButtonPressed(){        
         clickSelected(TypeBattleShips.STATE_USER);
+    }
+    
+    public void hideContinuar(){
+        continuar.setVisible(false);
+    }
+    
+    public void showContinuar(){
+        continuar.setVisible(true);
     }
 
 }

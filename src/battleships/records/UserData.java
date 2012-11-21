@@ -33,10 +33,6 @@ public class UserData {
     private int[][] shipUser_single_1;
     private boolean guardado_campaign_user_1;
     private int mision_1;
-    private Grid[][] mapEnemy_campaign_1;
-    private BattleShip[] shipEnemy_campaign_1;
-    private Grid[][] mapUser_campaign_1;
-    private BattleShip[] shipUser_campaign_1;
     private int record_single_1;
     private int record_campaign_1;
     private int dif_user_1;
@@ -49,10 +45,6 @@ public class UserData {
     private int[][] shipUser_single_2;
     private boolean guardado_campaign_user_2;
     private int mision_2;
-    private Grid[][] mapEnemy_campaign_2;
-    private BattleShip[] shipEnemy_campaign_2;
-    private Grid[][] mapUser_campaign_2;
-    private BattleShip[] shipUser_campaign_2;
     private int record_single_2;
     private int record_campaign_2;
     private int dif_user_2;
@@ -65,10 +57,6 @@ public class UserData {
     private int[][] shipUser_single_3;
     private boolean guardado_campaign_user_3;
     private int mision_3;
-    private Grid[][] mapEnemy_campaign_3;
-    private BattleShip[] shipEnemy_campaign_3;
-    private Grid[][] mapUser_campaign_3;
-    private BattleShip[] shipUser_campaign_3;
     private int record_single_3;
     private int record_campaign_3;
     private int dif_user_3;

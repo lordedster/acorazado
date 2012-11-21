@@ -37,6 +37,7 @@ import battleships.menu.CampaignScreen;
 import battleships.game.ships.TypeBattleShips;
 import battleships.menu.MisionScreen;
 import battleships.menu.MultiScreen;
+import battleships.menu.SelectorMisionScreen;
 import battleships.menu.SelectorCampaign;
 import battleships.menu.SelectorNombre;
 import battleships.menu.UserScreen;
@@ -95,6 +96,7 @@ public class BattleshipCanvas
     private CampaignScreen campaignScreen;
     private SelectorCampaign selectorCampaign;
     private PuntajesScreen puntajesScreen;
+    private SelectorMisionScreen selectorMisionScreen;
     private Slideable currentView;
     private Slideable targetView;
     private Resources r;
@@ -268,6 +270,10 @@ public class BattleshipCanvas
                 break;
             case TypeBattleShips.STATE_WIN_OR_LOSSER:
                 switch (key) {
+                    case LEFT_SOFTKEY:
+                        historia.setHistoria(DATA.getMision());
+                        showHistoriaScreen();
+                        break;
                     case RIGHT_SOFTKEY:
                         victoryLosser.rightButtonPressed();
                         break;
@@ -440,7 +446,22 @@ public class BattleshipCanvas
                 }
                 break;
             }
-                 case TypeBattleShips.SP_TURNO_IA:
+            case TypeBattleShips.STATE_MISION_SELECTOR:
+            {
+                switch(getGameAction(key)){
+                    case UP:
+                        selectorMisionScreen.selectPrev();
+                        break;
+                    case DOWN:
+                        selectorMisionScreen.selectNext();
+                        break;
+                    case FIRE:
+                        selectorMisionScreen.clickSelected();
+                        break; 
+                }
+                break;
+            }
+            case TypeBattleShips.SP_TURNO_IA:
             {
                 switch (key) {
                     case RIGHT_SOFTKEY:
@@ -643,7 +664,10 @@ public class BattleshipCanvas
         g.fillRect(0, 0, displayWidth, displayHeight);
         
         g.drawImage(r.background, cornerX, cornerY, anchor);
-        if (gameState == TypeBattleShips.STATE_DEPLOYSHIPS || gameState == TypeBattleShips.SP_TURNO || gameState == TypeBattleShips.SP_TURNO_IA){
+        if (gameState == TypeBattleShips.STATE_DEPLOYSHIPS || 
+                gameState == TypeBattleShips.SP_TURNO || 
+                gameState == TypeBattleShips.SP_TURNO_IA ||
+                gameState == TypeBattleShips.STATE_HISTORIA){
             int c = cornerX;
             for(int i = 0; i < 240; i++){
                 g.drawImage(r.fondo, c, cornerY, anchor);
@@ -747,6 +771,9 @@ public class BattleshipCanvas
         if(puntajesScreen == null)
         {
             createPuntajeScreen();
+        }
+        if(selectorMisionScreen == null){
+            createSelectorMisionScreen();
         }
         startApp();
     }
@@ -1035,6 +1062,9 @@ public class BattleshipCanvas
                 break;
             case TypeBattleShips.STATE_SELECTOR_CAMPAIGN:                
                 selectorCampaign.pointerEvent(Menu.POINTER_PRESSED, x, y);
+                break;                
+            case TypeBattleShips.STATE_MISION_SELECTOR:                
+                selectorMisionScreen.pointerEvent(Menu.POINTER_PRESSED, x, y);
                 break;
         }
     }
@@ -1088,6 +1118,9 @@ public class BattleshipCanvas
                 break;
             case TypeBattleShips.STATE_SELECTOR_CAMPAIGN:                
                 selectorCampaign.pointerEvent(Menu.POINTER_RELEASED, x, y);
+                break;                
+            case TypeBattleShips.STATE_MISION_SELECTOR:                
+                selectorMisionScreen.pointerEvent(Menu.POINTER_RELEASED, x, y);
                 break;
                 
         }
@@ -1145,6 +1178,9 @@ public class BattleshipCanvas
                 break;
             case TypeBattleShips.STATE_SELECTOR_CAMPAIGN:                
                 selectorCampaign.pointerEvent(Menu.POINTER_DRAGGED, x, y);
+                break;
+            case TypeBattleShips.STATE_MISION_SELECTOR:                
+                selectorMisionScreen.pointerEvent(Menu.POINTER_DRAGGED, x, y);
                 break;
         }
     }
@@ -1381,14 +1417,16 @@ public class BattleshipCanvas
                 switch(state)
                 {
                     case TypeBattleShips.STATE_MENU_EN_JUEGO:
-                        DATA.setMapaEnemySigle(tableroEnemigo.getMapaParaGuardar());
-                        DATA.setShipsEnemySigle(tableroEnemigo.getBarcosParaGuardar());
-                        DATA.setMapaFriendSigle(tableroAmigo.getMapaParaGuardar());
-                        DATA.setShipsFriendSigle(tableroAmigo.getBarcosParaGuardar());
-                        DATA.setGuardadoSingle(true);
-                        saveGame();
+                        if(!cpg && !mpg){
+                            DATA.setMapaEnemySigle(tableroEnemigo.getMapaParaGuardar());
+                            DATA.setShipsEnemySigle(tableroEnemigo.getBarcosParaGuardar());
+                            DATA.setMapaFriendSigle(tableroAmigo.getMapaParaGuardar());
+                            DATA.setShipsFriendSigle(tableroAmigo.getBarcosParaGuardar());
+                            DATA.setGuardadoSingle(true);
+                            saveGame();                            
+                            misionScreen.showResume();
+                        }
                         showMenuEnJuego();
-                        misionScreen.showResume();
                         break;
                     case TypeBattleShips.SP_TURNO_IA:
                         if(tableroEnemigo.sinBarcos()){
@@ -1402,8 +1440,11 @@ public class BattleshipCanvas
                             {
                                 if(cpg)
                                 {
-                                     cpgPoints = points;
-                                     if(points > DATA.getRecordCampaign())
+                                    if(DATA.getMision()< 4){
+                                        DATA.setMision(DATA.getMision() + 1);
+                                    }
+                                    cpgPoints = points;
+                                    if(points > DATA.getRecordCampaign())
                                     {
                                         cpgPoints = points;
                                         DATA.setRecordCampaign(points);
@@ -1525,12 +1566,12 @@ public class BattleshipCanvas
                             {
                                 if(cpg)
                                 {
-                                     cpgPoints = points;
-                                     if(points > DATA.getRecordCampaign())
+                                    cpgPoints = points;
+                                    if(points > DATA.getRecordCampaign())
                                     {
                                         cpgPoints = points;
-                                        DATA.setRecordCampaign(points);
-                                        saveGame();
+                                        DATA.setRecordCampaign(points);   
+                                        saveGame();                                     
                                     }
                                 }
                                 else
@@ -1548,8 +1589,6 @@ public class BattleshipCanvas
                                multiThread.requestStop();
 
                             } 
-                           
-                       
                             showWinOrLosser();
                         }else{
                             showTableroEnemigo();                                
@@ -1599,12 +1638,8 @@ public class BattleshipCanvas
                             isServer = true;
                             tableroAmigo.startAsServer();
                             break;
-                }
-                        
+                }     
             }
-            
-           
-            
         }, scaling,  r);
     }
     
@@ -1639,13 +1674,50 @@ public class BattleshipCanvas
         }, scaling,  r);
     }
     
+    private void createSelectorMisionScreen(){
+        selectorMisionScreen = new SelectorMisionScreen(cornerX, cornerY, gameWidth, gameHeight, new Menu.Listener() {
+
+            public void itemClicked(int x) {
+
+                switch(x)
+                {
+                    case SelectorMisionScreen.CERO:
+                            historia.setHistoria(0);  
+                            showHistoriaScreen();
+                            break;                        
+                    case SelectorMisionScreen.UNO:
+                            historia.setHistoria(1);  
+                            showHistoriaScreen();
+                            break;                        
+                    case SelectorMisionScreen.DOS:
+                            historia.setHistoria(2);  
+                            showHistoriaScreen();
+                            break;                        
+                    case SelectorMisionScreen.TRES:
+                            historia.setHistoria(3);  
+                            showHistoriaScreen();
+                            break;
+                    case SelectorMisionScreen.CUATRO:
+                            historia.setHistoria(4);  
+                            showHistoriaScreen();
+                            break;
+                    case SelectorMisionScreen.ATRAS:
+                            showCampaignScreen();
+                            break;
+                        
+                }                        
+            }
+        }, scaling,  r);
+    }
+    
     private void createHistoriaScreen(){
         historia = new HistoryScreen(cornerX, cornerY, gameWidth, gameHeight, new Menu.Listener() {
 
             public void itemClicked(int x) {
                 switch(x){
                 case TypeBattleShips.SP_TURNO:
-                    
+                    tableroEnemigo.generarMapa(r);
+                    tableroAmigo.generarMapaCampaign(r, DATA.getMision());
                     break;
                 }                              
             }
@@ -2020,6 +2092,11 @@ public class BattleshipCanvas
     private void showSelectorCampaign(){             
         nextState = TypeBattleShips.STATE_SELECTOR_CAMPAIGN;
         changeView(selectorCampaign);
+    }
+    
+    private void showSelectorMisionScreen(){
+        nextState = TypeBattleShips.STATE_MISION_SELECTOR;
+        changeView(selectorCampaign); 
     }
     
     private void sumarIntervalo(int suma){

@@ -557,19 +557,19 @@ public class EnemyBoard
 
         
             BattleShip b1 = new BattleShip(TypeBattleShips.PORTAAVIONES, TypeBattleShips.PORTAAVIONES_SIZE, 0, 0, 0);
-            super.AddShipVolador(b1, scaling, false, r, TypeBattleShips.PORTAAVIONES);
+            super.AddShipVolador(b1, scaling, false, TypeBattleShips.PORTAAVIONES);
             
             BattleShip b2 = new BattleShip(TypeBattleShips.ACORAZADO, TypeBattleShips.ACORAZADO_SIZE, 0, 0, 0);
-            super.AddShipVolador(b2, scaling, false, r, TypeBattleShips.ACORAZADO);
+            super.AddShipVolador(b2, scaling, false, TypeBattleShips.ACORAZADO);
             
             BattleShip b3 = new BattleShip(TypeBattleShips.DESTRUCTOR, TypeBattleShips.DESTRUCTOR_SIZE, 0, 0, 0);
-            super.AddShipVolador(b3, scaling, false, r, TypeBattleShips.DESTRUCTOR);
+            super.AddShipVolador(b3, scaling, false, TypeBattleShips.DESTRUCTOR);
             
             BattleShip b4 = new BattleShip(TypeBattleShips.SUBMARINO, TypeBattleShips.SUBMARINO_SIZE, 0, 0, 0);
-            super.AddShipVolador(b4, scaling, false, r, TypeBattleShips.SUBMARINO);
+            super.AddShipVolador(b4, scaling, false, TypeBattleShips.SUBMARINO);
             
             BattleShip b5 = new BattleShip(TypeBattleShips.ESPIA, TypeBattleShips.ESPIA_SIZE, 0, 0, 0);
-            super.AddShipVolador(b5, scaling, false, r, TypeBattleShips.ESPIA);
+            super.AddShipVolador(b5, scaling, false, TypeBattleShips.ESPIA);
             
     }
 }
