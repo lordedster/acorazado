@@ -1592,6 +1592,9 @@ public class BattleshipCanvas
                      case MisionScreen.NEWGAME:
                          showSelector();
                          break;
+                     case MisionScreen.PUNTAJES:
+                         showPuntajeScreen();
+                         break;
                      case MisionScreen.RESUME:
                          tableroEnemigo.loadBarcos(DATA.getBarcosEnemySingle());
                          tableroEnemigo.loadMapa(DATA.getMapaEnemySingle());
