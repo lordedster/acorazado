@@ -35,7 +35,8 @@ public class FriendlyBoard extends Map implements Slideable {
     int lastdirection = -1;
     
     boolean mpg;
-
+    
+    int puntaje = 0;
     
     
     boolean ready;
@@ -233,7 +234,7 @@ public class FriendlyBoard extends Map implements Slideable {
     
     public void pcshoot()
     {
-        System.err.println("dsparado a 1 en friendly en pcshot");
+        
         disparado = disparar(nextShot());
         //Listener(TypeBattleShips.SP_TURNO);
     }
@@ -537,6 +538,7 @@ public class FriendlyBoard extends Map implements Slideable {
         posicionMisil(s.getX(),s.getY(), board[s.getX()][s.getY()].getX(), board[s.getX()][s.getY()].getY());
         if(super.board[s.getX()][s.getY()].getEstado()== TypeBattleShips.INTACTO)
         {
+            puntaje = puntaje - 40;
             super.board[s.getX()][s.getY()].setEstado(TypeBattleShips.ACERTADO);
             if(!tocado)
             {
@@ -550,6 +552,7 @@ public class FriendlyBoard extends Map implements Slideable {
         else
         {
            super.board[s.getX()][s.getY()].setEstado(TypeBattleShips.SHOT);
+           puntaje = puntaje +5;
         }
         return true;
     }
@@ -560,6 +563,7 @@ public class FriendlyBoard extends Map implements Slideable {
         super.ships[barco].Hit();
         if(super.ships[barco].isSunked())
         {
+            puntaje = puntaje - 100;
               for(int i = 0; i < 10; i++)
               {
                    for (int j = 0; j < 10; j++)
@@ -609,7 +613,7 @@ public class FriendlyBoard extends Map implements Slideable {
      */
      
      public void readyToShoot(boolean ready){
-         System.err.println("Set ready to shot"+ ready);
+         
          this.ready = ready;
      }
      
@@ -621,7 +625,7 @@ public class FriendlyBoard extends Map implements Slideable {
          return disparado;
      }
      public void setHasShot(boolean d){
-         System.err.println("set has shot" + d);
+        
          disparado = d;
      }
      
@@ -637,7 +641,7 @@ public class FriendlyBoard extends Map implements Slideable {
     }
     
     private void posicionMisil(int x, int y, int target_x, int target_y ){
-        System.err.println("Ataque en curso a 1 en posicionMisil");
+        
         ataqueEnCurso = true;
         this.target_x = target_x;
         this.target_y = target_y;
@@ -659,14 +663,14 @@ public class FriendlyBoard extends Map implements Slideable {
     
     public void Atacar(boolean b){
         this.ataqueEnCurso = b;   
-        System.err.println("terminar ataque, ATACAR");
+ ;
         pintar();
         setearMisil();
     }
     
     public void AtacarMP(boolean b){
         this.ataqueEnCurso = b;   
-        System.err.println("Terminar ataque, ATACARMP");
+       
         //pintar();
         setearMisil();
     }
@@ -687,7 +691,7 @@ public class FriendlyBoard extends Map implements Slideable {
     public String mp_disparo(Shoot s)
     {
         String ss ="";
-        System.err.println("Disparado a 1 en mp disparo");
+      
         disparado = disparar(s);
        
         ss = ss + "2"; // 0
@@ -824,4 +828,14 @@ public class FriendlyBoard extends Map implements Slideable {
             super.AddShip(b, scaling, true, r, barcos[i][2]);
         }
     }
+
+    public int getPuntaje() {
+        return puntaje;
+    }
+
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
+    }
+    
+    
 }

@@ -600,7 +600,7 @@ public class BattleshipCanvas
         }
         catch (NullPointerException npe) {
             g.drawString("Lo que sea", 0, 0, anchor);
-                    System.err.println("******************sdfsdf CONSTRUCTOR");
+                   
 
             // just no painting then
         }
@@ -823,13 +823,13 @@ public class BattleshipCanvas
         {
     if (mpg)
         {
-            System.err.println("mpg true");
+           
             if( mpc.isLive())
                  {
-                     System.err.println("mpc alive true");
+                   
                     //if(readyToread)
                         {
-                                  System.err.println("LEOO ACA");
+                                  
                                   if(!mpc.isDatosListos())
                                   {
                                     mpc.leer();
@@ -837,9 +837,7 @@ public class BattleshipCanvas
                                   
                             while(mpc.isDatosListos())
                             {
-                        
-                                System.err.println("is datos listos true");
-                                
+
                                 mpc.setDatosListos(false);
                                 try
                                 {
@@ -847,20 +845,18 @@ public class BattleshipCanvas
                                 {
                                         case 1:
                                         {
-                                            System.err.println("case1");
+                                        
                                             String response;
                                             response = tableroAmigo.mp_disparo(mpc.recuperarDatosDisparo());
-                                            System.err.println(response);                          
+                                                                     
                                             mpc.responderDatos(response);
                                             mpc.setDatosListos(false);
-                                         
-                                                                   
-                                            
+
                                             break;
                                         }
                                         case 2:
                                         {
-                                            System.err.println("case2");
+                        
                                             tableroEnemigo.updateTableroEnemigo(mpc.getDatosString());
                                             mpc.clear();
                                             mpc.setDatosListos(false);
@@ -882,7 +878,7 @@ public class BattleshipCanvas
                  }
                  else
                 {
-                    System.err.println("mpc alive false");
+
                     if(!connected)
                     {
                      killMPsession();
@@ -1266,7 +1262,21 @@ public class BattleshipCanvas
                         break;
                     case TypeBattleShips.SP_TURNO_IA:
                         if(tableroEnemigo.sinBarcos()){
-                            victoryLosser.setGanadoPerdido(true);
+                            int points = tableroEnemigo.getPuntaje() + tableroAmigo.getPuntaje();
+                           victoryLosser.setPuntos(points); 
+                           tableroEnemigo.setPuntaje(0);
+                           tableroAmigo.setPuntaje(0);
+                           victoryLosser.setGanadoPerdido(true);
+                            killMPsession();
+                            
+                            if(!mpg)
+                            {
+                                if(points > getRecordSingle())
+                                {
+                                    setRecordSingle(points);
+                                }
+                            }
+                            
                             showWinOrLosser();
                         }else{
                             if(!mpg)
@@ -1355,7 +1365,20 @@ public class BattleshipCanvas
                         break;                        
                     case TypeBattleShips.SP_TURNO:
                        if(tableroAmigo.sinBarcos()){
+                           int points = tableroEnemigo.getPuntaje() + tableroAmigo.getPuntaje();
+                           victoryLosser.setPuntos(points);  
+                           tableroEnemigo.setPuntaje(0);
+                           tableroAmigo.setPuntaje(0);
                             victoryLosser.setGanadoPerdido(false);
+                            if(!mpg)
+                            {
+                                if(points > getRecordSingle())
+                                {
+                                    setRecordSingle(points);
+                                }
+                            }
+                            
+                            killMPsession();
                             showWinOrLosser();
                         }else{
                             showTableroEnemigo();                                

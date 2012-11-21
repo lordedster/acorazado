@@ -30,6 +30,8 @@ public class VictoryLoserScreen
     private StringImageItem menu;
     private StringImageItem ganado;
     private StringImageItem perdido;
+    private StringImageItem puntaje;
+    private int puntos;
     
 
     public VictoryLoserScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling, Resources r) {
@@ -45,6 +47,8 @@ public class VictoryLoserScreen
         ganado.setRGB(255, 255, 255);
         perdido = new StringImageItem("Perdiste");        
         perdido.setRGB(205, 0, 0);
+        puntaje = new StringImageItem("Puntaje: " + puntos);
+        ganado.setRGB(255, 255, 255);
         
         IN_CX = cornerX + width/2;
         OUT_CX = IN_CX - width;
@@ -63,6 +67,7 @@ public class VictoryLoserScreen
         }else{
             perdido.paint(g);
         }
+        puntaje.paint(g);
     }
     /**
      * Move view inwards
@@ -86,7 +91,15 @@ public class VictoryLoserScreen
         return distance != 0;
     }
 
-    /**
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+    
+     /**
      * Lay out menu items horizontally
      */
     public final void positionItems() {        

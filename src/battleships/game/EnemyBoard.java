@@ -26,6 +26,8 @@ public class EnemyBoard
     private final int OUT_X;    
     private int x;
     private int y;
+    
+    private int puntaje =0;
 
     
     private int cornerX;
@@ -231,7 +233,7 @@ public class EnemyBoard
                 Listener(TypeBattleShips.MP_DISPARAR);
                 posicionMisil(x,y,board[x][y].getX(),board[x][y].getY());
                 
-                System.err.println("HasShoot = 1 en playerShoot MP");
+                
                 hasShoot = true;                
 
               /*  if(board[x][y].getBarco()==TypeBattleShips.EMPTY)
@@ -258,15 +260,17 @@ public class EnemyBoard
                 posicionMisil(x,y,board[x][y].getX(),board[x][y].getY());
                 if(board[x][y].getBarco()==TypeBattleShips.EMPTY)
                 {
+                    puntaje = puntaje - 10;
                     board[x][y].setEstado(TypeBattleShips.SHOT);
                 }
                 else
                 {
+                    puntaje = puntaje +100;
                     board[x][y].setEstado(TypeBattleShips.ACERTADO);
                     acertarBaraco(board[x][y].getBarco());
                     acertoBarco = true;
                 }
-                System.err.println("Has shoot = 1 en PlayerShoot");
+  
                 hasShoot = true;                
             }
         }
@@ -278,6 +282,7 @@ public class EnemyBoard
         super.ships[barco].Hit();
         if(super.ships[barco].isSunked())
         {
+            puntaje = puntaje +200;
             for(int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -303,6 +308,14 @@ public class EnemyBoard
     
     public boolean getAcertarBarco(){
        return this.acertoBarco;
+    }
+
+    public int getPuntaje() {
+        return puntaje;
+    }
+
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
     }
         
         
@@ -337,14 +350,14 @@ public class EnemyBoard
     }
     
     public void Atacar(boolean b){
-        System.err.println("en atacar de enemy board ataque en currso = " + b);
+        
         this.ataqueEnCurso = b;        
         pintar();
         setearMisil();
     }
     
     public void AtacarMP(boolean b){
-        System.err.println("en atacar de enemy board MP Ataque en curso = " + b);
+    
         this.ataqueEnCurso = b;        
        // pintar();
         setearMisil();
@@ -367,7 +380,7 @@ public class EnemyBoard
     }
     
     public void setHasShoot(boolean n){
-        System.err.println("Enemy board has shoot =" +n);
+        
         hasShoot = n;
     }
     
@@ -402,20 +415,21 @@ public class EnemyBoard
         * char 6 = orientacion
         */
          
-           System.err.println(s);
+           
            char[] datosa = s.toCharArray();
-           System.err.println("comienzo a extraer los datos");
+           
            int resultado = Integer.parseInt(""+datosa[4]);
            int locX = Integer.parseInt(""+datosa[2]);
            int locY = Integer.parseInt(""+datosa[3]);
            int barco = Integer.parseInt(""+datosa[5]);
            int orienta = Integer.parseInt(""+datosa[6]);
-           System.err.println("Datos extraidos");
+          
            
            switch(resultado)
            {
                case 0:
                {
+                   puntaje = puntaje - 10;
                    board[locX][locY].setEstado(TypeBattleShips.SHOT);
                    board[locX][locY].setFrameBarco(2);
       
@@ -423,6 +437,7 @@ public class EnemyBoard
                }
                case 1:
                {
+                   puntaje = puntaje + 100;
                    board[locX][locY].setEstado(TypeBattleShips.ACERTADO);
                    board[locX][locY].setFrameBarco(1);
                    
@@ -430,6 +445,7 @@ public class EnemyBoard
                }
                case 2:
                {
+                   puntaje = puntaje + 200;
                    ships[barco].setX(calcMatrizX(locX));
                    ships[barco].setY(calcMatrizY(locY));
                    ships[barco].setOrientacion(orienta);
@@ -443,8 +459,7 @@ public class EnemyBoard
                            board[locY][locX+j].setBarco(barco);
                            board[locY][locX+j].setSprite(loadSprite(SeccionBarco(j, barco, r), 2, scaling));
                            board[locY][locX+j].setFrameBarco(1);
-                             System.err.println("H x = "+ locX );
-                               System.err.println("H y = " + (locY-j) );
+                            
                            
                        }
                        else
@@ -456,8 +471,7 @@ public class EnemyBoard
                            q.setTransform(Sprite.TRANS_MIRROR_ROT270);
                            board[locY+j][locX].setSprite(q);
                            board[locY+j][locX].setFrameBarco(1);
-                            System.err.println("V x = "+ (locX + j) );
-                               System.err.println("V y = " + (locY) );
+                       
                            
                        }
                    }
