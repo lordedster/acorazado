@@ -41,7 +41,6 @@ import battleships.menu.UserScreen;
 import battleships.menu.multiPlayerScreen;
 import battleships.records.UserData;
 import java.util.Random;
-//import javax.microedition.amms.control.tuner.TunerControl;
 import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.lcdui.*;
 import javax.microedition.lcdui.game.*;
@@ -928,10 +927,6 @@ public class BattleshipCanvas
            case TypeBattleShips.STATE_MP:
                 multiMenu.pointerEvent(SelectorNombre.POINTER_PRESSED, x, y);
                 break;
-//            case TypeBattleShips.SP_TURNO:
-//                misionScreen.pointerEvent(Menu.POINTER_PRESSED, x, y);
-//                audioManager.playSample(r.SAMPLE_BUTTON);
-//                break;
         }
     }
     /**
