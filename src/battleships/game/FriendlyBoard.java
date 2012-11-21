@@ -97,6 +97,14 @@ public class FriendlyBoard extends Map implements Slideable {
         
          
     }
+
+    public boolean isMpg() {
+        return mpg;
+    }
+
+    public void setMpg(boolean mpg) {
+        this.mpg = mpg;
+    }
     
     public void singlePlayerGame()
     {

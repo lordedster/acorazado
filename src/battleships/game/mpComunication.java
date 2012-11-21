@@ -68,7 +68,7 @@ public class mpComunication {
     }
 
     public String getDatosString() {
-        return datosString;
+          return datosString;
     }
 
     public void setDatosString(String datosString) {
@@ -141,6 +141,7 @@ public mpComunication()
 {
 
        String datos = btc.readData(); 
+       //if(datos.length())
        if(datos != null && !datosListos)
        {          
            datosString = "";
@@ -202,7 +203,7 @@ public mpComunication()
        s.setX(int2);
        s.setY(int3);
        s.setArma(int4);
-       
+       clear();
        return s;
    }
    
@@ -210,7 +211,7 @@ public mpComunication()
    {
        System.err.println("Disparo?");
        String ss = "1";
-       mysybc++;
+ 
        ss = ss + mysybc;
        ss = ss + s.getX();
        ss = ss + s.getY();
@@ -233,9 +234,17 @@ public mpComunication()
        btc.waitForClient();
    }
    
-   public void startClient()
+   public boolean startClient()
    {
+       try
+       {
        btc.connectToServer();
+       return true;
+       }
+       catch (Exception e)
+               {
+                   return false;
+               }
    }
    
    public void clear()
@@ -259,6 +268,11 @@ public mpComunication()
    public boolean isLive()
    {
        return btc.connectionAlive();
+   }
+   
+   public void kill()
+   {
+       btc.closeConnections();
    }
    
 }
