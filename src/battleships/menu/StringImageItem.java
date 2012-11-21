@@ -147,6 +147,10 @@ public class StringImageItem {
         return x > left && x < right && y > top && y < bottom;
     }
     
+    public void setFontStyleSize(int size, int style){
+        font = Font.getFont(Font.FACE_MONOSPACE, style, size);
+    }
+    
     
     
 }

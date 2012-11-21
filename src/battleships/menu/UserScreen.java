@@ -42,8 +42,6 @@ public class UserScreen
         setItem(INFO, new MenuItem(new StringMenuItem("Acerca De",r)));
         setItem(EXIT, new MenuItem(new StringMenuItem("Salir",r)));
         
-        getItem(CAMPAIGN).setVisibile(false);
-        
         IN_CX = cornerX + width / 2;
         OUT_CX = IN_CX - width;
         x = OUT_CX;

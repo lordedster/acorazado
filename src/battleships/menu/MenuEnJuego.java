@@ -13,11 +13,9 @@ public class MenuEnJuego
         extends Menu
         implements Slideable {
 
-    public static final int ITEM_COUNT = 4;
+    public static final int ITEM_COUNT = 2;
     public static final int GUARDAR = 0;
     public static final int CONTINUAR = 1;
-    public static final int NUCLEAR = 2;
-    public static final int BOMBARDEO = 3;
     public final int OUT_CX;
     public final int IN_CX;
     private int x;
@@ -31,8 +29,6 @@ public class MenuEnJuego
         this.cornerY = cornerY;
         setItem(GUARDAR, new MenuItem(new StringMenuItem("Menu Principal", r)));
         setItem(CONTINUAR, new MenuItem(new StringMenuItem("Continuar", r)));
-        setItem(NUCLEAR, new MenuItem(new StringMenuItem("Misil nuclear", r)));
-        setItem(BOMBARDEO, new MenuItem(new StringMenuItem("Bombardeo", r)));
         IN_CX = cornerX + width / 2;
         OUT_CX = IN_CX - width;
         x = OUT_CX;
@@ -41,15 +37,10 @@ public class MenuEnJuego
         positionItemsVertically();
     }
 
-    /**
-     * Render the menu
-     */
     public void paint(Graphics g) {
         super.paint(g);
     }
-    /**
-     * Move view inwards
-     */
+   
     public boolean slideIn() {
         int distance = x - IN_CX;
         distance *= 0.8;
@@ -58,9 +49,6 @@ public class MenuEnJuego
         return distance != 0;
     }
 
-    /**
-     * Move view outwards
-     */
     public boolean slideOut() {
         int distance = x - OUT_CX;
         distance *= 0.8;
@@ -69,9 +57,6 @@ public class MenuEnJuego
         return distance != 0;
     }
 
-    /**
-     * Lay out menu items horizontally
-     */
     public final void positionItemsHorizontally() {
         MenuItem item;
         for (int i = 0; i < ITEM_COUNT; i++) {
@@ -80,9 +65,6 @@ public class MenuEnJuego
         }
     }
 
-    /**
-     * Lay out menu items vertically
-     */
     public final void positionItemsVertically() {
         int newY = y;
         for (int i = 0; i < ITEM_COUNT; i++) {
@@ -91,23 +73,6 @@ public class MenuEnJuego
             newY += item.getHeight();
         }
     }
-
-    /**
-     * Hide resume option
-     */
-//    public void hideResume() {
-//        getItem(RESUME).setVisibile(false);
-//        positionItemsVertically();
-//    }
-
-    /**
-     * Show resume option
-     */
-//    public void showResume() {
-//        getItem(RESUME).setVisibile(true);
-//        selectItem(RESUME);
-//        positionItemsVertically();
-//    }
 }
 
 
