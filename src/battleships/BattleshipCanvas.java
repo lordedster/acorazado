@@ -41,6 +41,7 @@ import battleships.menu.UserScreen;
 import battleships.menu.multiPlayerScreen;
 import battleships.records.UserData;
 import java.util.Random;
+//import javax.microedition.amms.control.tuner.TunerControl;
 import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.lcdui.*;
 import javax.microedition.lcdui.game.*;
@@ -1341,23 +1342,23 @@ public class BattleshipCanvas
 
             public void itemClicked(int x) {
 
-                if(x != 1)
+                switch(x)
                 {
-                 
-                      
-
-                    isServer = false;
-                    tableroAmigo.startAsCliente();
-                    
+                    case multiPlayerScreen.ATRAS:
+                            showUserScreen();                            
+                            break;
+                        
+                    case multiPlayerScreen.CLIENTE:
+                            isServer = false;
+                            tableroAmigo.startAsCliente();
+                            break;
+                        
+                    case multiPlayerScreen.SERVIDOR:
+                            isServer = true;
+                            tableroAmigo.startAsServer();
+                            break;
                 }
-                else
-                {
-                      
-
-                    isServer = true;
-                    tableroAmigo.startAsServer();
-                    
-                }
+                        
             }
             
            

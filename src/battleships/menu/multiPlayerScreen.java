@@ -22,9 +22,10 @@ public class multiPlayerScreen
         extends Menu
         implements Slideable {
 
-    public static final int ITEM_COUNT = 2;
+    public static final int ITEM_COUNT = 3;
     public static final int CLIENTE = 0;
     public static final int SERVIDOR = 1;
+    public static final int ATRAS = 2;
     public final int OUT_CX;
     public final int IN_CX;
     private int x;
@@ -37,7 +38,8 @@ public class multiPlayerScreen
         this.width = width;       
         this.cornerY = cornerY;
         setItem(CLIENTE, new MenuItem(new StringMenuItem("Unirse a partida", r)));
-        setItem(SERVIDOR, new MenuItem(new StringMenuItem ("Crear partida", r)));   
+        setItem(SERVIDOR, new MenuItem(new StringMenuItem ("Crear partida", r)));  
+        setItem(ATRAS, new MenuItem(new StringMenuItem ("Atrás", r))); 
        
         IN_CX = cornerX + width / 2;
         OUT_CX = IN_CX - width;
