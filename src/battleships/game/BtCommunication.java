@@ -30,7 +30,7 @@ public class BtCommunication {
     private boolean connectionExists=false;
 
     public BtCommunication() {
-        System.err.println("**********************BTCOMM CONSTRUCTOR");
+      
 
             MYSERVICEUUID_UUID = new UUID(myServiceUUID, false);
             // Define the server connection URL
@@ -130,17 +130,17 @@ public boolean connectionAlive()
     return connectionExists;
 }
     public String readData() {
-                System.err.println("sr");
+             
 
         String rxString = null;
         try {
-            System.err.println("Read Data fn being executed");
+           
             byte[] buffer = null;
             // throw an exception if length is not greater then 0
 
             int length = inputStream.read();
             if (length==-1) {
-                System.err.println("conection fail1");
+                
                 connectionExists=false;
                  rxString="Lost";
                  return rxString;
@@ -154,7 +154,7 @@ public boolean connectionAlive()
                     //read into buffer until the end
                     int ch = inputStream.read(buffer, length, buffer.length - length);
                     if (ch == -1) {
-                            System.err.println("conection fail2");
+                          
                         connectionExists=false;
                         rxString = "Lost";
                         return rxString;
@@ -165,15 +165,15 @@ public boolean connectionAlive()
                // if (buffer != null) {
                     //make string from buffer
                     rxString = new String(buffer);
-                    System.err.println("Read Data :" + rxString);
+                   
                // }
             }
 
         } catch (IOException ex) {
-            System.err.println("error");
+           
             ex.printStackTrace();
         }
-                System.err.println("er");
+               
 
                 
         return rxString;

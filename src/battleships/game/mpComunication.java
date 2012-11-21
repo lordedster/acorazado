@@ -29,17 +29,7 @@ public class mpComunication {
 
     public boolean isDatosListos() {
         
-           if(datosListos)
-           {
-                     System.err.println("DatosLIstos");
-           
-           }
-           else
-           {
-                     System.err.println("datos NO listos");
-           
-           }
-           
+          
         return datosListos;
     }
 
@@ -188,7 +178,7 @@ public mpComunication()
           // }
            
            //////////
-           System.err.println("LEido" + datosString);
+        
            
            
            datosListos = true;
@@ -198,7 +188,7 @@ public mpComunication()
    
    public Shoot recuperarDatosDisparo()
    {
-       System.err.println("Recupero datos?");
+      
        Shoot s = new Shoot();
        s.setX(int2);
        s.setY(int3);
@@ -209,7 +199,7 @@ public mpComunication()
    
    public void enviarDatosDisparo(Shoot s)
    {
-       System.err.println("Disparo?");
+       
        String ss = "1";
  
        ss = ss + mysybc;
@@ -218,7 +208,7 @@ public mpComunication()
        ss = ss + s.getArma();
        ss = ss + "0";
        ss = ss + "0";
-       System.err.println(ss);
+
        btc.writeMessage(ss); 
    }
    
