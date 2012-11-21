@@ -334,7 +334,7 @@ public class EnemyBoard
     } 
     
     public int[][] getBarcosParaGuardar(){
-        int[][] s = new int[5][6];
+        int[][] s = new int[5][5];
         for (int i = 0; i < 5; i++) {
             s[i][0] = super.ships[i].getX();
             s[i][1] = super.ships[i].getY();
@@ -350,18 +350,23 @@ public class EnemyBoard
             for (int j = 0; j < 10; j++) {
                 switch(map[i][j]){
                     case TypeBattleShips.INTACTO:   
+                        super.board[i][j].setEstado(TypeBattleShips.INTACTO);
                         super.board[i][j].setFrameBarco(0);
                         break;
                     case TypeBattleShips.ACERTADO:
+                        super.board[i][j].setEstado(TypeBattleShips.ACERTADO);
                         super.board[i][j].setFrameBarco(1);
                         break;                        
-                    case TypeBattleShips.HUNDIDO:                        
+                    case TypeBattleShips.HUNDIDO:         
+                        super.board[i][j].setEstado(TypeBattleShips.HUNDIDO);               
                         super.board[i][j].setFrameBarco(1);
                         break;
                     case TypeBattleShips.SHOT:
+                        super.board[i][j].setEstado(TypeBattleShips.SHOT);
                         super.board[i][j].setFrameBarco(2);
                         break;
                     default:                   
+                        super.board[i][j].setEstado(TypeBattleShips.AGUA);
                         super.board[i][j].setFrameBarco(0);
                         break;
                 }
@@ -372,7 +377,6 @@ public class EnemyBoard
     
     public void loadBarcos(int[][] barcos){
         RellenarMapa(r,scaling);
-        ReemplazarBarcos(new BattleShip[barcos.length]);
         for (int i = 0; i < barcos.length; i++) {            
             BattleShip b = new BattleShip(barcos[i][2], 
                                             TypeBattleShips.getLargoBarco(barcos[i][2]),

@@ -35,7 +35,6 @@ import battleships.menu.SelectorNombre;
 import battleships.menu.UserScreen;
 import battleships.records.UserData;
 import java.util.Random;
-//import javax.microedition.amms.control.tuner.TunerControl;
 import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.lcdui.*;
 import javax.microedition.lcdui.game.*;
@@ -709,55 +708,38 @@ public class BattleshipCanvas
         this.x = x;
         this.y = y;
         pressed = true;
-        if (gameState == TypeBattleShips.STATE_MENU) {
-            //electricity = audioManager.loopSample(r.SAMPLE_ELECTRICITY);
-        }
 
         switch (gameState) {
             case TypeBattleShips.STATE_MENU_EN_JUEGO:                
                 menuEnJuego.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_MENU:
                 menu.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_USER:
                 userScreen.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_DEPLOYSHIPS:
                 deployShips.pointerEvent(Map.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_INFO:
                 info.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_OPTIONS:
                 options.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_SELECTOR:
                 selector.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_BARCOS:
                 barcos.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_MISION:
                 misionScreen.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_CREATE_NOMBRE:
                 selectorNombre.pointerEvent(SelectorNombre.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
-//            case TypeBattleShips.SP_TURNO:
-//                misionScreen.pointerEvent(Menu.POINTER_PRESSED, x, y);
-//                audioManager.playSample(r.SAMPLE_BUTTON);
-//                break;
         }
     }
     /**
@@ -765,11 +747,6 @@ public class BattleshipCanvas
      */
     public void pointerReleased(int x, int y) {
         pressed = false;
-//        if (electricity != null) {
-//            audioManager.stopPlayer(electricity);
-//            electricity = null;
-//        }
-        // STOP loop
         switch (gameState) {            
             case TypeBattleShips.STATE_MENU_EN_JUEGO:
                 menuEnJuego.pointerEvent(Menu.POINTER_RELEASED, x, y);
@@ -1095,6 +1072,7 @@ public class BattleshipCanvas
                          tableroEnemigo.loadMapa(DATA.getMapaEnemySingle());
                          tableroAmigo.loadBarcos(DATA.getBarcosFriendSingle());
                          tableroAmigo.loadMapa(DATA.getMapaFriendSingle());
+                         tableroAmigo.buscarAcertado();
                          showTableroEnemigo();
                          break;
                  }
