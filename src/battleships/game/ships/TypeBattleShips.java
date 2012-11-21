@@ -86,10 +86,14 @@ public class TypeBattleShips {
     public static final int MP_SYNC = 24;
     public static final int MP_DISPARAR = 25;
     public static final int STATE_MP = 26;
+    
+    
+
 
     public static final int STATE_WIN_OR_LOSSER = 27;
     public static final int SACUDIR = 28;
     public static final int STATE_MENU_EN_JUEGO = 29; 
+    public static final int PUNTAJES_MENU = 40;
     
     //Dificultades
     public static final int FACIL = 0;

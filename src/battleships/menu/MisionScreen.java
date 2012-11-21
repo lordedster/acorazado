@@ -15,10 +15,11 @@ import javax.microedition.lcdui.Graphics;
 public class MisionScreen 
     extends Menu
     implements Slideable{
-    public static final int ITEM_COUNT = 3;    
+    public static final int ITEM_COUNT = 4;    
     public static final int RESUME = 0;
     public static final int NEWGAME = 1;
-    public static final int BACK = 2;    
+    public static final int PUNTAJES = 2;
+    public static final int BACK = 3;    
     public final int OUT_CX;
     public final int IN_CX;
     private int x;
@@ -29,6 +30,7 @@ public class MisionScreen
         
         setItem(RESUME, new MenuItem(new StringMenuItem("Continuar",r)));
         setItem(NEWGAME, new MenuItem(new StringMenuItem("Nuevo Juego",r)));
+        setItem(PUNTAJES, new MenuItem(new StringMenuItem("Puntajes",r)));
         setItem(BACK, new MenuItem(new StringMenuItem("Atrás", r)));
         
         IN_CX = cornerX + width / 2;

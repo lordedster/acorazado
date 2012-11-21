@@ -41,6 +41,7 @@ import battleships.menu.SelectorNombre;
 import battleships.menu.UserScreen;
 import battleships.menu.multiPlayerScreen;
 import battleships.menu.HistoryScreen;
+import battleships.menu.PuntajesScreen;
 import battleships.records.UserData;
 import java.util.Random;
 import javax.microedition.io.ConnectionNotFoundException;
@@ -91,6 +92,7 @@ public class BattleshipCanvas
     private MenuEnJuego menuEnJuego;
     private VictoryLoserScreen victoryLosser;
     private CampaignScreen campaignScreen;
+    private PuntajesScreen puntajesScreen;
 
     private Slideable currentView;
     private Slideable targetView;
@@ -114,7 +116,7 @@ public class BattleshipCanvas
     boolean readyToread = false;
     
 
-   
+    private int cpgPoints = 0;
     
     
     /**
@@ -358,6 +360,7 @@ public class BattleshipCanvas
                 switch (key) {
                     case RIGHT_SOFTKEY:
                         killMPsession();
+                        multiThread.requestStop();
                         showUserScreen();
                         break;
                     default: 
@@ -704,6 +707,11 @@ public class BattleshipCanvas
         if (campaignScreen == null){
             createCampaignScreen();
         }
+        
+        if(puntajesScreen == null)
+        {
+            createPuntajeScreen();
+        }
         startApp();
     }
 
@@ -734,8 +742,7 @@ public class BattleshipCanvas
         if (multiThread == null) {
             multiThread = new BattleshipCanvas.MultiThread();
         }
-        multiThread.requestStart();
-        
+                
         LightManager.avoidDimming();
     }
 
@@ -901,6 +908,7 @@ public class BattleshipCanvas
                                 catch (Exception e)
                                 {
                                     killMPsession();
+                                    multiThread.requestStop();
                                     showUserScreen();
                                     
                                 }
@@ -916,6 +924,7 @@ public class BattleshipCanvas
                     if(!connected)
                     {
                      killMPsession();
+                      multiThread.requestStop();
                      showUserScreen();
                     }
                 }
@@ -1162,6 +1171,20 @@ public class BattleshipCanvas
            DATA.getNombreUsuario(UserData.PERFIL_C), r);
     }
     
+     private void createPuntajeScreen() {
+        puntajesScreen = new PuntajesScreen(cornerX, cornerY, gameWidth, gameHeight, new Menu.Listener() {
+            
+             public void itemClicked(int item) {
+                switch (item) {
+                    
+                    case 1:
+                        showUserScreen();
+                        break;
+                }
+            }
+        }, scaling, r);        
+    }
+    
     private void createOptionScreen() {
         options = new OptionScreen(cornerX, cornerY, gameWidth, gameHeight, new Menu.Listener() {
             
@@ -1204,6 +1227,7 @@ public class BattleshipCanvas
                         showMisionScreen();                        
                         break;
                     case UserScreen.MULTIJUGADOR:
+                        multiThread.requestStart();
                         showMultiplayer();                     
                         break;
                     case UserScreen.OPTIONS:
@@ -1310,15 +1334,34 @@ public class BattleshipCanvas
                            tableroEnemigo.setPuntaje(0);
                            tableroAmigo.setPuntaje(0);
                            victoryLosser.setGanadoPerdido(true);
-                            killMPsession();
                             
                             if(!mpg)
                             {
-                                if(points > getRecordSingle())
+                                if(cpg)
                                 {
-                                    setRecordSingle(points);
+                                     cpgPoints = points;
+                                     if(points > DATA.getRecordCampaign())
+                                    {
+                                        cpgPoints = points;
+                                        DATA.setRecordCampaign(points);
+                                        saveGame();
+                                    }
+                                }
+                                else
+                                {
+                                    if(points > DATA.getRecordCampaign())
+                                    {
+                                        DATA.setRecordCampaign(points);
+                                        saveGame();
+                                    }
                                 }
                             }
+                            else
+                            {
+                                killMPsession();
+                                multiThread.requestStop();
+
+                            }     
                             
                             showWinOrLosser();
                         }else{
@@ -1339,6 +1382,8 @@ public class BattleshipCanvas
                                     {
                                        
                                         killMPsession();
+                                        multiThread.requestStop();
+
                                         showUserScreen();
                                     }
                             else
@@ -1369,6 +1414,8 @@ public class BattleshipCanvas
                         catch (Exception e)
                         {
                             killMPsession();
+                            multiThread.requestStop();
+
                             showUserScreen();
                         }
                         break;
@@ -1415,13 +1462,33 @@ public class BattleshipCanvas
                             victoryLosser.setGanadoPerdido(false);
                             if(!mpg)
                             {
-                                if(points > getRecordSingle())
+                                if(cpg)
                                 {
-                                    setRecordSingle(points);
+                                     cpgPoints = points;
+                                     if(points > DATA.getRecordCampaign())
+                                    {
+                                        cpgPoints = points;
+                                        DATA.setRecordCampaign(points);
+                                        saveGame();
+                                    }
+                                }
+                                else
+                                {
+                                    if(points > DATA.getRecordCampaign())
+                                    {
+                                        DATA.setRecordCampaign(points);
+                                        saveGame();
+                                    }
                                 }
                             }
-                            
-                            killMPsession();
+                            else
+                            {
+                                killMPsession();
+                               multiThread.requestStop();
+
+                            } 
+                           
+                       
                             showWinOrLosser();
                         }else{
                             showTableroEnemigo();                                
@@ -1836,6 +1903,11 @@ public class BattleshipCanvas
     private void showWinOrLosser(){
         nextState = TypeBattleShips.STATE_WIN_OR_LOSSER;
         changeView(victoryLosser);
+    }
+    
+    private void showPuntajeScreen(){
+        nextState = TypeBattleShips.PUNTAJES_MENU;
+        changeView(puntajesScreen);
     }
     
     private void showMenuEnJuego(){
