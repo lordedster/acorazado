@@ -90,6 +90,7 @@ public class FriendlyBoard extends Map implements Slideable {
         this.cornerY = cornerY;
         ready = false;
         disparado = false;
+       
         
         
      
@@ -224,6 +225,7 @@ public class FriendlyBoard extends Map implements Slideable {
     
     public void pcshoot()
     {
+        System.err.println("dsparado a 1 en friendly en pcshot");
         disparado = disparar(nextShot());
         //Listener(TypeBattleShips.SP_TURNO);
     }
@@ -599,6 +601,7 @@ public class FriendlyBoard extends Map implements Slideable {
      */
      
      public void readyToShoot(boolean ready){
+         System.err.println("Set ready to shot"+ ready);
          this.ready = ready;
      }
      
@@ -610,6 +613,7 @@ public class FriendlyBoard extends Map implements Slideable {
          return disparado;
      }
      public void setHasShot(boolean d){
+         System.err.println("set has shot" + d);
          disparado = d;
      }
      
@@ -625,6 +629,7 @@ public class FriendlyBoard extends Map implements Slideable {
     }
     
     private void posicionMisil(int x, int y, int target_x, int target_y ){
+        System.err.println("Ataque en curso a 1 en posicionMisil");
         ataqueEnCurso = true;
         this.target_x = target_x;
         this.target_y = target_y;
@@ -645,8 +650,16 @@ public class FriendlyBoard extends Map implements Slideable {
     }
     
     public void Atacar(boolean b){
-        this.ataqueEnCurso = b;        
+        this.ataqueEnCurso = b;   
+        System.err.println("terminar ataque, ATACAR");
         pintar();
+        setearMisil();
+    }
+    
+    public void AtacarMP(boolean b){
+        this.ataqueEnCurso = b;   
+        System.err.println("Terminar ataque, ATACARMP");
+        //pintar();
         setearMisil();
     }
     
@@ -666,6 +679,7 @@ public class FriendlyBoard extends Map implements Slideable {
     public String mp_disparo(Shoot s)
     {
         String ss ="";
+        System.err.println("Disparado a 1 en mp disparo");
         disparado = disparar(s);
        
         ss = ss + "2"; // 0

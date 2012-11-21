@@ -213,7 +213,7 @@ public class EnemyBoard
     {
         if(!isAtaqueEnCurso() && !hasShoot)
         {
-            if(board[x][y].getEstado()!= TypeBattleShips.SHOT || board[x][y].getEstado()!= TypeBattleShips.ACERTADO)
+            if(board[x][y].getEstado()!= TypeBattleShips.SHOT && board[x][y].getEstado()!= TypeBattleShips.ACERTADO && board[x][y].getEstado()!= TypeBattleShips.HUNDIDO)
             {
                 mpshoot = new Shoot();
                 mpshoot.setArma(1);
@@ -221,6 +221,8 @@ public class EnemyBoard
                 mpshoot.setY(y);
                 Listener(TypeBattleShips.MP_DISPARAR);
                 posicionMisil(x,y,board[x][y].getX(),board[x][y].getY());
+                
+                System.err.println("HasShoot = 1 en playerShoot MP");
                 hasShoot = true;                
 
               /*  if(board[x][y].getBarco()==TypeBattleShips.EMPTY)
@@ -255,6 +257,7 @@ public class EnemyBoard
                     acertarBaraco(board[x][y].getBarco());
                     acertoBarco = true;
                 }
+                System.err.println("Has shoot = 1 en PlayerShoot");
                 hasShoot = true;                
             }
         }
@@ -325,8 +328,16 @@ public class EnemyBoard
     }
     
     public void Atacar(boolean b){
+        System.err.println("en atacar de enemy board ataque en currso = " + b);
         this.ataqueEnCurso = b;        
         pintar();
+        setearMisil();
+    }
+    
+    public void AtacarMP(boolean b){
+        System.err.println("en atacar de enemy board MP Ataque en curso = " + b);
+        this.ataqueEnCurso = b;        
+       // pintar();
         setearMisil();
     }
     
@@ -347,6 +358,7 @@ public class EnemyBoard
     }
     
     public void setHasShoot(boolean n){
+        System.err.println("Enemy board has shoot =" +n);
         hasShoot = n;
     }
     
@@ -392,38 +404,46 @@ public class EnemyBoard
                case 0:
                {
                    board[locX][locY].setEstado(TypeBattleShips.SHOT);
+                   board [locX][locY].setFrameBarco(2);
       
                    break;
                }
                case 1:
                {
                    board[locX][locY].setEstado(TypeBattleShips.ACERTADO);
+                   board[locX][locY].setFrameBarco(1);
+                   
                    break;
                }
                case 2:
                {
                    ships[barco].setX(calcMatrizX(locX));
-                   ships[barco].setX(calcMatrizY(locY));
+                   ships[barco].setY(calcMatrizY(locY));
                    ships[barco].setOrientacion(orienta);
                    ships[barco].hundir();
-                   for (int j = 0; j < ships[barco].getLargo()-1; j++)
+                   for (int j = 0; j < ships[barco].getLargo(); j++)
                    {
-                       if(orienta==0)
+                       if(orienta==TypeBattleShips.HORIZONTAL) // vertical 0
                        {
-                           board[x][y-j].setEstado(TypeBattleShips.HUNDIDO);
-                           board[x][y-j].setSeccion_barco(j);
-                           board[x][y-j].setBarco(barco);
-                           board[x][y-j].setFrameBarco(1);
+                           board[locX][locY-j].setEstado(TypeBattleShips.HUNDIDO);
+                           board[locX][locY-j].setSeccion_barco(j);
+                           board[locX][locY-j].setBarco(barco);
+                           board[locX][locY-j].setSprite(loadSprite(SeccionBarco(j, barco, r), 2, scaling));
+                           board[locX][locY-j].setFrameBarco(1);
                            
                        }
                        else
                        {
-                           board[x+j][y].setEstado(TypeBattleShips.HUNDIDO);
-                           board[x+j][y].setSeccion_barco(j);
-                           board[x+j][y].setBarco(barco);
-                           board[x+j][y].setFrameBarco(1);
+                           board[locX+j][locY].setEstado(TypeBattleShips.HUNDIDO);
+                           board[locX+j][locY].setSeccion_barco(j);
+                           board[locX+j][locY].setBarco(barco);
+                           Sprite q = loadSprite(SeccionBarco(j, barco, r), 2, scaling);
+                           q.setTransform(Sprite.TRANS_MIRROR_ROT270);
+                           board[locX+j][locY].setSprite(q);
+                           board[locX+j][locY].setFrameBarco(1);
                        }
                    }
+                   positionGrid();
                    break;
                }
            }
@@ -498,6 +518,26 @@ public class EnemyBoard
                 super.AddShip(b, scaling, false, r, barcos[i][2]);
             }
         }
+    }
+    
+    public void CargarBarcosVoladores(){
+
+        
+            BattleShip b1 = new BattleShip(TypeBattleShips.PORTAAVIONES, TypeBattleShips.PORTAAVIONES_SIZE, 0, 0, 0);
+            super.AddShipVolador(b1, scaling, false, r, TypeBattleShips.PORTAAVIONES);
+            
+            BattleShip b2 = new BattleShip(TypeBattleShips.ACORAZADO, TypeBattleShips.ACORAZADO_SIZE, 0, 0, 0);
+            super.AddShipVolador(b2, scaling, false, r, TypeBattleShips.ACORAZADO);
+            
+            BattleShip b3 = new BattleShip(TypeBattleShips.DESTRUCTOR, TypeBattleShips.DESTRUCTOR_SIZE, 0, 0, 0);
+            super.AddShipVolador(b3, scaling, false, r, TypeBattleShips.DESTRUCTOR);
+            
+            BattleShip b4 = new BattleShip(TypeBattleShips.SUBMARINO, TypeBattleShips.SUBMARINO_SIZE, 0, 0, 0);
+            super.AddShipVolador(b4, scaling, false, r, TypeBattleShips.SUBMARINO);
+            
+            BattleShip b5 = new BattleShip(TypeBattleShips.ESPIA, TypeBattleShips.ESPIA_SIZE, 0, 0, 0);
+            super.AddShipVolador(b5, scaling, false, r, TypeBattleShips.ESPIA);
+            
     }
 }
 

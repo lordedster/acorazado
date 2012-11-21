@@ -504,7 +504,9 @@ public class BattleshipCanvas
                 }
                 if(tableroAmigo.isAtaqueEnCurso()){
                     if(!tableroAmigo.animarAtaque()){
-                        tableroAmigo.Atacar(false);
+                   
+                            tableroAmigo.Atacar(false);
+                       
                         resetIntervalo();                          
                         if(tableroAmigo.getAcertarBarco()){
                             animacionSacudidaSonido();
@@ -522,7 +524,15 @@ public class BattleshipCanvas
             case TypeBattleShips.SP_TURNO:
                 if(tableroEnemigo.isAtaqueEnCurso()){
                     if(!tableroEnemigo.animarAtaque()){
-                        tableroEnemigo.Atacar(false);
+                        if(mpg)
+                        {
+                            tableroEnemigo.AtacarMP(false);
+                        }
+                        else
+                        {
+                            tableroEnemigo.Atacar(false);
+                        }
+                        
                         resetIntervalo();
                         if(tableroEnemigo.getAcertarBarco()){
                             animacionSacudidaSonido();
@@ -839,6 +849,8 @@ public class BattleshipCanvas
                                             mpc.responderDatos(response);
                                          
                                             mpc.clear();
+                                            
+                                            
                                             break;
                                         }
                                         case 2:
@@ -1163,9 +1175,12 @@ public class BattleshipCanvas
                         tableroAmigo.crearMapaManualmente(deployShips.ObtenerMapa());
                         tableroAmigo.crearBarcosManualmente(deployShips.ObtenerBarcos());
                         tableroAmigo.positionGrid();                        
-                        tableroEnemigo.generarMapa(r);
+                        
                         if(mpg) // si estoy en MP cargo el mapa dependiendo de si soy servidor o cliente para ver quien arrancua
-                        {                          
+                        {    
+                            tableroEnemigo.RellenarMapa(r, scaling);
+                            tableroEnemigo.CargarBarcosVoladores();
+                            tableroEnemigo.positionGrid();
                             if(isServer)                            
                             {
                                 readyToread = false;
@@ -1180,6 +1195,7 @@ public class BattleshipCanvas
                         }   
                         else
                         {
+                            tableroEnemigo.generarMapa(r);
                             readyToread = true;
                             showTableroEnemigo();
                         }
@@ -1221,14 +1237,14 @@ public class BattleshipCanvas
                         misionScreen.showResume();
                         break;
                     case TypeBattleShips.SP_TURNO_IA:
-                      if(tableroEnemigo.sinBarcos()){
+                        if(tableroEnemigo.sinBarcos()){
                             victoryLosser.setGanadoPerdido(true);
                             showWinOrLosser();
                         }else{
-                          if(!mpg)
-                          {
-                             tableroAmigo.readyToShoot(true);
-                          }
+                            if(!mpg)
+                            {
+                               tableroAmigo.readyToShoot(true);
+                            }
                             showTableroAmigo();
                         }
                         break;  
@@ -1496,12 +1512,16 @@ public class BattleshipCanvas
                     case SelectorScreen.BUTTON_OK:
                         
                         tableroAmigo.generarMapa(r);
-                        tableroEnemigo.generarMapa(r);
+                        
                         
                         if(mpg) // sy estoy en MP cargo el mapa dependiendo de si soy servidor o cliente para ver quien arrancua
-                        {                          
+                        {      
+                            tableroEnemigo.RellenarMapa(r, scaling); 
+                            tableroEnemigo.CargarBarcosVoladores();
+                            tableroEnemigo.positionGrid();
                             if(isServer)                            
                             {
+                               
                                 readyToread = false;
                                 showTableroEnemigo();
                             }
@@ -1514,6 +1534,7 @@ public class BattleshipCanvas
                         }   
                         else
                         {
+                            tableroEnemigo.generarMapa(r);
                             readyToread = true;
                            showTableroEnemigo();
                         }                      

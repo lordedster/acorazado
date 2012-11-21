@@ -275,7 +275,12 @@ public class Map {
                     y += 1;
                     break;                    
             }            
-        }        
+        }  
+    }
+    
+    protected void AddShipVolador(BattleShip ship, double scaling, boolean visibility, Resources r, int posicion)
+    {
+        ships[posicion] = ship;
         
     }
     
@@ -366,7 +371,7 @@ public class Map {
         y = (int)(y / d);
         return y;
     }
-    protected void RellenarMapa(Resources r, double scaling){
+    public void RellenarMapa(Resources r, double scaling){
         for(int i = 0; i < getHeight(); i++ )
         {
             for(int j = 0; j < getWidth(); j++)
@@ -459,7 +464,7 @@ public class Map {
     
     public boolean sinBarcos()
     {
-        boolean r = true;
+        boolean r = true;        
         
             for (int i = 0; i < ships.length; i++)
             {
