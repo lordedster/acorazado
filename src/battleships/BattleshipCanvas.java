@@ -275,6 +275,16 @@ public class BattleshipCanvas
                         break;
                 }
                 break;
+            case TypeBattleShips.PUNTAJES_MENU:
+                switch (key) {
+                    case RIGHT_SOFTKEY:
+                        victoryLosser.rightButtonPressed();
+                        break;
+                    default: 
+                        break;
+                }
+                break;
+
             case TypeBattleShips.STATE_MENU:
                 switch (key) {
                     case RIGHT_SOFTKEY:
@@ -1382,10 +1392,10 @@ public class BattleshipCanvas
                         break;
                     case TypeBattleShips.SP_TURNO_IA:
                         if(tableroEnemigo.sinBarcos()){
-                            int points = tableroEnemigo.getPuntaje() + tableroAmigo.getPuntaje();
+                            int points = (tableroEnemigo.getPuntaje() + tableroAmigo.getPuntaje());
+                            System.err.println("pointsfinales = " + points);
                            victoryLosser.setPuntos(points); 
-                           tableroEnemigo.setPuntaje(0);
-                           tableroAmigo.setPuntaje(0);
+                           System.err.println("pointsfinales de victory= " + victoryLosser.getPuntos());
                            victoryLosser.setGanadoPerdido(true);
                             
                             if(!mpg)
@@ -1402,9 +1412,9 @@ public class BattleshipCanvas
                                 }
                                 else
                                 {
-                                    if(points > DATA.getRecordCampaign())
+                                    if(points > DATA.getRecordSingle())
                                     {
-                                        DATA.setRecordCampaign(points);
+                                        DATA.setRecordSingle(points);
                                         saveGame();
                                     }
                                 }
@@ -1445,9 +1455,7 @@ public class BattleshipCanvas
                                 isServer = false;
                                 showSelector();
                             }
-                   
-      
-                       
+ 
                         
                         break;
                     }
@@ -1508,10 +1516,10 @@ public class BattleshipCanvas
                         break;                        
                     case TypeBattleShips.SP_TURNO:
                        if(tableroAmigo.sinBarcos()){
-                           int points = tableroEnemigo.getPuntaje() + tableroAmigo.getPuntaje();
-                           victoryLosser.setPuntos(points);  
-                           tableroEnemigo.setPuntaje(0);
-                           tableroAmigo.setPuntaje(0);
+                           int points = (tableroEnemigo.getPuntaje() + tableroAmigo.getPuntaje());
+                           System.err.println("pointsfinales = " + points);
+                           victoryLosser.setPuntos(points); 
+                           System.err.println("pointsfinales de victory= " + victoryLosser.getPuntos());
                             victoryLosser.setGanadoPerdido(false);
                             if(!mpg)
                             {
@@ -1527,9 +1535,9 @@ public class BattleshipCanvas
                                 }
                                 else
                                 {
-                                    if(points > DATA.getRecordCampaign())
+                                    if(points > DATA.getRecordSingle())
                                     {
-                                        DATA.setRecordCampaign(points);
+                                        DATA.setRecordSingle(points);
                                         saveGame();
                                     }
                                 }
@@ -1677,6 +1685,8 @@ public class BattleshipCanvas
                          showSelector();
                          break;
                      case MisionScreen.PUNTAJES:
+                         puntajesScreen.setPuntosCP(DATA.getRecordCampaign());
+                         puntajesScreen.setPuntosSP(DATA.getRecordSingle());
                          showPuntajeScreen();
                          break;
                      case MisionScreen.RESUME:
@@ -1993,7 +2003,7 @@ public class BattleshipCanvas
     }
     
     private void showPuntajeScreen(){
-        nextState = TypeBattleShips.PUNTAJES_MENU;
+        nextState = TypeBattleShips.PUNTAJES_MENU;     
         changeView(puntajesScreen);
     }
     

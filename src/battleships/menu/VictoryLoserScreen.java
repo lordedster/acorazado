@@ -96,6 +96,7 @@ public class VictoryLoserScreen
     }
 
     public void setPuntos(int puntos) {
+        puntaje.setTexto("Puntaje: "+ puntos);
         this.puntos = puntos;
     }
     

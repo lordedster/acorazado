@@ -52,11 +52,27 @@ public class PuntajesScreen extends Menu
         OUT_CX = IN_CX - width;
         x = OUT_CX;
         y = cornerY + height / 2;
-        positionItemsHorizontally();
-        positionItemsVertically();
+        
          positionItems();
     }
 
+    public int getPuntosCP() {
+        return puntosCP;
+    }
+
+    public void setPuntosCP(int puntosCP) {
+        this.puntosCP = puntosCP;
+    }
+
+    public int getPuntosSP() {
+        return puntosSP;
+    }
+
+    public void setPuntosSP(int puntosSP) {
+        this.puntosSP = puntosSP;
+    }
+
+    
     /**
      * Render the menu
      */
@@ -72,7 +88,7 @@ public class PuntajesScreen extends Menu
         int distance = x - IN_CX;
         distance *= 0.8;
         x = IN_CX + distance;
-        positionItemsHorizontally();
+         positionItems();
         return distance != 0;
     }
 
@@ -83,21 +99,11 @@ public class PuntajesScreen extends Menu
         int distance = x - OUT_CX;
         distance *= 0.8;
         x = OUT_CX + distance;
-        positionItemsHorizontally();
+         positionItems();
         return distance != 0;
     }
 
-    
-    /**
-     * Lay out menu items horizontally
-     */
-    public final void positionItemsHorizontally() {
-        MenuItem item;
-        for (int i = 0; i < ITEM_COUNT; i++) {
-            item = getItem(i);
-            item.setHorizontalCenter(x);
-        }
-    }
+   
     
     public void atrasPuntaje()
     {
@@ -122,7 +128,7 @@ public class PuntajesScreen extends Menu
     public final void positionItems() {        
         menu.setPosition(x + width / 2 - menu.getWidth(),cornerY + height - menu.getHeight());
         puntajeSP.setPosition(x - puntajeCP.getWidth() / 2, y);
-        puntajeCP.setPosition(x - puntajeCP.getWidth() / 2, y);
+        puntajeCP.setPosition(x - puntajeCP.getWidth() / 2, y  + puntajeCP.getHeight());
     }
 }
 

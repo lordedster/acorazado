@@ -37,7 +37,7 @@ public class FriendlyBoard extends Map implements Slideable {
     
     boolean mpg;
     
-    int puntaje = 0;
+    int puntaje;
     
     
     boolean ready;
@@ -82,6 +82,7 @@ public class FriendlyBoard extends Map implements Slideable {
         acertoBarco = false;
         
         mpg = multiplayer;
+        puntaje = 0;
         
         IN_CX = cornerX;
         OUT_CX = IN_CX - width;    
@@ -578,6 +579,7 @@ public class FriendlyBoard extends Map implements Slideable {
         if(super.ships[barco].isSunked())
         {
             puntaje = puntaje - 100;
+            System.err.println("points = " + puntaje);
               for(int i = 0; i < 10; i++)
               {
                    for (int j = 0; j < 10; j++)
