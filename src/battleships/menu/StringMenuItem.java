@@ -97,7 +97,7 @@ public class StringMenuItem {
     }
     
     public int getHeight(){
-        return FONT.getHeight();
+        return FONT.getHeight()+ 3;
     }
     
     public int getX(){

@@ -52,8 +52,7 @@ public class Resources {
     /** 
      * Recursos de AUDIO
      */
-    
-    public final String SAMPLE_BUTTON = "/button.mp3";    
+     
     public final String SAMPLE_EXPLOSION = "/explosion.mp3";
     public final String SAMPLE_TRANSITION = "/transition.mp3";
     public final String SAMPLE_BONUS = "/bonus.mp3";

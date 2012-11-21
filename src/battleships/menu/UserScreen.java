@@ -31,16 +31,19 @@ public class UserScreen
     private int width;
     private int cornerY;
 
-    public UserScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling) {
+    public UserScreen(int cornerX, int cornerY, int width, int height, Listener l, double scaling, Resources r) {
         super(ITEM_COUNT, l);
         this.width = width;       
         this.cornerY = cornerY;
-        setItem(ACTION, new MenuItem(loadSprite("/action.png", 2, scaling)));
-        setItem(CAMPAIGN, new MenuItem(loadSprite("/campaign.png", 2, scaling)));
-        setItem(MULTIJUGADOR, new MenuItem(loadSprite("/multijugador.png", 2, scaling)));
-        setItem(OPTIONS, new MenuItem(loadSprite("/opciones.png", 2, scaling)));
-        setItem(EXIT, new MenuItem(loadSprite("/exit.png", 2, scaling)));
+        setItem(ACTION, new MenuItem(new StringMenuItem("Misión Única",r)));
+        setItem(CAMPAIGN, new MenuItem(new StringMenuItem("Campaña",r)));
+        setItem(MULTIJUGADOR, new MenuItem(new StringMenuItem("Multijugador",r)));
+        setItem(OPTIONS, new MenuItem(new StringMenuItem("Opciones",r)));
+        setItem(EXIT, new MenuItem(new StringMenuItem("Salir",r)));
         setItem(INFO, new MenuItem(loadSprite("/info.png", 2, scaling)));
+        
+        getItem(CAMPAIGN).setVisibile(false);
+        
         IN_CX = cornerX + width / 2;
         OUT_CX = IN_CX - width;
         x = OUT_CX;

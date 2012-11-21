@@ -159,16 +159,8 @@ public class FriendlyBoard extends Map implements Slideable {
         misil.paint(g);
     }
     
-     private void createMap(boolean visibilidad){
-        for(int i = 0; i < getHeight(); i++ )
-        {
-            for(int j = 0; j < getWidth(); j++)
-            {
-                setGrid(i, j, new Grid(TypeBattleShips.AGUA, TypeBattleShips.EMPTY, 
-                                        loadSprite(r.water, 3, scaling), 
-                                        loadSprite(r.mira, 2, scaling),TypeBattleShips.EMPTY));
-            }
-        }
+     private void createMap(boolean visibilidad){       
+        RellenarMapa(r,scaling);
         CargarBarcosFacil(visibilidad);
     }    
     
@@ -211,7 +203,7 @@ public class FriendlyBoard extends Map implements Slideable {
         if(estaOcupado(direccion, x_primero, y_primero, size)){
             AlgoritmoFacil(ship, size, map, posicion, v);
         } else {
-            BattleShip b = new BattleShip(TypeBattleShips.SHIPS[ship], ship, size, direccion, calcMatrizX(x_primero), calcMatrizY(y_primero));
+            BattleShip b = new BattleShip(ship, size, direccion, calcMatrizX(x_primero), calcMatrizY(y_primero));
             super.AddShip(b, scaling, v, r, posicion);
         }
     }
@@ -598,11 +590,11 @@ public class FriendlyBoard extends Map implements Slideable {
     }
      public void crearBarcosManualmente(BattleShip[] g){
         for (int i = 0; i < g.length; i++){
-            ships[i] = new BattleShip(g[i].Name(), g[i].getType(), g[i].getLargo(), g[i].getOrientacion(), g[i].getX(), g[i].getY());
+            ships[i] = new BattleShip(g[i].getType(), g[i].getLargo(), g[i].getOrientacion(), g[i].getX(), g[i].getY());
         }
     }
     /*
-     *******************************INTELIGENCIA ARTIFICIAL*******************************************
+     *******************************INTELIGENCIA ARTIFICIAL******************************************
      * Disparar con disparar(nextShot());
      */
      
@@ -746,7 +738,7 @@ public class FriendlyBoard extends Map implements Slideable {
     
     
      
-    public int[][] getMapaParaGuardar(){
+     public int[][] getMapaParaGuardar(){
         int[][] m = new int[10][10];
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -755,4 +747,59 @@ public class FriendlyBoard extends Map implements Slideable {
         }
         return m;
     } 
+    
+    public int[][] getBarcosParaGuardar(){
+        int[][] s = new int[5][5];
+        for (int i = 0; i < 5; i++) {
+            s[i][0] = super.ships[i].getX();
+            s[i][1] = super.ships[i].getY();
+            s[i][2] = super.ships[i].getType();
+            s[i][3] = super.ships[i].getOrientacion();
+            s[i][4] = super.ships[i].gethits();
+        }
+        return s;
+    }
+    
+    public void loadMapa(int[][] map){
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                switch(map[i][j]){
+                    case TypeBattleShips.INTACTO:
+                        super.board[i][j].setEstado(TypeBattleShips.INTACTO);
+                        super.board[i][j].setFrameBarco(0);
+                        break;
+                    case TypeBattleShips.ACERTADO:
+                        super.board[i][j].setEstado(TypeBattleShips.ACERTADO);
+                        super.board[i][j].setFrameBarco(1);
+                        break;                        
+                    case TypeBattleShips.HUNDIDO:           
+                        super.board[i][j].setEstado(TypeBattleShips.HUNDIDO);             
+                        super.board[i][j].setFrameBarco(1);
+                        break;
+                    case TypeBattleShips.SHOT:
+                        super.board[i][j].setEstado(TypeBattleShips.SHOT);
+                        super.board[i][j].setFrameBarco(2);
+                        break;
+                    default:                        
+                        super.board[i][j].setEstado(TypeBattleShips.AGUA);
+                        super.board[i][j].setFrameBarco(0);
+                        break;
+                }
+            }
+        }
+        positionGrid();
+    }
+    
+    public void loadBarcos(int[][] barcos){
+        RellenarMapa(r,scaling);
+        for (int i = 0; i < barcos.length; i++) {            
+            BattleShip b = new BattleShip(barcos[i][2], 
+                                            TypeBattleShips.getLargoBarco( barcos[i][2]),
+                                            barcos[i][3], 
+                                            barcos[i][0],
+                                            barcos[i][1]);
+            b.setHits(barcos[i][4]);     
+            super.AddShip(b, scaling, true, r, barcos[i][2]);
+        }
+    }
 }

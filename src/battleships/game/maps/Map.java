@@ -366,6 +366,17 @@ public class Map {
         y = (int)(y / d);
         return y;
     }
+    protected void RellenarMapa(Resources r, double scaling){
+        for(int i = 0; i < getHeight(); i++ )
+        {
+            for(int j = 0; j < getWidth(); j++)
+            {
+                setGrid(i, j, new Grid(TypeBattleShips.AGUA, TypeBattleShips.EMPTY, 
+                                        loadSprite(r.water, 3, scaling), 
+                                        loadSprite(r.mira, 2, scaling),TypeBattleShips.EMPTY));
+            }
+        }
+    }
     
     protected Image SeccionBarco(int seccion, int Type, Resources r){
         switch(Type){

@@ -11,7 +11,6 @@ import battleships.game.Resources;
  */
 public class BattleShip {
     
-    private String name; 
     private int type;
     private int lengh;
     private int orientacion; 
@@ -19,9 +18,8 @@ public class BattleShip {
     private int y;
     private int hits;
     
-    public BattleShip(String name, int type, int lengh, int orientacion, int x, int y)
+    public BattleShip(int type, int lengh, int orientacion, int x, int y)
     {
-        this.name = name;
         this.lengh = lengh;
         this.x = x;
         this.y = y;
@@ -64,12 +62,7 @@ public class BattleShip {
     {
         hits += 1;
     }
-    
-    public String Name()
-    {
-        return name;
-    }
-    
+        
     public int getType()
     {
         return type;

@@ -41,7 +41,6 @@ import battleships.menu.UserScreen;
 import battleships.menu.multiPlayerScreen;
 import battleships.records.UserData;
 import java.util.Random;
-//import javax.microedition.amms.control.tuner.TunerControl;
 import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.lcdui.*;
 import javax.microedition.lcdui.game.*;
@@ -450,10 +449,7 @@ public class BattleshipCanvas
                 switch (key) {
                     case LEFT_SOFTKEY:                        
                         if (selectorNombre.isNombreListo()){
-                            DATA.setNombreUsuarioActual(selectorNombre.obtenerNombre());
-                            menu.setNombre(DATA.getUsuarioActual(),DATA.getNombreUsuarioActual());
-                            saveGame();
-                            showUserScreen();
+                           selectorNombre.GuardarNombre();
                         }
                         break;
                     case RIGHT_SOFTKEY:
@@ -604,6 +600,10 @@ public class BattleshipCanvas
         if (DATA == null) {
             loadOrCreateGame();
         }
+        if (misionScreen == null){
+            createMisionScreen();            
+            //showMisionScreen();
+        }
         if (menu == null) {
             createMenu();
            // menu.hideResume();
@@ -631,10 +631,6 @@ public class BattleshipCanvas
         }
         if (barcos == null){
             createBarcosScreen();
-        }
-        if (misionScreen == null){
-            createMisionScreen();            
-            //showMisionScreen();
         }
         if (tableroEnemigo == null){
             createTableroEnemigo();
@@ -884,54 +880,40 @@ public class BattleshipCanvas
         this.x = x;
         this.y = y;
         pressed = true;
-        if (gameState == TypeBattleShips.STATE_MENU) {
-            //electricity = audioManager.loopSample(r.SAMPLE_ELECTRICITY);
-        }
 
         switch (gameState) {
             case TypeBattleShips.STATE_MENU_EN_JUEGO:                
                 menuEnJuego.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_MENU:
                 menu.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_USER:
                 userScreen.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_DEPLOYSHIPS:
                 deployShips.pointerEvent(Map.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_INFO:
                 info.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_OPTIONS:
                 options.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_SELECTOR:
                 selector.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_BARCOS:
                 barcos.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_MISION:
                 misionScreen.pointerEvent(Menu.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
             case TypeBattleShips.STATE_CREATE_NOMBRE:
                 selectorNombre.pointerEvent(SelectorNombre.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
            case TypeBattleShips.STATE_MP:
                 multiMenu.pointerEvent(SelectorNombre.POINTER_PRESSED, x, y);
-                audioManager.playSample(r.SAMPLE_BUTTON);
                 break;
 //            case TypeBattleShips.SP_TURNO:
 //                misionScreen.pointerEvent(Menu.POINTER_PRESSED, x, y);
@@ -944,11 +926,6 @@ public class BattleshipCanvas
      */
     public void pointerReleased(int x, int y) {
         pressed = false;
-//        if (electricity != null) {
-//            audioManager.stopPlayer(electricity);
-//            electricity = null;
-//        }
-        // STOP loop
         switch (gameState) {            
             case TypeBattleShips.STATE_MENU_EN_JUEGO:
                 menuEnJuego.pointerEvent(Menu.POINTER_RELEASED, x, y);
@@ -1052,6 +1029,7 @@ public class BattleshipCanvas
                          }else{
                              tableroAmigo.setDificultad(DATA.getDificultadUsuarioActual());
                              options.setDificultad(DATA.getDificultadUsuarioActual());
+                             boolean d = DATA.getGuardadoUsuarioActual();
                              if(DATA.getGuardadoUsuarioActual()){
                                 misionScreen.showResume();
                              }else{
@@ -1160,7 +1138,7 @@ public class BattleshipCanvas
                         break;
                 }
             }
-        },scaling);
+        },scaling, r);
     }
     
     private void createDeployShips(){
@@ -1232,7 +1210,14 @@ public class BattleshipCanvas
                 switch(state)
                 {
                     case TypeBattleShips.STATE_MENU_EN_JUEGO:
+                        DATA.setMapaEnemySigle(tableroEnemigo.getMapaParaGuardar());
+                        DATA.setShipsEnemySigle(tableroEnemigo.getBarcosParaGuardar());
+                        DATA.setMapaFriendSigle(tableroAmigo.getMapaParaGuardar());
+                        DATA.setShipsFriendSigle(tableroAmigo.getBarcosParaGuardar());
+                        DATA.setGuardadoSingle(true);
+                        saveGame();
                         showMenuEnJuego();
+                        misionScreen.showResume();
                         break;
                     case TypeBattleShips.SP_TURNO_IA:
                       if(tableroEnemigo.sinBarcos()){
@@ -1391,6 +1376,12 @@ public class BattleshipCanvas
                          showSelector();
                          break;
                      case MisionScreen.RESUME:
+                         tableroEnemigo.loadBarcos(DATA.getBarcosEnemySingle());
+                         tableroEnemigo.loadMapa(DATA.getMapaEnemySingle());
+                         tableroAmigo.loadBarcos(DATA.getBarcosFriendSingle());
+                         tableroAmigo.loadMapa(DATA.getMapaFriendSingle());
+                         tableroAmigo.buscarAcertado();
+                         showTableroEnemigo();
                          break;
                  }
              }
@@ -1444,8 +1435,7 @@ public class BattleshipCanvas
             public void itemClicked(int item) {
                 switch (item) {
                     case BarcosScreen.PORTAAVIONES:
-                        deployShips.agregarBarco(new BattleShip(TypeBattleShips.SHIPS[TypeBattleShips.PORTAAVIONES], 
-                                                                TypeBattleShips.PORTAAVIONES,
+                        deployShips.agregarBarco(new BattleShip(TypeBattleShips.PORTAAVIONES,
                                                                 TypeBattleShips.PORTAAVIONES_SIZE,
                                                                 TypeBattleShips.HORIZONTAL,
                                                                 0,0));
@@ -1454,8 +1444,7 @@ public class BattleshipCanvas
                         showDeployShips();
                         break;  
                     case BarcosScreen.ACORAZADO:
-                        deployShips.agregarBarco(new BattleShip(TypeBattleShips.SHIPS[TypeBattleShips.ACORAZADO], 
-                                                                TypeBattleShips.ACORAZADO,
+                        deployShips.agregarBarco(new BattleShip(TypeBattleShips.ACORAZADO,
                                                                 TypeBattleShips.ACORAZADO_SIZE,
                                                                 TypeBattleShips.HORIZONTAL,
                                                                 0,0));                        
@@ -1464,8 +1453,7 @@ public class BattleshipCanvas
                         showDeployShips();
                         break;                
                     case BarcosScreen.SUBMARINO:
-                        deployShips.agregarBarco(new BattleShip(TypeBattleShips.SHIPS[TypeBattleShips.SUBMARINO], 
-                                                                TypeBattleShips.SUBMARINO,
+                        deployShips.agregarBarco(new BattleShip(TypeBattleShips.SUBMARINO,
                                                                 TypeBattleShips.SUBMARINO_SIZE,
                                                                 TypeBattleShips.HORIZONTAL,
                                                                 0,0));
@@ -1474,8 +1462,7 @@ public class BattleshipCanvas
                         showDeployShips();
                         break;
                     case BarcosScreen.DESTRUCTOR:
-                        deployShips.agregarBarco(new BattleShip(TypeBattleShips.SHIPS[TypeBattleShips.DESTRUCTOR], 
-                                                                TypeBattleShips.DESTRUCTOR,
+                        deployShips.agregarBarco(new BattleShip(TypeBattleShips.DESTRUCTOR,
                                                                 TypeBattleShips.DESTRUCTOR_SIZE,
                                                                 TypeBattleShips.HORIZONTAL,
                                                                 0,0));
@@ -1484,8 +1471,7 @@ public class BattleshipCanvas
                         showDeployShips();
                         break;
                     case BarcosScreen.ESPIA:
-                        deployShips.agregarBarco(new BattleShip(TypeBattleShips.SHIPS[TypeBattleShips.ESPIA], 
-                                                                TypeBattleShips.ESPIA,
+                        deployShips.agregarBarco(new BattleShip(TypeBattleShips.ESPIA,
                                                                 TypeBattleShips.ESPIA_SIZE,
                                                                 TypeBattleShips.HORIZONTAL,
                                                                 0,0));
@@ -1559,6 +1545,13 @@ public class BattleshipCanvas
                     case SelectorNombre.VOLVER:
                         showMenu();
                         break;
+                    case SelectorNombre.ACEPTAR:
+                        DATA.setNombreUsuarioActual(selectorNombre.obtenerNombre());
+                        menu.setNombre(DATA.getUsuarioActual(),DATA.getNombreUsuarioActual());
+                        saveGame();
+                        misionScreen.hideResume();
+                        showUserScreen();
+                        break;
                 }
             }
        }, scaling, r);
@@ -1569,6 +1562,9 @@ public class BattleshipCanvas
             public void itemClicked(int x) {
                 switch (x){
                     case TypeBattleShips.STATE_USER:
+                        DATA.setGuardadoSingle(false);
+                        misionScreen.hideResume();
+                        saveGame();
                         showUserScreen();
                     break;
                 }
