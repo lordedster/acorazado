@@ -27,7 +27,7 @@ public class EnemyBoard
     private int x;
     private int y;
     
-    private int puntaje =0;
+    private int puntaje;
 
     
     private int cornerX;
@@ -283,6 +283,7 @@ public class EnemyBoard
         if(super.ships[barco].isSunked())
         {
             puntaje = puntaje +200;
+            System.err.println("points = " + puntaje);
             for(int i = 0; i < 10; i++)
             {
                 for (int j = 0; j < 10; j++)
