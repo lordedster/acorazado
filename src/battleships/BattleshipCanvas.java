@@ -355,6 +355,14 @@ public class BattleshipCanvas
                     default:
                         break;
                 }
+                switch (key) {
+                    case RIGHT_SOFTKEY:
+                        killMPsession();
+                        showUserScreen();
+                        break;
+                    default: 
+                        break;
+                }
                 break;
             case TypeBattleShips.STATE_DEPLOYSHIPS:
                  switch (key) {
@@ -867,7 +875,8 @@ public class BattleshipCanvas
                                 System.err.println("is datos listos true");
                                 
                                 mpc.setDatosListos(false);
-                                System.err.println("int0 " + mpc.getInt0());
+                                try
+                                {
                                 switch(mpc.getInt0())
                                 {
                                         case 1:
@@ -875,14 +884,11 @@ public class BattleshipCanvas
                                             System.err.println("case1");
                                             String response;
                                             response = tableroAmigo.mp_disparo(mpc.recuperarDatosDisparo());
-                                            System.err.println(response);
-                                    
-                                            mpc.setDatosListos(false);
-                                        
+                                            System.err.println(response);                          
                                             mpc.responderDatos(response);
+                                            mpc.setDatosListos(false);
                                          
-                                            mpc.clear();
-                                            
+                                                                   
                                             
                                             break;
                                         }
@@ -890,12 +896,17 @@ public class BattleshipCanvas
                                         {
                                             System.err.println("case2");
                                             tableroEnemigo.updateTableroEnemigo(mpc.getDatosString());
-                                        
-                                            readyToread = false;
-                                           
                                             mpc.clear();
+                                            mpc.setDatosListos(false);
                                             break;
                                         }
+                                }
+                                }
+                                catch (Exception e)
+                                {
+                                    killMPsession();
+                                    showUserScreen();
+                                    
                                 }
                               
                             }
@@ -908,13 +919,14 @@ public class BattleshipCanvas
                     System.err.println("mpc alive false");
                     if(!connected)
                     {
-                      vibratorManager.vibrate(10); 
+                     killMPsession();
+                     showUserScreen();
                     }
                 }
              }
     else
     {
-        System.err.println("MPG false");
+        
     }
         }
     
@@ -922,6 +934,27 @@ public class BattleshipCanvas
     /**
      * Handle pointer pressed
      */
+    
+    public void killMPsession()
+    {
+        mpg = false;
+        mpc.kill();
+        isServer = false;
+        boolean connected = false;
+        mpturno = false;
+        readyToread = false;
+        /*
+         * 
+         * 
+         * 
+         * 
+         *    EVITAR QUE APAREZCA EL MENU PARA EL TABLERO AMIGO
+         * 
+         * 
+         */
+        tableroAmigo.setMpg(false);
+        tableroEnemigo.setMpg(false);
+    }
     public void pointerPressed(int x, int y) {
         this.x = x;
         this.y = y;
@@ -1291,24 +1324,43 @@ public class BattleshipCanvas
                         break;
                     case TypeBattleShips.BT_CLIENTE:
                     {
-                               
-                                mpturno=false;
-                                mpc.startClient();
-                                                    
-                        connected = true;
-                        isServer = false;
-                        showSelector();
+                            mpturno=false;
+                            if(!mpc.startClient())
+                                    {
+                                       
+                                        killMPsession();
+                                        showUserScreen();
+                                    }
+                            else
+                            {
+                                connected = true;
+                                isServer = false;
+                                showSelector();
+                            }
+                   
+      
+                       
+                        
                         break;
                     }
                     case TypeBattleShips.BT_SERVIDOR:
                     {
-                               
+                         try
+                        {      
                         mpturno=true;        
+                  
                         mpc.startServer();
                                            
                         connected = true;
                         isServer = true;
                         showSelector();
+                        
+                          }
+                        catch (Exception e)
+                        {
+                            killMPsession();
+                            showUserScreen();
+                        }
                         break;
                     }
 

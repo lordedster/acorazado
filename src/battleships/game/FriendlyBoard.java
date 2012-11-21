@@ -104,8 +104,15 @@ public class FriendlyBoard extends Map implements Slideable {
     }
     private void setPositionMenu() {       
        menu.setPosition(x + displayWidth - menu.getWidth(), cornerY + displayHeight - menu.getHeight());
+    }    
+
+    public boolean isMpg() {
+        return mpg;
     }
-    
+
+    public void setMpg(boolean mpg) {
+        this.mpg = mpg;
+    }
     
     public void singlePlayerGame()
     {

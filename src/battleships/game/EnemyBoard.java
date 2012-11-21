@@ -26,6 +26,8 @@ public class EnemyBoard
     private final int OUT_X;    
     private int x;
     private int y;
+
+    
     private int cornerX;
     private int cornerY;
     private int displayWidth;
@@ -108,6 +110,13 @@ public class EnemyBoard
         positionGrid();
         setPositionMenu();
         return distance != 0;
+    }
+    public boolean isMpg() {
+        return mpg;
+    }
+
+    public void setMpg(boolean mpg) {
+        this.mpg = mpg;
     }
 
     public boolean slideIn() {
@@ -392,19 +401,23 @@ public class EnemyBoard
         * char 5 = barco
         * char 6 = orientacion
         */
+         
+           System.err.println(s);
            char[] datosa = s.toCharArray();
+           System.err.println("comienzo a extraer los datos");
            int resultado = Integer.parseInt(""+datosa[4]);
            int locX = Integer.parseInt(""+datosa[2]);
            int locY = Integer.parseInt(""+datosa[3]);
            int barco = Integer.parseInt(""+datosa[5]);
            int orienta = Integer.parseInt(""+datosa[6]);
-          
+           System.err.println("Datos extraidos");
+           
            switch(resultado)
            {
                case 0:
                {
                    board[locX][locY].setEstado(TypeBattleShips.SHOT);
-                   board [locX][locY].setFrameBarco(2);
+                   board[locX][locY].setFrameBarco(2);
       
                    break;
                }
@@ -425,22 +438,27 @@ public class EnemyBoard
                    {
                        if(orienta==TypeBattleShips.HORIZONTAL) // vertical 0
                        {
-                           board[locX][locY-j].setEstado(TypeBattleShips.HUNDIDO);
-                           board[locX][locY-j].setSeccion_barco(j);
-                           board[locX][locY-j].setBarco(barco);
-                           board[locX][locY-j].setSprite(loadSprite(SeccionBarco(j, barco, r), 2, scaling));
-                           board[locX][locY-j].setFrameBarco(1);
+                           board[locY][locX+j].setEstado(TypeBattleShips.HUNDIDO);
+                           board[locY][locX+j].setSeccion_barco(j);
+                           board[locY][locX+j].setBarco(barco);
+                           board[locY][locX+j].setSprite(loadSprite(SeccionBarco(j, barco, r), 2, scaling));
+                           board[locY][locX+j].setFrameBarco(1);
+                             System.err.println("H x = "+ locX );
+                               System.err.println("H y = " + (locY-j) );
                            
                        }
                        else
                        {
-                           board[locX+j][locY].setEstado(TypeBattleShips.HUNDIDO);
-                           board[locX+j][locY].setSeccion_barco(j);
-                           board[locX+j][locY].setBarco(barco);
+                           board[locY+j][locX].setEstado(TypeBattleShips.HUNDIDO);
+                           board[locY+j][locX].setSeccion_barco(j);
+                           board[locY+j][locX].setBarco(barco);
                            Sprite q = loadSprite(SeccionBarco(j, barco, r), 2, scaling);
                            q.setTransform(Sprite.TRANS_MIRROR_ROT270);
-                           board[locX+j][locY].setSprite(q);
-                           board[locX+j][locY].setFrameBarco(1);
+                           board[locY+j][locX].setSprite(q);
+                           board[locY+j][locX].setFrameBarco(1);
+                            System.err.println("V x = "+ (locX + j) );
+                               System.err.println("V y = " + (locY) );
+                           
                        }
                    }
                    positionGrid();
