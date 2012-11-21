@@ -10,6 +10,7 @@ import battleships.game.maps.Grid;
 import battleships.game.maps.Map;
 import battleships.game.ships.BattleShip;
 import battleships.game.ships.TypeBattleShips;
+import battleships.menu.StringImageItem;
 //import battleships.records.UserData;
 import java.util.Random;
 import javax.microedition.io.StreamConnection;
@@ -56,6 +57,7 @@ public class FriendlyBoard extends Map implements Slideable {
     private Sprite misil;
     private boolean ataqueEnCurso;
     private boolean acertoBarco;
+    private StringImageItem menu;
     
     private int misil_x;
     private int misil_y;
@@ -90,13 +92,20 @@ public class FriendlyBoard extends Map implements Slideable {
         this.cornerY = cornerY;
         ready = false;
         disparado = false;
-       
+        menu = new StringImageItem("Menu");
+        menu.setRGB(255, 255, 255);   
+        menu.setPosition(OUT_CX, cornerY + displayHeight);
+        menu.setVisible(false);
         
-        
-     
-        
-         
     }
+    
+    public void verMenu(){        
+        menu.setVisible(true);
+    }
+    private void setPositionMenu() {       
+       menu.setPosition(x + displayWidth - menu.getWidth(), cornerY + displayHeight - menu.getHeight());
+    }
+    
     
     public void singlePlayerGame()
     {
@@ -124,6 +133,7 @@ public class FriendlyBoard extends Map implements Slideable {
         distance *= 0.5;
         x = OUT_CX + distance;
         positionGrid();
+        setPositionMenu();
         return distance != 0;
     }
 
@@ -132,6 +142,7 @@ public class FriendlyBoard extends Map implements Slideable {
         distance *= 0.5;
         x = IN_CX + distance;
         positionGrid();
+        setPositionMenu();
         return distance != 0;
     }
     

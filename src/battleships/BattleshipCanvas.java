@@ -401,6 +401,19 @@ public class BattleshipCanvas
                 }
                 break;
             }
+                 case TypeBattleShips.SP_TURNO_IA:
+            {
+                switch (key) {
+                    case RIGHT_SOFTKEY:
+                        if(mpg){
+                            tableroAmigo.rightButtonPressed();
+                        }
+                        break;
+                    default: 
+                        break;
+                }
+                break;
+            }
             case TypeBattleShips.SP_TURNO:
                  switch (key) {
                     case LEFT_SOFTKEY:
@@ -615,7 +628,8 @@ public class BattleshipCanvas
             //showMisionScreen();
         }
         if (menu == null) {
-            createMenu();
+            createMenu();            
+            showMenu();
            // menu.hideResume();
         }
         if (tableroAmigo == null)
@@ -651,7 +665,7 @@ public class BattleshipCanvas
 
         if (multiMenu == null){
             createMultiMenu();
-            showMultiplayer();
+            //showMultiplayer();
         }
 
         if (victoryLosser == null){
@@ -1088,7 +1102,6 @@ public class BattleshipCanvas
            DATA.getNombreUsuario(UserData.PERFIL_A), 
            DATA.getNombreUsuario(UserData.PERFIL_B), 
            DATA.getNombreUsuario(UserData.PERFIL_C), r);
-        //showMenu();
     }
     
     private void createOptionScreen() {
@@ -1175,7 +1188,8 @@ public class BattleshipCanvas
                         {    
                             tableroEnemigo.RellenarMapa(r, scaling);
                             tableroEnemigo.CargarBarcosVoladores();
-                            tableroEnemigo.positionGrid();
+                            tableroEnemigo.positionGrid();                            
+                            tableroAmigo.verMenu();
                             if(isServer)                            
                             {
                                 readyToread = false;
@@ -1426,7 +1440,7 @@ public class BattleshipCanvas
                     case InfoScreen.LINK:
                         Main midlet = Main.getInstance();
                         try {
-                            if (midlet.platformRequest("http://projects.developer.nokia.com/JMEExplonoid")) {
+                            if (midlet.platformRequest("http://github.com/lordedster/acorazado")) {
                                 midlet.exit();
                             }
                         }
@@ -1514,6 +1528,7 @@ public class BattleshipCanvas
                             tableroEnemigo.RellenarMapa(r, scaling); 
                             tableroEnemigo.CargarBarcosVoladores();
                             tableroEnemigo.positionGrid();
+                            tableroAmigo.verMenu();
                             if(isServer)                            
                             {
                                

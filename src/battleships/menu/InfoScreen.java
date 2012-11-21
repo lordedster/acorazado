@@ -36,7 +36,8 @@ public class InfoScreen
         x = OUT_CX;
         y = cornerY + (int) (height * 0.8);
 
-        MenuItem item = new MenuItem(loadSprite("/link.png", 2, scaling));
+        //MenuItem item = new MenuItem(loadSprite("/link.png", 2, scaling));
+        MenuItem item = new MenuItem(new InfoStringMenuItem("github.com/lord/nedster/acorazado", r));
         setItem(LINK, item);
         item.setCenter(x, y);
 
