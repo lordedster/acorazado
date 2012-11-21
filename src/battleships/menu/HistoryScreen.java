@@ -83,12 +83,11 @@ public class HistoryScreen
     public void setHistoria(int h){
         historia.setTexto(CampaignHistory.HISTORY[h]);
     }
-
+    
     public final void positionItems() {
         historia.setPosition(x - menu.getWidth()/2, y);
         menu.setPosition(x + width - menu.getWidth(), y + height - menu.getHeight());
     }
-
 }
 
 

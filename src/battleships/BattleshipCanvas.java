@@ -1472,6 +1472,7 @@ public class BattleshipCanvas
                     case CampaignScreen.MISION:
                             break;                        
                     case CampaignScreen.NUEVO:
+                        
                             break;
                     case CampaignScreen.RECORDS:
                             break;
@@ -1817,6 +1818,11 @@ public class BattleshipCanvas
     private void showMenuEnJuego(){
         nextState = TypeBattleShips.STATE_MENU_EN_JUEGO;
         changeView(menuEnJuego);
+    }
+    
+    private void showHistoriaScreen(){        
+        nextState = TypeBattleShips.STATE_MENU_EN_JUEGO;
+        changeView(historia);
     }
     
     private void sumarIntervalo(int suma){
