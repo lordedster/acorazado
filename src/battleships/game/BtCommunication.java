@@ -42,28 +42,37 @@ public class BtCommunication {
 
             // Make the device discoverable, create the server and
             // wait for a connection
+
             localDevice = LocalDevice.getLocalDevice();
+      
             localDevice.setDiscoverable(DiscoveryAgent.GIAC);
             // Create a server connection object to accept
             // a connection from a client
+           
             scn = (StreamConnectionNotifier) Connector.open(connURL);
+              
             // Accept a connection from the client
             conn = (StreamConnection) scn.acceptAndOpen();
 
+           
             //scn.close();
             //open the streams
             inputStream = conn.openInputStream();
+             
             outputStream = conn.openOutputStream();
+           
             connectionExists=true;
             //RemoteDevice remdev = RemoteDevice.getRemoteDevice(conn);
             //System.err.println("Remote device address: " + remdev.getBluetoothAddress());
             //System.err.println("Remote device name: " + remdev.getFriendlyName(true));
         } catch (Exception ex) {
+           
             ex.printStackTrace();
         }
         if (conn != null) {
             return conn;
         } else {
+   
             return null;
         }
 
@@ -121,6 +130,8 @@ public boolean connectionAlive()
     return connectionExists;
 }
     public String readData() {
+                System.err.println("sr");
+
         String rxString = null;
         try {
             System.err.println("Read Data fn being executed");
@@ -129,6 +140,7 @@ public boolean connectionAlive()
 
             int length = inputStream.read();
             if (length==-1) {
+                System.err.println("conection fail1");
                 connectionExists=false;
                  rxString="Lost";
                  return rxString;
@@ -142,6 +154,7 @@ public boolean connectionAlive()
                     //read into buffer until the end
                     int ch = inputStream.read(buffer, length, buffer.length - length);
                     if (ch == -1) {
+                            System.err.println("conection fail2");
                         connectionExists=false;
                         rxString = "Lost";
                         return rxString;
@@ -157,9 +170,12 @@ public boolean connectionAlive()
             }
 
         } catch (IOException ex) {
+            System.err.println("error");
             ex.printStackTrace();
         }
+                System.err.println("er");
 
+                
         return rxString;
 
     }

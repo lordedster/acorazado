@@ -16,18 +16,30 @@ public class mpComunication {
     
     private BtCommunication btc;
     private boolean datosListos;
-    private int int0;
-    private int int1;
-    private int int2;
-    private int int3;
-    private int int4;
-    private int int5;
-    private int int6;
-    private int int7;
+    private int int0 =0;
+    private int int1 =0;
+    private int int2 =0;
+    private int int3 =0;
+    private int int4 =0;
+    private int int5 =0;
+    private int int6 =0;
+    private int int7 =0;
     
     private String datosString;
 
     public boolean isDatosListos() {
+        
+           if(datosListos)
+           {
+                     System.err.println("DatosLIstos");
+           
+           }
+           else
+           {
+                     System.err.println("datos NO listos");
+           
+           }
+           
         return datosListos;
     }
 
@@ -128,51 +140,56 @@ public mpComunication()
    public void leer()
 {
 
-                   String datos = btc.readData();   
-       if(!datos.equals("") && !datosListos)
-       {
+       String datos = btc.readData(); 
+       if(datos != null && !datosListos)
+       {          
            datosString = "";
            char[] datosa = datos.toCharArray();
-           if(datosa[0]!='\0')
+           if(datosa.length > 0)
            {
                int0 = Integer.parseInt(""+datosa[0]);
                datosString = datosString + int0;
            }
-           if(datosa[1]!='\0')
+           if(datosa.length > 1)
            {
            int1 = Integer.parseInt(""+datosa[1]);
            datosString = datosString + int1;
            }
-           if(datosa[2]!='\0')
+           if(datosa.length > 2)
            {
            int2 = Integer.parseInt(""+datosa[2]);
            datosString = datosString + int2;
            }
-           if(datosa[3]!='\0')
+           if(datosa.length > 3)
            {
            int3 = Integer.parseInt(""+datosa[3]);
            datosString = datosString + int3;
            }
-           if(datosa[4]!='\0')
+           if(datosa.length > 4)
            {
            int4 = Integer.parseInt(""+datosa[4]);
            datosString = datosString + int4;
            }
-           if(datosa[5]!='\0')
+           if(datosa.length > 5)
            {
            int5 = Integer.parseInt(""+datosa[5]);
            datosString = datosString + int5;
            }
-           if(datosa[6]!='\0')
+           if(datosa.length > 6)
            {
            int6 = Integer.parseInt(""+datosa[6]);
            datosString = datosString + int6;
            }
-           if(datosa[7]!='\0')
-           {
-           int7 = Integer.parseInt(""+datosa[7]);
-           datosString = datosString + int7;
-           }
+           //if(datosa[7]!='\0')
+          // {
+          // int7 = Integer.parseInt(""+datosa[7]);
+          // datosString = datosString + int7;
+          // }
+           
+           //////////
+           System.err.println("LEido" + datosString);
+           
+           
            datosListos = true;
  
         }    
@@ -180,6 +197,7 @@ public mpComunication()
    
    public Shoot recuperarDatosDisparo()
    {
+       System.err.println("Recupero datos?");
        Shoot s = new Shoot();
        s.setX(int2);
        s.setY(int3);
@@ -190,6 +208,7 @@ public mpComunication()
    
    public void enviarDatosDisparo(Shoot s)
    {
+       System.err.println("Disparo?");
        String ss = "1";
        mysybc++;
        ss = ss + mysybc;
@@ -198,7 +217,7 @@ public mpComunication()
        ss = ss + s.getArma();
        ss = ss + "0";
        ss = ss + "0";
-       
+       System.err.println(ss);
        btc.writeMessage(ss); 
    }
    
@@ -231,6 +250,7 @@ public mpComunication()
     int5 = 0;
     int6 = 0;
     int7 = 0;
+   
     
     datosString = "";
    

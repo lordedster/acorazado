@@ -56,6 +56,7 @@ public class BattleshipCanvas
     private static final int LEFT_SOFTKEY = -6;
     private static final int RIGHT_SOFTKEY = -7;
     private static final int INTERVAL = 30;
+    private static final int INTERVAL_MP = 100;
     private static final double DEFAULT_WIDTH = 240;
     private static final double DEFAULT_HEIGHT = 320;
     private boolean pressed = false;
@@ -71,6 +72,7 @@ public class BattleshipCanvas
     private int x = 0;
     private int y = 0;
     private BattleshipCanvas.GameThread gameThread;
+    private BattleshipCanvas.MultiThread multiThread;
     private Main main;
     private MainMenu menu; 
     private OptionScreen options;
@@ -105,6 +107,10 @@ public class BattleshipCanvas
     private  boolean isServer;
     private boolean mpg = false;
     private boolean connected = false;
+    boolean mpturno = false;
+    boolean readyToread = false;
+    
+
    
     
     
@@ -322,10 +328,10 @@ public class BattleshipCanvas
                 break;
             case TypeBattleShips.STATE_MP:
             switch (getGameAction(key)) {
-                    case LEFT:
+                    case UP:
                         multiMenu.selectPrev();
                         break;
-                    case RIGHT:
+                    case DOWN:
                         multiMenu.selectNext();
                         break;
                     case FIRE:
@@ -639,7 +645,7 @@ public class BattleshipCanvas
 
         if (multiMenu == null){
             createMultiMenu();
-            //showMultiplayer();
+            showMultiplayer();
         }
 
         if (victoryLosser == null){
@@ -676,6 +682,12 @@ public class BattleshipCanvas
             gameThread = new BattleshipCanvas.GameThread();
         }
         gameThread.requestStart();
+        
+        if (multiThread == null) {
+            multiThread = new BattleshipCanvas.MultiThread();
+        }
+        multiThread.requestStart();
+        
         LightManager.avoidDimming();
     }
 
@@ -736,7 +748,7 @@ public class BattleshipCanvas
                         //checkKeys();
                         update();
                         render();
-                        mpgameon();
+                        //mpgameon();
 
                         // Sleep the rest of the time
                         time = INTERVAL - (System.currentTimeMillis() - time);
@@ -749,48 +761,119 @@ public class BattleshipCanvas
         }
     }
 
+    
+        
+    class MultiThread
+            extends Thread {
+
+        private boolean pause = true;
+        private boolean stop = false;
+        private boolean started = false;
+
+        public void requestStart() {
+            this.pause = false;
+            if (!started) {
+                this.start();
+                this.started = true;
+            }
+            else {
+                synchronized (this) {
+                    notify();
+                }
+            }
+        }
+
+        public void requestPause() {
+            this.pause = true;
+        }
+
+        public void requestStop() {
+            this.stop = true;
+        }
+
+        /**
+         * The game loop. This example uses only one thread for updating
+         * game logic and for rendering with constant frequency.
+         */
+        public void run() {
+                        mpgameon();
+        }
+    }
+    
+    
+    
     public void mpgameon()
     {
+
+        while(true)
+        {
     if (mpg)
         {
+            System.err.println("mpg true");
             if( mpc.isLive())
                  {
-
+                     System.err.println("mpc alive true");
+                    //if(readyToread)
                         {
-                            mpc.leer();
-                            if(mpc.isDatosListos())
+                                  System.err.println("LEOO ACA");
+                                  if(!mpc.isDatosListos())
+                                  {
+                                    mpc.leer();
+                                  }
+                                  
+                            while(mpc.isDatosListos())
                             {
+                        
+                                System.err.println("is datos listos true");
+                                
                                 mpc.setDatosListos(false);
+                                System.err.println("int0 " + mpc.getInt0());
                                 switch(mpc.getInt0())
                                 {
                                         case 1:
                                         {
+                                            System.err.println("case1");
                                             String response;
                                             response = tableroAmigo.mp_disparo(mpc.recuperarDatosDisparo());
+                                            System.err.println(response);
+                                    
                                             mpc.setDatosListos(false);
+                                        
                                             mpc.responderDatos(response);
-                                            showTableroEnemigo();
+                                         
+                                            mpc.clear();
                                             break;
                                         }
                                         case 2:
                                         {
+                                            System.err.println("case2");
                                             tableroEnemigo.updateTableroEnemigo(mpc.getDatosString());
-                                            showTableroAmigo();
+                                        
+                                            readyToread = false;
+                                           
+                                            mpc.clear();
                                             break;
                                         }
                                 }
-                                mpc.clear();
+                              
                             }
                         
                         }
+                 
                  }
                  else
                 {
+                    System.err.println("mpc alive false");
                     if(!connected)
                     {
                       vibratorManager.vibrate(10); 
                     }
                 }
+             }
+    else
+    {
+        System.err.println("MPG false");
+    }
         }
     
     }
@@ -1019,7 +1102,7 @@ public class BattleshipCanvas
            DATA.getNombreUsuario(UserData.PERFIL_A), 
            DATA.getNombreUsuario(UserData.PERFIL_B), 
            DATA.getNombreUsuario(UserData.PERFIL_C), r);
-        showMenu();
+        //showMenu();
     }
     
     private void createOptionScreen() {
@@ -1102,7 +1185,25 @@ public class BattleshipCanvas
                         tableroAmigo.crearBarcosManualmente(deployShips.ObtenerBarcos());
                         tableroAmigo.positionGrid();                        
                         tableroEnemigo.generarMapa(r);
-                        showTableroEnemigo();
+                        if(mpg) // si estoy en MP cargo el mapa dependiendo de si soy servidor o cliente para ver quien arrancua
+                        {                          
+                            if(isServer)                            
+                            {
+                                readyToread = false;
+                                showTableroEnemigo();
+                            }
+                            else
+                            {
+                                    readyToread = true;
+                                showTableroAmigo();                            
+                            }
+                            
+                        }   
+                        else
+                        {
+                            readyToread = true;
+                            showTableroEnemigo();
+                        }
                         break;
                     case TypeBattleShips.SACUDIR:
                         animacionSacudidaSonido();
@@ -1137,8 +1238,11 @@ public class BattleshipCanvas
                       if(tableroEnemigo.sinBarcos()){
                             victoryLosser.setGanadoPerdido(true);
                             showWinOrLosser();
-                        }else{                                
-                            tableroAmigo.readyToShoot(true);
+                        }else{
+                          if(!mpg)
+                          {
+                             tableroAmigo.readyToShoot(true);
+                          }
                             showTableroAmigo();
                         }
                         break;  
@@ -1147,9 +1251,10 @@ public class BattleshipCanvas
                         break;
                     case TypeBattleShips.BT_CLIENTE:
                     {
-                                System.err.println("c");
-
-                        mpc.startClient();
+                               
+                                mpturno=false;
+                                mpc.startClient();
+                                                    
                         connected = true;
                         isServer = false;
                         showSelector();
@@ -1157,9 +1262,10 @@ public class BattleshipCanvas
                     }
                     case TypeBattleShips.BT_SERVIDOR:
                     {
-                                System.err.println("s");
-
+                               
+                        mpturno=true;        
                         mpc.startServer();
+                                           
                         connected = true;
                         isServer = true;
                         showSelector();
@@ -1170,6 +1276,7 @@ public class BattleshipCanvas
                             {
                                 if(tableroEnemigo.getMP_shoot() != null)
                                 {
+                                    readyToread = true;
                                     mpc.enviarDatosDisparo(tableroEnemigo.getMP_shoot());
                                 }
                             break;
@@ -1252,7 +1359,7 @@ public class BattleshipCanvas
                 if(x != 1)
                 {
                  
-                            System.err.println("**********************BTCOMM CONSTRUCTOR");
+                      
 
                     isServer = false;
                     tableroAmigo.startAsCliente();
@@ -1260,7 +1367,7 @@ public class BattleshipCanvas
                 }
                 else
                 {
-                            System.err.println("**********************BTCOMM asdasda");
+                      
 
                     isServer = true;
                     tableroAmigo.startAsServer();
@@ -1400,15 +1507,39 @@ public class BattleshipCanvas
             public void itemClicked(int item) {
                 switch (item) {
                     case SelectorScreen.BUTTON_OK:
+                        
                         tableroAmigo.generarMapa(r);
                         tableroEnemigo.generarMapa(r);
-                        showTableroEnemigo();
+                        
+                        if(mpg) // sy estoy en MP cargo el mapa dependiendo de si soy servidor o cliente para ver quien arrancua
+                        {                          
+                            if(isServer)                            
+                            {
+                                readyToread = false;
+                                showTableroEnemigo();
+                            }
+                            else
+                            {
+                                readyToread = true;
+                                showTableroAmigo();
+                            }
+                            
+                        }   
+                        else
+                        {
+                            readyToread = true;
+                           showTableroEnemigo();
+                        }                      
+                        
+                        //asdasd
+                        
+                        
                         break;
                     case SelectorScreen.BUTTON_CANCEL:  
                         deployShips.seteoMemoria();
                         deployShips.generarMapa(r);
                         barcos.verItems();
-                        
+  
                         showBarcos();
                         break;                        
                 }
@@ -1566,4 +1697,8 @@ public class BattleshipCanvas
     private void resetIntervalo(){
         this.intervalo = 0;
     }   
+    
+
 }
+
+

@@ -674,15 +674,20 @@ public class FriendlyBoard extends Map implements Slideable {
     public String mp_disparo(Shoot s)
     {
         String ss ="";
-       disparar(s);
+        disparado = disparar(s);
        
-        ss = ss + "1"; // 0
+        ss = ss + "2"; // 0
         ss = ss + "0";//sync  // 1
-        if(board[s.getX()][s.getY()].getBarco() == TypeBattleShips.EMPTY)
+        if(board[s.getX()][s.getY()].getBarco() == TypeBattleShips.EMPTY) //no hay barcos = agua
         {
+           
             ss = ss + "" + s.getX();  //2
             ss = ss + "" + s.getY(); //3
              ss = ss + "0"; // 4
+             ss = ss + "0"; // 5
+             ss = ss + "0"; // 6
+             
+             
         }
         else
         {
@@ -691,8 +696,8 @@ public class FriendlyBoard extends Map implements Slideable {
                 ss = ss + "" + obtMatrizX(ships[board[s.getX()][s.getY()].getBarco()].getX());  //2
                 ss = ss +  "" + obtMatrizY(ships[board[s.getX()][s.getY()].getBarco()].getY());  //3
                 ss = ss + "2";  //4
-                ss = ss + "" + board[s.getX()][s.getY()].getBarco();
-                ss = ss + "" + ships[board[s.getX()][s.getY()].getBarco()].getOrientacion();
+                ss = ss + "" + board[s.getX()][s.getY()].getBarco();//5
+                ss = ss + "" + ships[board[s.getX()][s.getY()].getBarco()].getOrientacion();//6
                 
             }
             else
