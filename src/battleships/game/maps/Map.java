@@ -278,7 +278,7 @@ public class Map {
         }  
     }
     
-    protected void AddShipVolador(BattleShip ship, double scaling, boolean visibility, Resources r, int posicion)
+    protected void AddShipVolador(BattleShip ship, double scaling, boolean visibility, int posicion)
     {
         ships[posicion] = ship;
         

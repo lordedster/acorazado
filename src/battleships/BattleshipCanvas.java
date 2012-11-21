@@ -633,7 +633,10 @@ public class BattleshipCanvas
         g.fillRect(0, 0, displayWidth, displayHeight);
         
         g.drawImage(r.background, cornerX, cornerY, anchor);
-        if (gameState == TypeBattleShips.STATE_DEPLOYSHIPS || gameState == TypeBattleShips.SP_TURNO || gameState == TypeBattleShips.SP_TURNO_IA){
+        if (gameState == TypeBattleShips.STATE_DEPLOYSHIPS || 
+                gameState == TypeBattleShips.SP_TURNO || 
+                gameState == TypeBattleShips.SP_TURNO_IA ||
+                gameState == TypeBattleShips.STATE_HISTORIA){
             int c = cornerX;
             for(int i = 0; i < 240; i++){
                 g.drawImage(r.fondo, c, cornerY, anchor);
@@ -1637,7 +1640,8 @@ public class BattleshipCanvas
             public void itemClicked(int x) {
                 switch(x){
                 case TypeBattleShips.SP_TURNO:
-                    
+                    tableroEnemigo.generarMapa(r);
+                    tableroAmigo.generarMapaCampaign(r, DATA.getMision());
                     break;
                 }                              
             }

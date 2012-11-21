@@ -43,7 +43,7 @@ public class HistoryScreen
         menu = new StringImageItem("Jugar");
         menu.setRGB(255, 255, 255);
         
-        IN_CX = cornerX + width / 2;
+        IN_CX = cornerX;
         OUT_CX = IN_CX - width;
         x = OUT_CX;
         y = cornerY;
@@ -87,7 +87,7 @@ public class HistoryScreen
     }
     
     public final void positionItems() {
-        historia.setPosition(x - menu.getWidth()/2, y);
+        historia.setPosition(x , y);
         menu.setPosition(x + width - menu.getWidth(), y + height - menu.getHeight());
     }
     
