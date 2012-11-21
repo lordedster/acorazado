@@ -12,8 +12,10 @@ import battleships.game.ships.BattleShip;
 import battleships.game.ships.TypeBattleShips;
 //import battleships.records.UserData;
 import java.util.Random;
+import javax.microedition.io.StreamConnection;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.Sprite;
+
 
 /**
  *
@@ -31,6 +33,10 @@ public class FriendlyBoard extends Map implements Slideable {
     boolean ld = true;
     boolean rd = true;
     int lastdirection = -1;
+    
+    boolean mpg;
+
+    
     
     boolean ready;
     boolean disparado;
@@ -59,7 +65,7 @@ public class FriendlyBoard extends Map implements Slideable {
     private int map_y;
 
 
-    public FriendlyBoard(int cornerX, int cornerY, int width, int height, Resources r, Listener l, double scaling, int dificultad) {
+    public FriendlyBoard(int cornerX, int cornerY, int width, int height, Resources r, Listener l, double scaling, int dificultad, boolean multiplayer) {
         super(10,10,5,l);
         this.displayWidth = width;
         this.displayHeight = height;        
@@ -72,6 +78,8 @@ public class FriendlyBoard extends Map implements Slideable {
         ataqueEnCurso = false;
         acertoBarco = false;
         
+        mpg = multiplayer;
+        
         IN_CX = cornerX;
         OUT_CX = IN_CX - width;    
 
@@ -82,6 +90,10 @@ public class FriendlyBoard extends Map implements Slideable {
         this.cornerY = cornerY;
         ready = false;
         disparado = false;
+        
+        
+     
+        
          
     }
     
@@ -649,7 +661,73 @@ public class FriendlyBoard extends Map implements Slideable {
             board[map_x][map_y].setFrameBarco(1);
         }            
     }
-         
+
+    
+    public String mp_disparo(Shoot s)
+    {
+        String ss ="";
+        disparado = disparar(s);
+       
+        ss = ss + "2"; // 0
+        ss = ss + "0";//sync  // 1
+        if(board[s.getX()][s.getY()].getBarco() == TypeBattleShips.EMPTY) //no hay barcos = agua
+        {
+           
+            ss = ss + "" + s.getX();  //2
+            ss = ss + "" + s.getY(); //3
+             ss = ss + "0"; // 4
+             ss = ss + "0"; // 5
+             ss = ss + "0"; // 6
+             
+             
+        }
+        else
+        {
+            if(  ships[board[s.getX()][s.getY()].getBarco()].isSunked())
+            {
+                ss = ss + "" + obtMatrizX(ships[board[s.getX()][s.getY()].getBarco()].getX());  //2
+                ss = ss +  "" + obtMatrizY(ships[board[s.getX()][s.getY()].getBarco()].getY());  //3
+                ss = ss + "2";  //4
+                ss = ss + "" + board[s.getX()][s.getY()].getBarco();//5
+                ss = ss + "" + ships[board[s.getX()][s.getY()].getBarco()].getOrientacion();//6
+                
+            }
+            else
+            {
+                ss = ss + "" + s.getX();
+                ss = ss + "" + s.getY();
+                ss = ss + "1";
+                ss = ss + "0";
+                ss = ss + "0";
+            }
+            
+        }
+        
+        
+        
+        
+             /*
+        * char 0 = 1 ataque, 2 respuesta ataque
+        * char 1 = sycn del 0 al 9, ventana
+        * char 2 = x
+        * char 3 = y 
+        * char 4 = resultado, tocado undido / arma especial
+        * char 5 = barco
+        * char 6 = orientacion
+        */
+        return ss;
+    }
+    
+    public void startAsServer()
+    {
+        Listener(TypeBattleShips.BT_SERVIDOR);
+    }
+    
+    public void startAsCliente()
+    {
+        Listener(TypeBattleShips.BT_CLIENTE);
+    }
+    
     public void setAcertarBarcoFalse(){
         this.acertoBarco = false;
     }

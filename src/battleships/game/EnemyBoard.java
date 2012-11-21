@@ -42,6 +42,11 @@ public class EnemyBoard
     private boolean hasShoot;
     private boolean acertoBarco;
     
+    private boolean mpg;
+    
+    
+    private Shoot mpshoot;
+    
     private int misil_x;
     private int misil_y;
     private int target_x;
@@ -49,7 +54,7 @@ public class EnemyBoard
     private int map_x;
     private int map_y;
     
-    public EnemyBoard(int cornerX, int cornerY, int width, int height, Resources r, Listener l, double scaling, int dificultad) {
+    public EnemyBoard(int cornerX, int cornerY, int width, int height, Resources r, Listener l, double scaling, int dificultad, boolean multiplayer) {
         super(10,10,5,l);
         this.displayWidth = width;
         this.displayHeight = height;        
@@ -63,6 +68,9 @@ public class EnemyBoard
         menu.setRGB(255, 255, 255);
         acertoBarco = false;
         //setPositionMenu();
+        
+        
+        mpg = multiplayer;
         
         ataqueEnCurso = false;
         hasShoot = false;
@@ -152,7 +160,8 @@ public class EnemyBoard
         AlgoritmoFacil(TypeBattleShips.ESPIA, TypeBattleShips.ESPIA_SIZE, ObtenerMatriz(), 4, v);
    }
     
-    private void AlgoritmoFacil(int ship, int size, Grid[][] map, int posicion, boolean v){        
+    private void AlgoritmoFacil(int ship, int size, Grid[][] map, int posicion, boolean v){ 
+        
         int direccion = rnd.nextInt(2); 
         int x_primero = 0; 
         int y_primero = 0;
@@ -194,6 +203,41 @@ public class EnemyBoard
         Listener(TypeBattleShips.STATE_MENU_EN_JUEGO);
     }
     
+    public Shoot getMP_shoot()
+    {
+        return mpshoot;
+    
+    }
+    
+    public void playerShootMP(int x, int y)
+    {
+        if(!isAtaqueEnCurso() && !hasShoot)
+        {
+            if(board[x][y].getEstado()!= TypeBattleShips.SHOT || board[x][y].getEstado()!= TypeBattleShips.ACERTADO)
+            {
+                mpshoot = new Shoot();
+                mpshoot.setArma(1);
+                mpshoot.setX(x);
+                mpshoot.setY(y);
+                Listener(TypeBattleShips.MP_DISPARAR);
+                posicionMisil(x,y,board[x][y].getX(),board[x][y].getY());
+                hasShoot = true;                
+
+              /*  if(board[x][y].getBarco()==TypeBattleShips.EMPTY)
+                {
+                    board[x][y].setEstado(TypeBattleShips.SHOT);
+                }
+                else
+                {
+                    board[x][y].setEstado(TypeBattleShips.ACERTADO);
+                    acertarBaraco(board[x][y].getBarco());
+                }*/
+            }
+        }
+             
+    }
+            
+            
     public void PlayerShoot(int x, int y)
     {
         if(!isAtaqueEnCurso() && !hasShoot())
@@ -321,8 +365,72 @@ public class EnemyBoard
                 rightButtonPressed();
             }
         }
-    } 
+
+    }
      
+     public void updateTableroEnemigo(String s)
+     {
+     
+              /*
+        * char 0 = 1 ataque, 2 respuesta ataque
+        * char 1 = sycn del 0 al 9, ventana
+        * char 2 = x
+        * char 3 = y 
+        * char 4 = resultado, tocado undido / arma especial
+        * char 5 = barco
+        * char 6 = orientacion
+        */
+           char[] datosa = s.toCharArray();
+           int resultado = Integer.parseInt(""+datosa[4]);
+           int locX = Integer.parseInt(""+datosa[2]);
+           int locY = Integer.parseInt(""+datosa[3]);
+           int barco = Integer.parseInt(""+datosa[5]);
+           int orienta = Integer.parseInt(""+datosa[6]);
+          
+           switch(resultado)
+           {
+               case 0:
+               {
+                   board[locX][locY].setEstado(TypeBattleShips.SHOT);
+      
+                   break;
+               }
+               case 1:
+               {
+                   board[locX][locY].setEstado(TypeBattleShips.ACERTADO);
+                   break;
+               }
+               case 2:
+               {
+                   ships[barco].setX(calcMatrizX(locX));
+                   ships[barco].setX(calcMatrizY(locY));
+                   ships[barco].setOrientacion(orienta);
+                   ships[barco].hundir();
+                   for (int j = 0; j < ships[barco].getLargo()-1; j++)
+                   {
+                       if(orienta==0)
+                       {
+                           board[x][y-j].setEstado(TypeBattleShips.HUNDIDO);
+                           board[x][y-j].setSeccion_barco(j);
+                           board[x][y-j].setBarco(barco);
+                           board[x][y-j].setFrameBarco(1);
+                           
+                       }
+                       else
+                       {
+                           board[x+j][y].setEstado(TypeBattleShips.HUNDIDO);
+                           board[x+j][y].setSeccion_barco(j);
+                           board[x+j][y].setBarco(barco);
+                           board[x+j][y].setFrameBarco(1);
+                       }
+                   }
+                   break;
+               }
+           }
+     
+     }
+
+         
     public int[][] getMapaParaGuardar(){
         int[][] m = new int[10][10];
         for (int i = 0; i < 10; i++) {
@@ -392,3 +500,4 @@ public class EnemyBoard
         }
     }
 }
+

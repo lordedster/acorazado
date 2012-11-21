@@ -76,6 +76,11 @@ public class BattleShip {
         this.y = y;
     }
     
+    public void hundir()
+    {
+        hits = lengh;
+    }
+    
     public void setOrientacion(int orientacion){
         this.orientacion = orientacion;
     }
