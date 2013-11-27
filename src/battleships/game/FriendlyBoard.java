@@ -645,7 +645,12 @@ public class FriendlyBoard extends Map implements Slideable {
                 if (g[i][f].getBarco() == TypeBattleShips.EMPTY){
                     board[i][f] = new Grid(g[i][f].getEstado(),g[i][f].getBarco(), loadSprite(r.water, 3, scaling), loadSprite(r.mira, 2, scaling), g[i][f].getSeccion_barco());
                 }else{
-                    board[i][f] = new Grid(g[i][f].getEstado(),g[i][f].getBarco(), loadSprite(SeccionBarco(g[i][f].getSeccion_barco(), g[i][f].getBarco(), r), 2, scaling), loadSprite(r.mira, 2, scaling), g[i][f].getSeccion_barco());
+                    Sprite agua = loadSprite(SeccionBarco(g[i][f].getSeccion_barco(),g[i][f].getBarco(), r), 2, scaling);
+                    if (ships[g[i][f].getBarco()].getOrientacion() == TypeBattleShips.VERTICAL)
+                {
+                    agua.setTransform(Sprite.TRANS_MIRROR_ROT270);
+                }    
+                    board[i][f] = new Grid(g[i][f].getEstado(),g[i][f].getBarco(), agua,  loadSprite(r.mira, 2, scaling), g[i][f].getSeccion_barco());
                 }
             }
         }

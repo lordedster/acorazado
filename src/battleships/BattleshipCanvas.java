@@ -708,7 +708,7 @@ public class BattleshipCanvas
         }
         if (misionScreen == null){
             createMisionScreen();            
-            //showMisionScreen();
+           // showMisionScreen();
         }
         if (menu == null) {
             createMenu();            
@@ -1361,8 +1361,8 @@ public class BattleshipCanvas
                         deployShips.girarBarco();
                         break;
                     case TypeBattleShips.STATE_MISION: 
-                        tableroAmigo.crearMapaManualmente(deployShips.ObtenerMapa());
                         tableroAmigo.crearBarcosManualmente(deployShips.ObtenerBarcos());
+                        tableroAmigo.crearMapaManualmente(deployShips.ObtenerMapa());
                         tableroAmigo.positionGrid();                        
                         
                         if(mpg) // si estoy en MP cargo el mapa dependiendo de si soy servidor o cliente para ver quien arrancua
